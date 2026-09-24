@@ -48,11 +48,11 @@ export function Partners() {
   ];
 
   return (
-    <section id="parcerias" className="py-12 sm:py-16 border-y border-[#D1D1D1] bg-[#DFDDD9]/50">
+    <section id="parcerias" className="py-12 sm:py-16 border-y border-[#4D5061]/20 bg-[#F1F0EF]">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Título direto */}
         <div className="text-center">
-          <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-[#2A2826] sm:text-sm">
+          <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-[#30323D] sm:text-sm">
             PARCERIAS
           </h2>
         </div>

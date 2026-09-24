@@ -16,14 +16,14 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#d85e27] bg-[#EE6F36] shadow-sm transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-[#cc551f] bg-[#E06126] shadow-sm transition-all">
       <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logótipo / Nome do Projeto */}
         <Link
           href="#hero"
           className="group flex items-center gap-3 transition-opacity hover:opacity-95"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EAE8E5] text-[#EE6F36] shadow-xs transition-transform group-hover:scale-105">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F1F0EF] text-[#E06126] shadow-xs transition-transform group-hover:scale-105">
             <Sparkles className="h-5 w-5" />
           </div>
           <div className="flex flex-col">
@@ -53,10 +53,10 @@ export function Navbar() {
         <div className="hidden items-center gap-3 md:flex">
           <Link
             href="#contacto"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#EAE8E5] px-4 py-2 text-xs font-semibold text-[#EE6F36] shadow-xs transition-all hover:bg-[#DFDDD9] hover:shadow-md"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#F1F0EF] px-4 py-2 text-xs font-semibold text-[#E06126] shadow-xs transition-all hover:bg-[#DFDDD9] hover:shadow-md"
           >
             <span>Falar Connosco</span>
-            <ArrowUpRight className="h-3.5 w-3.5 text-[#EE6F36]" />
+            <ArrowUpRight className="h-3.5 w-3.5 text-[#E06126]" />
           </Link>
         </div>
 
@@ -79,7 +79,7 @@ export function Navbar() {
 
       {/* Menu Dropdown Mobile */}
       {mobileMenuOpen && (
-        <div className="border-t border-white/20 bg-[#EE6F36] px-4 pt-2 pb-6 md:hidden">
+        <div className="border-t border-white/20 bg-[#E06126] px-4 pt-2 pb-6 md:hidden">
           <nav className="flex flex-col space-y-1">
             {navLinks.map((link) => (
               <Link
@@ -95,7 +95,7 @@ export function Navbar() {
               <Link
                 href="#contacto"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#EAE8E5] py-2.5 text-center text-xs font-semibold text-[#EE6F36] shadow-xs hover:bg-[#DFDDD9]"
+                className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#F1F0EF] py-2.5 text-center text-xs font-semibold text-[#E06126] shadow-xs hover:bg-[#DFDDD9]"
               >
                 <span>Falar Connosco</span>
                 <ArrowUpRight className="h-3.5 w-3.5" />

@@ -48,17 +48,17 @@ export function Partners() {
   ];
 
   return (
-    <section id="parcerias" className="py-12 sm:py-16 border-y border-[#4D5061]/20 bg-[#F1F0EF]">
+    <div id="parcerias" className="w-full">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Título direto */}
         <div className="text-center">
           <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-[#30323D] sm:text-sm">
-            PARCERIAS
+            PARCEIROS
           </h2>
         </div>
 
         {/* 4 Parceiros na mesma linha e mais juntos */}
-        <div className="mt-8 flex items-center justify-center gap-4 sm:gap-6 md:gap-8 flex-nowrap overflow-x-auto py-2">
+        <div className="mt-4 flex items-center justify-center gap-4 sm:gap-6 md:gap-8 flex-nowrap overflow-x-auto py-2">
           {partners.map((partner) => (
             <div
               key={partner.id}
@@ -79,6 +79,6 @@ export function Partners() {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Projeto C.A.I.X.A. | Prevenção Oncológica Pediátrica",
+  title: "Projeto C.A.I.X.A.",
   description:
     "Plataforma informativa do Projeto C.A.I.X.A. dedicada à prevenção, sensibilização e apoio na oncologia pediátrica.",
 };
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-[#F1F0EF] text-[#30323D] selection:bg-[#E06126] selection:text-white">
+      <body className="min-h-full flex flex-col bg-[#E5E3DF] text-[#30323D] selection:bg-[#E06126] selection:text-white">
         {children}
       </body>
     </html>

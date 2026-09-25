@@ -23,8 +23,8 @@ export function Navbar() {
     const sections = [
       { id: "hero", name: "inicio" },
       { id: "sobre", name: "sobre" },
-      { id: "parcerias", name: "parcerias" },
       { id: "equipa", name: "equipa" },
+      { id: "parcerias", name: "parcerias" },
     ];
 
     const observer = new IntersectionObserver(
@@ -63,8 +63,8 @@ export function Navbar() {
   const navLinks = [
     { label: "Início", href: "#", onClick: handleScrollToTop, id: "inicio" },
     { label: "O Projeto", href: "#sobre", id: "sobre" },
-    { label: "Apoios", href: "#parcerias", id: "parcerias" },
     { label: "Equipa", href: "#equipa", id: "equipa" },
+    { label: "Apoios", href: "#parcerias", id: "parcerias" },
   ];
 
   return (

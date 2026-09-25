@@ -1,7 +1,7 @@
 export function About() {
   return (
-    <section id="sobre" className="py-20 sm:py-28 bg-[#F5F2EE] border-t border-slate-200/60 scroll-mt-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <section id="sobre" className="relative flex min-h-screen flex-col justify-center border-t border-slate-200/60 bg-[#F5F2EE] py-24 sm:py-32 scroll-mt-20">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Bloco de Conteúdo Centrado na Página */}
         <div className="mx-auto max-w-4xl">
           <div className="mb-3 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.1em] text-[#F85308]">

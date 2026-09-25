@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Partners } from "./Partners";
 
 export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[calc(100vh-4.5rem)] flex-col justify-between overflow-hidden pt-8 sm:pt-12 pb-6"
+      className="relative flex min-h-[calc(100vh-4.5rem)] scroll-mt-24 flex-col items-center justify-center overflow-hidden py-16 sm:py-24"
     >
       {/* Luz difusa de fundo arquitetural com #E06126 */}
       <div
@@ -15,7 +14,7 @@ export function Hero() {
       />
 
       {/* Conteúdo Central do Hero */}
-      <div className="mx-auto flex flex-1 flex-col items-center justify-center text-center max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex flex-col items-center justify-center text-center max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Título Principal */}
         <h1 className="text-4xl font-bold tracking-tight text-[#30323D] sm:text-6xl sm:leading-tight">
           Projeto{" "}
@@ -47,9 +46,6 @@ export function Hero() {
           </Link>
         </div>
       </div>
-
-      {/* Parcerias integradas na base do Hero para visibilidade imediata sem scroll */}
-    <Partners />
     </section>
   );
 }

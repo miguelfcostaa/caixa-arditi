@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import { User, HeartHandshake, Code2, Palette } from "lucide-react";
 
 interface TeamMember {
@@ -6,9 +10,10 @@ interface TeamMember {
   role: string;
   initials: string;
   avatarGradient: string;
+  image?: string; // Caminho da foto em /public/team/, ex: "/team/ana-lucia.png"
 }
 
-// Componente de Cartão de Membro Reutilizável declarado fora da função de renderização
+// Componente de Cartão de Membro Reutilizável
 function MemberCard({
   member,
   isLeader = false,
@@ -16,19 +21,30 @@ function MemberCard({
   member: TeamMember;
   isLeader?: boolean;
 }) {
-  return (
-    <div
-      className={"group relative flex flex-col items-center rounded-2xl p-6 text-center transition-all hover:-translate-y-1 hover:shadow-md "}
-    >
-      {/* Moldura da Imagem / Fotografia */}
-      <div className="relative mb-4 flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center overflow-hidden rounded-full border-4 border-[#E5E3DF] shadow-xs ring-1 ring-[#4D5061]/30">
-        {/* Placeholder estético com gradiente e iniciais */}
-        <div
-          className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${member.avatarGradient} text-xl font-bold text-white transition-transform group-hover:scale-105`}
-        >
-          <span>{member.initials}</span>
-        </div>
+  const [imgError, setImgError] = useState(false);
+  const hasValidImage = Boolean(member.image && !imgError);
 
+  return (
+    <div className="group relative flex flex-col items-center rounded-2xl p-6 text-center transition-all hover:-translate-y-1">
+      {/* Moldura da Imagem / Fotografia - Formato Círculo com a cor/gradiente da equipa por trás */}
+      <div
+        className={`relative mb-4 flex h-32 w-32 sm:h-36 sm:w-36 items-center justify-center overflow-hidden rounded-full border-4 border-[#E5E3DF] bg-gradient-to-br ${member.avatarGradient} shadow-xs ring-1 ring-[#4D5061]/30 transition-all duration-300 group-hover:scale-105 group-hover:shadow-md`}
+      >
+        {hasValidImage ? (
+          <Image
+            src={member.image!}
+            alt={member.name}
+            fill
+            sizes="(max-width: 640px) 128px, 144px"
+            className="object-cover object-top sm:object-center transition-transform duration-300 group-hover:scale-110"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          /* Placeholder estético com as iniciais sobre o gradiente da equipa */
+          <span className="text-2xl font-bold text-white transition-transform group-hover:scale-105">
+            {member.initials}
+          </span>
+        )}
       </div>
 
       {/* Nome */}
@@ -57,6 +73,7 @@ export function Team() {
       role: "Investigadora Principal",
       initials: "AF",
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
+      image: "/team/ana-lucia-faria.png",
     },
     {
       id: "chefe-luis",
@@ -64,6 +81,7 @@ export function Team() {
       role: "Investigador Principal",
       initials: "LF",
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
+      image: "/team/luis.png",
     },
     {
       id: "chefe-monica",
@@ -71,24 +89,27 @@ export function Team() {
       role: "Investigadora Principal",
       initials: "MC",
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
+      image: "/team/monica-cameirao.png",
     },
   ];
 
   // 2. Psicólogas (2)
   const psychologists: TeamMember[] = [
     {
+      id: "psico-2",
+      name: "Beatriz Castro",
+      role: "Psicóloga Clínica",
+      initials: "BC",
+      avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
+      image: "/team/beatriz.png",
+    },
+    {
       id: "psico-1",
       name: "Petra Santos",
       role: "Psicóloga Clínica",
       initials: "PS",
       avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
-    },
-    {
-      id: "psico-2",
-      name: "Beatriz Castro",
-      role: "Psicóloga de Apoio Pediátrico",
-      initials: "BC",
-      avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
+      image: "/team/petra-santos.png",
     },
   ];
 
@@ -99,14 +120,16 @@ export function Team() {
       name: "Miguel Costa",
       role: "Desenvolvedor Frontend",
       initials: "MC",
-      avatarGradient: "from-mist-500 to-graphite ring-[#30323D]/30",
+      avatarGradient: "from-[#4D5061] to-[#30323D] ring-[#30323D]/30",
+      image: "/team/miguel-costa.png",
     },
     {
       id: "dev-2",
       name: "Roberto Fernandes",
       role: "Desenvolvedor Backend",
       initials: "RF",
-      avatarGradient: "from-mist-500 to-graphite ring-[#30323D]/30",
+      avatarGradient: "from-[#4D5061] to-[#30323D] ring-[#30323D]/30",
+      image: "/team/roberto.png",
     },
   ];
 
@@ -118,23 +141,25 @@ export function Team() {
       role: "Designer UX / UI",
       initials: "JP",
       avatarGradient: "from-cyan-600 to-cyan-800 ring-[#E06126]/20",
+      image: "/team/juan-ponte.png",
     },
     {
       id: "des-vis",
       name: "Carolina Luís",
       role: "Designer Visual & Gráfico",
-      initials: "DG",
+      initials: "CL",
       avatarGradient: "from-cyan-600 to-cyan-800 ring-[#E06126]/20",
+      image: "",
     },
   ];
 
   return (
-    <section id="equipa" className="relative border-t border-[#4D5061]/20 bg-[#F1F0EF] py-20 sm:py-28">
+    <section id="equipa" className="relative border-t border-[#4D5061]/20 bg-[#F1F0EF] py-20 sm:py-28 scroll-mt-18">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho */}
         <div className="text-center">
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-graphite sm:text-4xl">
-            Equipa de Desenvolvimento
+            Equipa de Investigação
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-graphite sm:text-base">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
@@ -150,9 +175,9 @@ export function Team() {
               Investigação & Coordenação do Projeto
             </h3>
           </div>
-          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-3">
             {leader.map((member) => (
-                <MemberCard key={member.id} member={member} isLeader={true} />
+              <MemberCard key={member.id} member={member} isLeader={true} />
             ))}
           </div>
         </div>
@@ -187,7 +212,7 @@ export function Team() {
           </div>
         </div>
 
-        {/* Nível 4: Design (1 Designer UX/UI e 1 Designer) */}
+        {/* Nível 4: Design (1 UX/UI e 1 Designer) */}
         <div className="mt-16">
           <div className="mb-6 flex items-center justify-center gap-2">
             <Palette className="h-4 w-4 text-cyan-700" />

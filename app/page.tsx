@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
+import { Partners } from "@/components/Partners";
 import { Team } from "@/components/Team";
 import { Footer } from "@/components/Footer";
 
@@ -12,15 +13,17 @@ export default function Home() {
 
       {/* Conteúdo Principal Informativo */}
       <main className="flex-1">
-        {/* 1. Hero com apresentação do Projeto C.A.I.X.A. e Parcerias integradas acima da dobra */}
+        {/* 1. Hero com apresentação do Projeto C.A.I.X.A. */}
         <Hero />
 
-        {/* 2. Lugar para Descrição do Projeto */}
+        {/* 2. Descrição do Projeto / Pilares */}
         <About />
 
-        {/* 3. Espaço para a Equipa que vai desenvolver o projeto */}
+        {/* 3. Equipa que vai desenvolver o projeto */}
         <Team />
 
+        {/* 4. Apoios / Parcerias */}
+        <Partners />
       </main>
 
       {/* 5. Rodapé */}

@@ -2,36 +2,37 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Sparkles, Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const handleScrollToTop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.history.pushState(null, "", window.location.pathname);
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+  };
+
   const navLinks = [
-    { label: "Início", href: "#hero" },
+    { label: "Início", href: "#", onClick: handleScrollToTop },
     { label: "O Projeto", href: "#sobre" },
-    { label: "Parcerias", href: "#parcerias" },
+    { label: "Apoios", href: "#parcerias" },
     { label: "Equipa", href: "#equipa" },
-    { label: "Contacto", href: "#contacto" },
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#cc551f] bg-[#E06126] shadow-sm transition-all">
       <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logótipo / Nome do Projeto */}
+        {/* Logótipo / Nome do Projeto - Clicar sobe até ao topo da página */}
         <Link
-          href="#hero"
+          href="#"
+          onClick={handleScrollToTop}
           className="group flex items-center gap-3 transition-opacity hover:opacity-95"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F1F0EF] text-[#E06126] shadow-xs transition-transform group-hover:scale-105">
-            <Sparkles className="h-5 w-5" />
-          </div>
           <div className="flex flex-col">
             <span className="text-base font-bold tracking-tight text-white">
               Projeto C.A.I.X.A.
-            </span>
-            <span className="text-xs font-medium text-white/85">
-              Prevenção Oncológica Infantil
             </span>
           </div>
         </Link>
@@ -42,23 +43,13 @@ export function Navbar() {
             <Link
               key={link.label}
               href={link.href}
+              onClick={link.onClick}
               className="rounded-lg px-3.5 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/15 hover:text-white"
             >
               {link.label}
             </Link>
           ))}
         </nav>
-
-        {/* Botão de Destaque Desktop */}
-        <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href="#contacto"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#F1F0EF] px-4 py-2 text-xs font-semibold text-[#E06126] shadow-xs transition-all hover:bg-[#DFDDD9] hover:shadow-md"
-          >
-            <span>Falar Connosco</span>
-            <ArrowUpRight className="h-3.5 w-3.5 text-[#E06126]" />
-          </Link>
-        </div>
 
         {/* Botão Mobile Menu */}
         <div className="flex md:hidden">
@@ -85,22 +76,17 @@ export function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  if (link.onClick) {
+                    link.onClick(e);
+                  }
+                  setMobileMenuOpen(false);
+                }}
                 className="rounded-lg px-3 py-2 text-sm font-medium text-white hover:bg-white/15"
               >
                 {link.label}
               </Link>
             ))}
-            <div className="pt-2">
-              <Link
-                href="#contacto"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#F1F0EF] py-2.5 text-center text-xs font-semibold text-[#E06126] shadow-xs hover:bg-[#DFDDD9]"
-              >
-                <span>Falar Connosco</span>
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
           </nav>
         </div>
       )}

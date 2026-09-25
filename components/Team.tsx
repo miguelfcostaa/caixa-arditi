@@ -96,20 +96,20 @@ export function Team() {
   // 2. Psicólogas (2)
   const psychologists: TeamMember[] = [
     {
+      id: "psico-2",
+      name: "Beatriz Castro",
+      role: "Psicóloga Clínica",
+      initials: "BC",
+      avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
+      image: "",
+    },
+    {
       id: "psico-1",
       name: "Petra Santos",
       role: "Psicóloga Clínica",
       initials: "PS",
       avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
       image: "/team/petra-santos.png",
-    },
-    {
-      id: "psico-2",
-      name: "Beatriz Castro",
-      role: "Psicóloga de Apoio Pediátrico",
-      initials: "BC",
-      avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
-      image: "",
     },
   ];
 

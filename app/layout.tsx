@@ -23,7 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col bg-[#E5E3DF] text-[#30323D] selection:bg-[#E06126] selection:text-white font-sans"
+        className="min-h-full flex flex-col bg-[#FCFAF9] text-[#07213D] selection:bg-[#F85308] selection:text-white font-sans"
       >
         {children}
       </body>

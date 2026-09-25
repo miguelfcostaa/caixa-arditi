@@ -1,49 +1,60 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[calc(100vh-4.5rem)] scroll-mt-24 flex-col items-center justify-center overflow-hidden py-16 sm:py-24"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-[#FCFAF9] pt-24 pb-16 sm:pt-28 sm:pb-20 scroll-mt-0"
     >
-      {/* Luz difusa de fundo arquitetural com #E06126 */}
-      <div
-        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-[#E06126]/15 via-[#4D5061]/10 to-transparent blur-3xl"
-        aria-hidden="true"
-      />
+      {/* Imagem de Fundo com Ondas Orgânicas como na Referência */}
+      <div className="pointer-events-none absolute inset-0 -z-10 h-full w-full select-none overflow-hidden">
+        <Image
+          src="/hero-bg.png"
+          alt=""
+          fill
+          priority
+          quality={100}
+          className="object-cover object-center"
+        />
+      </div>
 
-      {/* Conteúdo Central do Hero */}
-      <div className="mx-auto flex flex-col items-center justify-center text-center max-w-5xl px-4 sm:px-6 lg:px-8">
-        {/* Título Principal */}
-        <h1 className="text-4xl font-bold tracking-tight text-[#30323D] sm:text-6xl sm:leading-tight">
-          Projeto{" "}
-          <span className="text-[#E06126]">
-            C.A.I.X.A.
-          </span>
-        </h1>
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl text-left">
 
-        {/* Descrição do Projeto */}
-        <p className="mt-5 max-w-2xl text-base leading-relaxed text-[#4D5061] sm:text-lg">
-          Da <span className="text-[#E06126] font-bold">C</span>onsciencialização à <span className="text-[#E06126] font-bold">A</span>ção: <span className="text-[#E06126] font-bold">I</span>mpacto neuropsicológico das tecnologias <span className="text-[#E06126] font-bold">X</span>R na <span className="text-[#E06126] font-bold">A</span>prendizagem para prevenção do cancro infantil. 
-        </p>
+          {/* Título Principal */}
+          <h1 className="text-5xl font-extrabold tracking-tight text-[#07213D] sm:text-6xl md:text-7xl">
+            Projeto <span className="text-[#F85308]">C.A.I.X.A.</span>
+          </h1>
 
-        {/* Botões de Ação */}
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Link
-            href="#sobre"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#E06126] px-6 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#E06126]/25 transition-all hover:bg-[#c8531d] hover:shadow-md hover:shadow-[#E06126]/30"
-          >
-            <span>Conhecer o Projeto</span>
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          {/* Subtítulo de Impacto */}
+          <h2 className="mt-4 text-2xl font-bold tracking-tight text-[#07213D] sm:text-3xl md:text-4xl leading-snug sm:leading-tight">
+            Aprender a prevenir através do jogo e da Realidade Estendida.
+          </h2>
 
-          <Link
-            href="#contacto"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-[#4D5061]/35 bg-[#F1F0EF] px-6 py-2.5 text-sm font-semibold text-[#30323D] shadow-2xs transition-all hover:border-[#E06126] hover:bg-[#F1F0EF] hover:text-[#E06126]"
-          >
-            <span>Contactar Equipa</span>
-          </Link>
+          {/* Parágrafo Descritivo */}
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-[#07213D]/80 sm:text-lg">
+            Uma experiência educativa e interativa que ajuda as crianças a conhecer, compreender e adotar comportamentos de prevenção do cancro, através de um jogo em Realidade Estendida (XR).
+          </p>
+
+          {/* Botões de Chamada para Ação */}
+          <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center">
+            <Link
+              href="#sobre"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F85308] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F85308]/25 transition-all hover:bg-[#e04804] hover:shadow-xl hover:shadow-[#F85308]/30 hover:-translate-y-0.5"
+            >
+              <span>Conhecer o Projeto</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+
+            <Link
+              href="#contacto"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#07213D] bg-transparent px-8 py-3.5 text-sm font-bold text-[#07213D] transition-all hover:border-[#F85308] hover:text-[#F85308] hover:-translate-y-0.5"
+            >
+              <span>Contactar Equipa</span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

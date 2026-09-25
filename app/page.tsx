@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#F1F0EF]">
+    <div className="flex min-h-screen flex-col bg-[#FCFAF9]">
       {/* Barra de Navegação */}
       <Navbar />
 
@@ -19,10 +19,10 @@ export default function Home() {
         {/* 2. Descrição do Projeto / Pilares */}
         <About />
 
-        {/* 3. Equipa que vai desenvolver o projeto */}
+        {/* 4. Equipa que vai desenvolver o projeto */}
         <Team />
 
-        {/* 4. Apoios / Parcerias */}
+        {/* 3. Apoios / Parcerias */}
         <Partners />
       </main>
 

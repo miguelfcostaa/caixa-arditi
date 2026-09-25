@@ -147,7 +147,7 @@ export function Team() {
       id: "des-vis",
       name: "Nome Designer",
       role: "Designer Visual & Gráfico",
-      initials: "CL",
+      initials: "ND",
       avatarGradient: "from-cyan-600 to-cyan-800 ring-[#E06126]/20",
       image: "",
     },

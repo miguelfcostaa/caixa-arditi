@@ -120,16 +120,16 @@ export function Team() {
       name: "Miguel Costa",
       role: "Desenvolvedor Frontend",
       initials: "MC",
-      avatarGradient: "from-[#4D5061] to-[#30323D] ring-[#30323D]/30",
-      image: "/team/miguel-costa.png",
+      avatarGradient: "from-[#c6d2db] to-[#c6d2db] ring-[#30323D]/30",
+      image: "/team/miguelcosta.png",
     },
     {
       id: "dev-2",
       name: "Roberto Fernandes",
       role: "Desenvolvedor Backend",
       initials: "RF",
-      avatarGradient: "from-[#4D5061] to-[#30323D] ring-[#30323D]/30",
-      image: "/team/roberto.png",
+      avatarGradient: "from-[#c6d2db] to-[#c6d2db] ring-[#30323D]/30",
+      image: "/team/roberto-f.png",
     },
   ];
 
@@ -143,14 +143,14 @@ export function Team() {
       avatarGradient: "from-cyan-600 to-cyan-800 ring-[#E06126]/20",
       image: "/team/juan-ponte.png",
     },
-    {
-      id: "des-vis",
-      name: "Nome Designer",
-      role: "Designer Visual & Gráfico",
-      initials: "ND",
-      avatarGradient: "from-cyan-600 to-cyan-800 ring-[#E06126]/20",
-      image: "",
-    },
+    // {
+    //   id: "des-vis",
+    //   name: "Nome Designer",
+    //   role: "Designer Visual & Gráfico",
+    //   initials: "ND",
+    //   avatarGradient: "from-cyan-600 to-cyan-800 ring-[#E06126]/20",
+    //   image: "",
+    // },
   ];
 
   return (
@@ -218,7 +218,7 @@ export function Team() {
               Designers 
             </h3>
           </div>
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-1">
             {designers.map((designer) => (
               <MemberCard key={designer.id} member={designer} />
             ))}

@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   title: "Projeto C.A.I.X.A.",
   description:
     "Plataforma informativa do Projeto C.A.I.X.A. dedicada à prevenção, sensibilização e apoio na oncologia pediátrica.",
+  icons: {
+    icon: "/logo.ico",
+    shortcut: "/logo.ico",
+    apple: "/logo.ico",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

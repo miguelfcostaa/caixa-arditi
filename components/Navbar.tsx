@@ -82,9 +82,11 @@ export function Navbar() {
           onClick={handleScrollToTop}
           className="group flex items-center gap-1.5 transition-opacity hover:opacity-90"
         >
-          <span className="text-xl font-bold tracking-tight text-[#07213D] sm:text-2xl">
+          {/* <span className="text-xl font-bold tracking-tight text-[#07213D] sm:text-2xl">
             Projeto <span className="text-[#F85308]">C.A.I.X.A.</span>
-          </span>
+          </span> */}
+
+          <img src="/logo.ico" alt="Logo do Projeto C.A.I.X.A." className="h-10 w-auto sm:h-12" />
         </Link>
 
         {/* Links Desktop com indicador ativo como na referência */}

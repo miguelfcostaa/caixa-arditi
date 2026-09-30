@@ -121,7 +121,7 @@ export function Team() {
       role: "Desenvolvedor Frontend",
       initials: "MC",
       avatarGradient: "from-[#c6d2db] to-[#c6d2db] ring-[#30323D]/30",
-      image: "/team/miguelcosta.png",
+      image: "/team/miguel-costa.png",
     },
     {
       id: "dev-2",

@@ -293,7 +293,7 @@ export function Team() {
       image: "/team/roberto-f.png",
       category: "Desenvolvimento de Software",
       bio: {
-        pt: "Engenheiro de software focado em desenvolvimento backend, gestão de dados e conectividade de sistemas. No Projeto C.A.I.X.A., estrutura a lógica de suporte e persistência de dados das aplicações, garantindo a robustez e segurança de todo o ecossistema tecnológico.",
+        pt: "Engenheiro de software focado em desenvolvimento backend, gestão de dados e conectividade de sistemas. No Projeto C.A.I.X.A., estrutura a lógica de suporte e persistência de dados das aplicações, garantindo a robustez e segurança de todo o ecossistema tecnológico. ",
         en: "Software engineer focused on backend development, data management, and system connectivity. In Project C.A.I.X.A., he structures the core logic and data persistence of applications, ensuring the robustness and security of the entire technological ecosystem.",
       },
     },

@@ -220,7 +220,7 @@ export function Team() {
       image: "/team/luis.png",
       category: "Investigação & Coordenação",
       bio: {
-        pt: "",
+        pt: "Licenciei-me em Design Interativo (Universidade da Madeira) e obtive o Mestrado em Tecnologias do Entretenimento (Carnegie Mellon University). Em 2021, concluí o Doutoramento em Média Digitais na Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa (FCT – UNL), onde desenvolvi uma plataforma que utiliza elementos como a música e a reminiscência para a estimulação cognitiva, denominada Musiquence. \n\n Atualmente, sou docente na Universidade da Madeira, onde colaboro ativamente em projetos de investigação no NeuroRehabLab e no NOVA LINCS. A minha função consiste, sobretudo, no desenvolvimento de jogos sérios (serious games) e no estudo do seu impacto em populações clínicas (ex.: neurológicas e psiquiátricas).",
         en: "I graduated in Interactive Design (University of Madeira) and have a Master in Entertainment Technologies (Carnegie Mellon University). In 2021, I completed the PhD in Digital Media at the Faculty of Sciences and Technology of Universidade Nova de Lisboa (FCT – UNL), where I developed a platform that uses elements such as music and reminiscence for cognitive stimulation called Musiquence. \n\n I’m currently a professor at the University of Madeira, where I actively collaborate on research projects at the NeuroRehabLab and NovaLincs. My role consists, above all, in developing serious games and studying their impact on clinical populations (e.g., Neurological and Psychiatric).",
       },
     },

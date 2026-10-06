@@ -101,7 +101,7 @@ export function Team() {
       role: "Psicóloga Clínica",
       initials: "BC",
       avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
-      image: "",
+      image: "/team/beatriz-castro.png",
     },
     {
       id: "psico-1",

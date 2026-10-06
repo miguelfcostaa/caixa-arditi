@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -30,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-[#FCFAF9] text-[#07213D] selection:bg-[#F85308] selection:text-white font-sans"
       >
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

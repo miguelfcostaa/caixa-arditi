@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { AnimatedMesh } from "./AnimatedMesh";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="hero"
@@ -12,15 +17,15 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl text-left">
-
           {/* Título Principal */}
           <h1 className="text-5xl font-extrabold tracking-tight text-[#07213D] sm:text-6xl md:text-7xl">
-            Projeto <span className="text-[#F85308]">C.A.I.X.A.</span>
+            {t("hero.titlePrefix")}
+            <span className="text-[#F85308]">{t("hero.titleHighlight")}</span>
           </h1>
 
           {/* Parágrafo Descritivo */}
           <p className="mt-5 max-w-xl text-base leading-relaxed text-[#07213D]/80 sm:text-lg">
-            Da Consciencialização à Ação: Impacto neuropsicológico das tecnologias XR na Aprendizagem para prevenção do cancro infantil.
+            {t("hero.description")}
           </p>
 
           {/* Botões de Chamada para Ação */}
@@ -29,7 +34,7 @@ export function Hero() {
               href="#sobre"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F85308] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F85308]/25 transition-all hover:bg-[#e04804] hover:shadow-xl hover:shadow-[#F85308]/30 hover:-translate-y-0.5"
             >
-              <span>Conhecer o Projeto</span>
+              <span>{t("hero.btnAbout")}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

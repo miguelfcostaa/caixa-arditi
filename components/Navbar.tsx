@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Mail } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function Navbar() {
+  const { locale, setLocale, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
@@ -25,6 +27,7 @@ export function Navbar() {
       { id: "sobre", name: "sobre" },
       { id: "equipa", name: "equipa" },
       { id: "parcerias", name: "parcerias" },
+      { id: "contacto", name: "contacto" },
     ];
 
     const observer = new IntersectionObserver(
@@ -61,10 +64,10 @@ export function Navbar() {
   };
 
   const navLinks = [
-    { label: "Início", href: "#", onClick: handleScrollToTop, id: "inicio" },
-    { label: "O Projeto", href: "#sobre", id: "sobre" },
-    { label: "Equipa", href: "#equipa", id: "equipa" },
-    { label: "Apoios", href: "#parcerias", id: "parcerias" },
+    { label: t("navbar.home"), href: "#", onClick: handleScrollToTop, id: "inicio" },
+    { label: t("navbar.about"), href: "#sobre", id: "sobre" },
+    { label: t("navbar.team"), href: "#equipa", id: "equipa" },
+    { label: t("navbar.partners"), href: "#parcerias", id: "parcerias" },
   ];
 
   return (
@@ -82,43 +85,106 @@ export function Navbar() {
           onClick={handleScrollToTop}
           className="group flex items-center gap-1.5 transition-opacity hover:opacity-90"
         >
-          {/* <span className="text-xl font-bold tracking-tight text-[#07213D] sm:text-2xl">
-            Projeto <span className="text-[#F85308]">C.A.I.X.A.</span>
-          </span> */}
-
           <img src="/logo.ico" alt="Logo do Projeto C.A.I.X.A." className="h-10 w-auto sm:h-12" />
         </Link>
 
-        {/* Links Desktop com indicador ativo como na referência */}
-        <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
-            return (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={link.onClick}
-                className={`relative py-1 text-sm font-semibold transition-colors ${
-                  isActive
-                    ? "text-[#F85308]"
-                    : "text-[#07213D] hover:text-[#F85308]"
-                }`}
-              >
-                <span>{link.label}</span>
-                {isActive && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-[#F85308]" />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+        {/* Lado Direito Desktop: Links, Seletor de Idioma e Botão de Contacto */}
+        <div className="hidden items-center gap-7 md:flex">
+          <nav className="flex items-center gap-7">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <Link
+                  key={link.id}
+                  href={link.href}
+                  onClick={link.onClick}
+                  className={`relative py-1 text-sm font-semibold transition-colors ${
+                    isActive
+                      ? "text-[#F85308]"
+                      : "text-[#07213D] hover:text-[#F85308]"
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-[#F85308]" />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
 
-        {/* Botão Mobile Menu */}
-        <div className="flex md:hidden">
+          {/* Divisória subtil */}
+          <div className="h-5 w-px bg-slate-300/70" />
+
+          {/* Seletor de Idioma (PT | EN) */}
+          <div className="flex items-center rounded-full bg-slate-200/70 p-0.5 text-xs font-bold text-[#07213D]">
+            <button
+              type="button"
+              onClick={() => setLocale("pt")}
+              className={`rounded-full px-2.5 py-1 transition-all cursor-pointer ${
+                locale === "pt"
+                  ? "bg-white text-[#F85308] shadow-xs font-extrabold"
+                  : "text-[#07213D]/70 hover:text-[#07213D]"
+              }`}
+              aria-label="Mudar para Português"
+            >
+              PT
+            </button>
+            <button
+              type="button"
+              onClick={() => setLocale("en")}
+              className={`rounded-full px-2.5 py-1 transition-all cursor-pointer ${
+                locale === "en"
+                  ? "bg-white text-[#F85308] shadow-xs font-extrabold"
+                  : "text-[#07213D]/70 hover:text-[#07213D]"
+              }`}
+              aria-label="Switch to English"
+            >
+              EN
+            </button>
+          </div>
+
+          {/* Botão Contacto na Navbar */}
+          <Link
+            href="#contacto"
+            className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#07213D] px-5 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#F85308] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          >
+            <Mail className="h-3.5 w-3.5" />
+            <span>{t("navbar.contact")}</span>
+          </Link>
+        </div>
+
+        {/* Ações Mobile: Seletor de Idioma + Botão Menu */}
+        <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center rounded-full bg-slate-200/70 p-0.5 text-xs font-bold text-[#07213D]">
+            <button
+              type="button"
+              onClick={() => setLocale("pt")}
+              className={`rounded-full px-2 py-0.5 text-[11px] transition-all cursor-pointer ${
+                locale === "pt"
+                  ? "bg-white text-[#F85308] shadow-xs font-extrabold"
+                  : "text-[#07213D]/70"
+              }`}
+            >
+              PT
+            </button>
+            <button
+              type="button"
+              onClick={() => setLocale("en")}
+              className={`rounded-full px-2 py-0.5 text-[11px] transition-all cursor-pointer ${
+                locale === "en"
+                  ? "bg-white text-[#F85308] shadow-xs font-extrabold"
+                  : "text-[#07213D]/70"
+              }`}
+            >
+              EN
+            </button>
+          </div>
+
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="inline-flex items-center justify-center rounded-lg p-2 text-[#07213D] hover:bg-slate-100 focus:outline-hidden"
+            className="inline-flex items-center justify-center rounded-lg p-2 text-[#07213D] hover:bg-slate-100 focus:outline-hidden cursor-pointer"
             aria-label="Abrir menu de navegação"
           >
             {mobileMenuOpen ? (
@@ -138,7 +204,7 @@ export function Navbar() {
               const isActive = activeSection === link.id;
               return (
                 <Link
-                  key={link.label}
+                  key={link.id}
                   href={link.href}
                   onClick={(e) => {
                     if (link.onClick) {
@@ -157,6 +223,16 @@ export function Navbar() {
                 </Link>
               );
             })}
+
+            {/* Botão Contacto no Menu Mobile */}
+            <Link
+              href="#contacto"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#07213D] px-4 py-2.5 text-sm font-bold text-white shadow-xs transition-all hover:bg-[#F85308]"
+            >
+              <Mail className="h-4 w-4" />
+              <span>{t("navbar.contact")}</span>
+            </Link>
           </nav>
         </div>
       )}

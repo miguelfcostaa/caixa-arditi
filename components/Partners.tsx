@@ -1,13 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function Partners() {
+  const { t } = useLanguage();
+
   return (
     <section id="parcerias" className="relative flex min-h-screen flex-col justify-center border-t border-slate-200/60 bg-[#F5F2EE] py-24 sm:py-32 scroll-mt-20">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Título direto */}
         <div className="text-center">
           <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-[#07213D] sm:text-sm">
-            APOIADO POR:
+            {t("partners.title")}
           </h2>
         </div>
 

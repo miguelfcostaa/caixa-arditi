@@ -220,8 +220,8 @@ export function Team() {
       image: "/team/luis.png",
       category: "Investigação & Coordenação",
       bio: {
-        pt: "Investigador no NeuroRehabLab / ARDITI com especialização em tecnologias de Realidade Estendida (XR), computação ubíqua e interação humano-computador. Coordena a vertente tecnológica do Projeto C.A.I.X.A., focando-se no desenvolvimento de experiências imersivas rigorosas e centradas no utilizador.",
-        en: "Researcher at NeuroRehabLab / ARDITI specializing in Extended Reality (XR) technologies, ubiquitous computing, and human-computer interaction. Coordinates the technological branch of Project C.A.I.X.A., focusing on the development of rigorous and user-centered immersive experiences.",
+        pt: "",
+        en: "I graduated in Interactive Design (University of Madeira) and have a Master in Entertainment Technologies (Carnegie Mellon University). In 2021, I completed the PhD in Digital Media at the Faculty of Sciences and Technology of Universidade Nova de Lisboa (FCT – UNL), where I developed a platform that uses elements such as music and reminiscence for cognitive stimulation called Musiquence. \n\n I’m currently a professor at the University of Madeira, where I actively collaborate on research projects at the NeuroRehabLab and NovaLincs. My role consists, above all, in developing serious games and studying their impact on clinical populations (e.g., Neurological and Psychiatric).",
       },
     },
     {

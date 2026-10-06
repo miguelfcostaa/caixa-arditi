@@ -18,7 +18,7 @@ export function About() {
             <div className="mb-3 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.1em] text-[#F85308]">
               <span>{t("about.tag")}</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tight text-[#07213D] sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-[#07213D] sm:text-3xl text-justify">
               {t("about.title")}
             </h2>
             <p className="mt-6 sm:mt-8 text-base leading-relaxed text-justify text-[#334155]">

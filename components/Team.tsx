@@ -178,15 +178,6 @@ function MemberCard({
       >
         {member.role}
       </p>
-
-      {/* Botão sutil Ver biografia */}
-      <button
-        type="button"
-        onClick={() => onOpenBio(member)}
-        className="mt-2 text-[11px] font-semibold text-[#F85308] opacity-80 hover:opacity-100 hover:underline cursor-pointer"
-      >
-        {t("team.viewBio")}
-      </button>
     </div>
   );
 }
@@ -205,7 +196,7 @@ export function Team() {
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
       image: "/team/ana-lucia-faria.png",
       category: "Investigação & Coordenação",
-      bio: "Investigadora Principal e docente universitária com vasta experiência na aplicação de tecnologias interativas e Realidade Virtual na neuroreabilitação e cognição. No Projeto C.A.I.X.A., lidera a coordenação científica e a investigação dos impactos da gamificação e ambientes imersivos na literacia e prevenção oncológica pediátrica.",
+      bio: "I am a Health and Clinical Psychologist (Neuropsychology sub-specialty) by Ordem dos Psicólogos with a Ph.D. in Rehabilitation Psychology from the University of Coimbra in 2020. The main outcomes of my thesis were: the development of a new cognitive rehabilitation personalization framework with objective guidelines that were used to create three innovative tools-Task Generator, Reh@Task, and Reh@City and; its clinical validation with stroke patients from Madeira Health Service. In 2015 I was awarded a doctoral scholarship from ARDITI, with host institution M-ITI/LARSyS. During my doctoral studies, I have been involved in an EU project called RehabNet(303891 FP7-PEOPLE-2011). As a post-doctoral researcher, I was in the coordination team of an interdisciplinary project called BRaNT(PTDC/CCI-COM/31046/2017), which addresses the scientific limitations of current cognitive rehabilitation practices through virtual reality games that will allow automatic personalization through Artificial Intelligence approaches. Since 2010 that I teach as invited professor in the University of Madeira. \n\n I published, mostly as first author, 8 articles in peer-reviewed journals such as Journal of NeuroEngineering and Rehabilitation (IF:4.632), Frontiers in Psychology (IF:2.323), Journal of Medical Internet Research RAT (IF:4.945) and Virtual Reality (IF: 3.634). Currently, I am working on a systematic review about the Ecological validity of virtual reality-based technologies for the assessment and rehabilitation of ABI, together with Universitat Politècnica de València researchers. Additionally, I published 1 book chapter and 12 conference articles, some ACM and IEEE. I was awarded a Best Student Paper Commendation in 2014 and 2016 ICDVRAT and Best Student Paper in the 2018 Conference on Applied Psychology and Human Behavior. I have been an active participant, with posters and oral presentations, in relevant clinical meetings, such as the International Congress of Neuropsychological Rehabilitation in ABI (Best Communication prize), the International Neuropsychological Society Meetings, and the European Stroke Organisation Conference. \n\n Clinical and Health Psychologist, specialized in Neuropsychology \n University of Madeira Professor \n NeuroRehabLab Psychology Lead",
     },
     {
       id: "chefe-luis",

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Mail } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function Navbar() {
@@ -68,6 +68,7 @@ export function Navbar() {
     { label: t("navbar.about"), href: "#sobre", id: "sobre" },
     { label: t("navbar.team"), href: "#equipa", id: "equipa" },
     { label: t("navbar.partners"), href: "#parcerias", id: "parcerias" },
+    { label: t("navbar.contact"), href: "#contacto", id: "contacto" },
   ];
 
   return (
@@ -143,15 +144,6 @@ export function Navbar() {
               EN
             </button>
           </div>
-
-          {/* Botão Contacto na Navbar */}
-          <Link
-            href="#contacto"
-            className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#07213D] px-5 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#F85308] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-          >
-            <Mail className="h-3.5 w-3.5" />
-            <span>{t("navbar.contact")}</span>
-          </Link>
         </div>
 
         {/* Ações Mobile: Seletor de Idioma + Botão Menu */}
@@ -223,16 +215,6 @@ export function Navbar() {
                 </Link>
               );
             })}
-
-            {/* Botão Contacto no Menu Mobile */}
-            <Link
-              href="#contacto"
-              onClick={() => setMobileMenuOpen(false)}
-              className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#07213D] px-4 py-2.5 text-sm font-bold text-white shadow-xs transition-all hover:bg-[#F85308]"
-            >
-              <Mail className="h-4 w-4" />
-              <span>{t("navbar.contact")}</span>
-            </Link>
           </nav>
         </div>
       )}

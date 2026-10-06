@@ -13,7 +13,10 @@ interface TeamMember {
   avatarGradient: string;
   image?: string; // Caminho da foto em /public/team/
   category?: string;
-  bio?: string;
+  bio?: {
+    pt: string;
+    en: string;
+  } | string;
 }
 
 // Componente Modal de Biografia com altura fixa e scroll obrigatório
@@ -24,7 +27,7 @@ function BioModal({
   member: TeamMember | null;
   onClose: () => void;
 }) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
 
   useEffect(() => {
     if (!member) return;
@@ -45,12 +48,19 @@ function BioModal({
 
   if (!member) return null;
 
+  // Resolve a biografia conforme o idioma atual (com fallback para o outro idioma se vazio)
+  const currentBio = (() => {
+    if (!member.bio) return t("team.defaultBio");
+    if (typeof member.bio === "string") return member.bio;
+    return member.bio[locale] || member.bio.pt || member.bio.en || t("team.defaultBio");
+  })();
+
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-member-name"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
     >
       {/* Fundo escurecido (Backdrop) */}
       <div
@@ -59,20 +69,20 @@ function BioModal({
         aria-hidden="true"
       />
 
-      {/* Janela de Biografia - Altura fixa que não aumenta de tamanho e requer scroll */}
-      <div className="relative z-10 flex h-[480px] sm:h-[520px] max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-[#FCFAF9] p-6 sm:p-8 shadow-2xl ring-1 ring-slate-200/80 transition-all animate-in zoom-in-95 duration-200">
+      {/* Janela de Biografia - Mais larga (max-w-2xl) com altura fixa e scroll suave */}
+      <div className="relative z-10 flex h-[500px] sm:h-[530px] max-h-[88vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl sm:rounded-3xl bg-[#FCFAF9] p-5 sm:p-8 shadow-2xl ring-1 ring-slate-200/80 transition-all animate-in zoom-in-95 duration-200">
         {/* Botão de Fechar fixo */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-[#07213D] transition-colors cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#F85308]"
+          className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-[#07213D] transition-colors cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#F85308]"
           aria-label={t("team.close")}
         >
           <X className="h-5 w-5" />
         </button>
 
         {/* Cabeçalho Fixo com Fotografia e Nome */}
-        <div className="flex shrink-0 flex-col items-center text-center sm:flex-row sm:items-center sm:text-left gap-4 sm:gap-5 pr-8 sm:pr-6">
+        <div className="flex shrink-0 flex-col items-center text-center sm:flex-row sm:items-center sm:text-left gap-3.5 sm:gap-5 pt-1 sm:pt-0 sm:pr-10">
           <div
             className={`relative flex h-20 w-20 sm:h-24 sm:w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-gradient-to-br ${member.avatarGradient} shadow-md ring-1 ring-slate-200`}
           >
@@ -108,12 +118,12 @@ function BioModal({
         <div className="my-4 sm:my-5 h-px w-full shrink-0 bg-slate-200/80" />
 
         {/* Corpo da Biografia com Scroll Fixo */}
-        <div className="flex-1 overflow-y-auto pr-2 space-y-3">
+        <div className="flex-1 overflow-y-auto pr-2 sm:pr-3 space-y-3">
           <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-[#07213D]/70 sticky top-0 bg-[#FCFAF9] py-0.5">
             {t("team.bioTitle")}
           </h4>
-          <p className="text-sm leading-relaxed text-slate-700 whitespace-pre-line text-justify sm:text-left">
-            {member.bio || t("team.defaultBio")}
+          <p className="text-sm leading-relaxed text-slate-700 whitespace-pre-line text-justify">
+            {currentBio}
           </p>
         </div>
       </div>
@@ -184,39 +194,48 @@ function MemberCard({
 
 export function Team() {
   const { t } = useLanguage();
-  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
+  const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
 
   // 1. Chefe do Projeto / Investigadores Principais
   const leader: TeamMember[] = [
     {
       id: "chefe-ana",
       name: "Ana Lúcia Faria",
-      role: "Investigadora Principal",
+      role: t("team.defaultRoleInv"),
       initials: "AF",
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
       image: "/team/ana-lucia-faria.png",
       category: "Investigação & Coordenação",
-      bio: "I am a Health and Clinical Psychologist (Neuropsychology sub-specialty) by Ordem dos Psicólogos with a Ph.D. in Rehabilitation Psychology from the University of Coimbra in 2020. The main outcomes of my thesis were: the development of a new cognitive rehabilitation personalization framework with objective guidelines that were used to create three innovative tools-Task Generator, Reh@Task, and Reh@City and; its clinical validation with stroke patients from Madeira Health Service. In 2015 I was awarded a doctoral scholarship from ARDITI, with host institution M-ITI/LARSyS. During my doctoral studies, I have been involved in an EU project called RehabNet(303891 FP7-PEOPLE-2011). As a post-doctoral researcher, I was in the coordination team of an interdisciplinary project called BRaNT(PTDC/CCI-COM/31046/2017), which addresses the scientific limitations of current cognitive rehabilitation practices through virtual reality games that will allow automatic personalization through Artificial Intelligence approaches. Since 2010 that I teach as invited professor in the University of Madeira. \n\n I published, mostly as first author, 8 articles in peer-reviewed journals such as Journal of NeuroEngineering and Rehabilitation (IF:4.632), Frontiers in Psychology (IF:2.323), Journal of Medical Internet Research RAT (IF:4.945) and Virtual Reality (IF: 3.634). Currently, I am working on a systematic review about the Ecological validity of virtual reality-based technologies for the assessment and rehabilitation of ABI, together with Universitat Politècnica de València researchers. Additionally, I published 1 book chapter and 12 conference articles, some ACM and IEEE. I was awarded a Best Student Paper Commendation in 2014 and 2016 ICDVRAT and Best Student Paper in the 2018 Conference on Applied Psychology and Human Behavior. I have been an active participant, with posters and oral presentations, in relevant clinical meetings, such as the International Congress of Neuropsychological Rehabilitation in ABI (Best Communication prize), the International Neuropsychological Society Meetings, and the European Stroke Organisation Conference. \n\n Clinical and Health Psychologist, specialized in Neuropsychology \n University of Madeira Professor \n NeuroRehabLab Psychology Lead",
+      bio: {
+        pt: "Sou Psicóloga Clínica e da Saúde (com especialidade avançada em Neuropsicologia) pela Ordem dos Psicólogos Portugueses, doutorada em Psicologia da Reabilitação pela Universidade de Coimbra em 2020. Os principais resultados da minha tese foram o desenvolvimento de um novo modelo de personalização da reabilitação cognitiva com diretrizes objetivas, utilizadas para criar três ferramentas inovadoras — Task Generator, Reh@Task e Reh@City — e a sua validação clínica com doentes vítimas de AVC no Serviço de Saúde da Madeira (SESARAM). Em 2015 foi-me atribuída uma bolsa de doutoramento pela ARDITI, tendo como instituição de acolhimento o M-ITI/LARSyS. Durante os meus estudos de doutoramento, estive envolvida no projeto europeu RehabNet (303891 FP7-PEOPLE-2011). Como investigadora de pós-doutoramento, integrei a equipa de coordenação do projeto interdisciplinar BRaNT (PTDC/CCI-COM/31046/2017), que aborda as limitações científicas das práticas atuais de reabilitação cognitiva através de jogos de realidade virtual com personalização automática baseada em Inteligência Artificial. Desde 2010 leciono como professora convidada na Universidade da Madeira. \n\n Publiquei, maioritariamente como primeira autora, 8 artigos em revistas científicas com revisão por pares, tais como o Journal of NeuroEngineering and Rehabilitation (IF: 4.632), Frontiers in Psychology (IF: 2.323), Journal of Medical Internet Research (IF: 4.945) e Virtual Reality (IF: 3.634). Atualmente, estou a desenvolver uma revisão sistemática sobre a validade ecológica de tecnologias baseadas em realidade virtual para a avaliação e reabilitação de Lesões Cerebrais Adquiridas (LCA), em colaboração com investigadores da Universitat Politècnica de València. Além disso, publiquei 1 capítulo de livro e 12 artigos em conferências (alguns ACM e IEEE). Fui distinguida com a Best Student Paper Commendation em 2014 e 2016 no ICDVRAT e o Best Student Paper na Conferência de Psicologia Aplicada e Comportamento Humano de 2018. Tenho participado ativamente com posters e apresentações orais em reuniões clínicas de relevo internacional, como o International Congress of Neuropsychological Rehabilitation in ABI (Prémio de Melhor Comunicação), International Neuropsychological Society Meetings e European Stroke Organisation Conference. \n\n Psicóloga Clínica e da Saúde, Especialista em Neuropsicologia \n Professora Convidada na Universidade da Madeira \n Responsável pela área de Psicologia no NeuroRehabLab",
+        en: "I am a Health and Clinical Psychologist (Neuropsychology sub-specialty) by Ordem dos Psicólogos with a Ph.D. in Rehabilitation Psychology from the University of Coimbra in 2020. The main outcomes of my thesis were: the development of a new cognitive rehabilitation personalization framework with objective guidelines that were used to create three innovative tools-Task Generator, Reh@Task, and Reh@City and; its clinical validation with stroke patients from Madeira Health Service. In 2015 I was awarded a doctoral scholarship from ARDITI, with host institution M-ITI/LARSyS. During my doctoral studies, I have been involved in an EU project called RehabNet(303891 FP7-PEOPLE-2011). As a post-doctoral researcher, I was in the coordination team of an interdisciplinary project called BRaNT(PTDC/CCI-COM/31046/2017), which addresses the scientific limitations of current cognitive rehabilitation practices through virtual reality games that will allow automatic personalization through Artificial Intelligence approaches. Since 2010 that I teach as invited professor in the University of Madeira. \n\n I published, mostly as first author, 8 articles in peer-reviewed journals such as Journal of NeuroEngineering and Rehabilitation (IF:4.632), Frontiers in Psychology (IF:2.323), Journal of Medical Internet Research RAT (IF:4.945) and Virtual Reality (IF: 3.634). Currently, I am working on a systematic review about the Ecological validity of virtual reality-based technologies for the assessment and rehabilitation of ABI, together with Universitat Politècnica de València researchers. Additionally, I published 1 book chapter and 12 conference articles, some ACM and IEEE. I was awarded a Best Student Paper Commendation in 2014 and 2016 ICDVRAT and Best Student Paper in the 2018 Conference on Applied Psychology and Human Behavior. I have been an active participant, with posters and oral presentations, in relevant clinical meetings, such as the International Congress of Neuropsychological Rehabilitation in ABI (Best Communication prize), the International Neuropsychological Society Meetings, and the European Stroke Organisation Conference. \n\n Clinical and Health Psychologist, specialized in Neuropsychology \n University of Madeira Professor \n NeuroRehabLab Psychology Lead",
+      },
     },
     {
       id: "chefe-luis",
       name: "Luís Ferreira",
-      role: "Investigador Principal",
+      role: t("team.defaultRoleInv"),
       initials: "LF",
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
       image: "/team/luis.png",
       category: "Investigação & Coordenação",
-      bio: "Investigador no NeuroRehabLab / ARDITI com especialização em tecnologias de Realidade Estendida (XR), computação ubíqua e interação humano-computador. Coordena a vertente tecnológica do Projeto C.A.I.X.A., focando-se no desenvolvimento de experiências imersivas rigorosas e centradas no utilizador.",
+      bio: {
+        pt: "Investigador no NeuroRehabLab / ARDITI com especialização em tecnologias de Realidade Estendida (XR), computação ubíqua e interação humano-computador. Coordena a vertente tecnológica do Projeto C.A.I.X.A., focando-se no desenvolvimento de experiências imersivas rigorosas e centradas no utilizador.",
+        en: "Researcher at NeuroRehabLab / ARDITI specializing in Extended Reality (XR) technologies, ubiquitous computing, and human-computer interaction. Coordinates the technological branch of Project C.A.I.X.A., focusing on the development of rigorous and user-centered immersive experiences.",
+      },
     },
     {
       id: "chefe-monica",
       name: "Mónica Cameirão",
-      role: "Investigadora Principal",
+      role: t("team.defaultRoleInv"),
       initials: "MC",
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
       image: "/team/monica-cameirao.png",
       category: "Investigação & Coordenação",
-      bio: "Mónica is an Assistant Professor and researcher at the University of Madeira (UMa) and integrated member of the NOVA Laboratory for Computer Science and Informatics (NOVA LINCS). She is the current Director of the PhD Program in Informatics Engineering of UMa. In the past she worked as research assistant at the SPECS Laboratory of the Universitat Pompeu Fabra and at the Institute of Neuroinformatics, ETH-Zürich, Switzerland; and was visiting scholar at the Quality of Life Technologies center of Carnegie Mellon University. Since Mónica arrived in Madeira in 2011, she has been co-principal investigator and co-founder of the NeuroRehabLab Research Group, an interdisciplinary research group that investigates at the intersection of technology, neuroscience and clinical practice to find novel solutions to increase the quality of life of those with special needs. Mónica has been particularly involved in the development and clinical assessment of Virtual Reality (VR) technologies for stroke rehabilitation, exploring specific brain mechanisms that relate to functional recovery to approach motor and cognitive rehabilitation by means of non-invasive and low-cost technologies. More recently, Mónica has also been involved in the development of VR solutions for supporting mental health after early pregnancy loss. Her research addresses aspects such as serious gaming and personalization of training. In 2016, Mónica has been awarded the ISVR Early Career Investigator Award, an award granted by the International Society for Virtual Rehabilitation to recognize and acknowledge outstanding contributions by early career scientists whose research relates to virtual rehabilitation. Since 2020, Mónica is a member of the Ethics Committee of UMa."
+      bio: {
+        pt: "A Mónica é Professora Auxiliar e investigadora na Universidade da Madeira (UMa) e membro integrado do NOVA Laboratory for Computer Science and Informatics (NOVA LINCS). É a atual Diretora do Programa de Doutoramento em Engenharia Informática da UMa. No passado, trabalhou como assistente de investigação no Laboratório SPECS da Universitat Pompeu Fabra e no Institute of Neuroinformatics da ETH-Zürich, na Suíça; foi também investigadora visitante no Quality of Life Technologies Center da Carnegie Mellon University. Desde que chegou à Madeira em 2011, é co-investigadora principal e co-fundadora do Grupo de Investigação NeuroRehabLab, um grupo interdisciplinar que investiga na interseção entre tecnologia, neurociência e prática clínica para encontrar soluções inovadoras que melhorem a qualidade de vida de pessoas com necessidades especiais. A Mónica tem estado particularmente envolvida no desenvolvimento e avaliação clínica de tecnologias de Realidade Virtual (RV) para a reabilitação pós-AVC, explorando mecanismos cerebrais específicos relacionados com a recuperação funcional para abordar a reabilitação motora e cognitiva através de tecnologias não invasivas e de baixo custo. Mais recentemente, tem colaborado no desenvolvimento de soluções de RV para apoio à saúde mental após perda gestacional precoce. A sua investigação foca aspetos como jogos sérios (serious games) e personalização do treino. Em 2016, foi distinguida com o prémio ISVR Early Career Investigator Award pela International Society for Virtual Rehabilitation, em reconhecimento das contribuições de excelência de jovens cientistas na área da reabilitação virtual. Desde 2020, é membro da Comissão de Ética da UMa.",
+        en: "Mónica is an Assistant Professor and researcher at the University of Madeira (UMa) and integrated member of the NOVA Laboratory for Computer Science and Informatics (NOVA LINCS). She is the current Director of the PhD Program in Informatics Engineering of UMa. In the past she worked as research assistant at the SPECS Laboratory of the Universitat Pompeu Fabra and at the Institute of Neuroinformatics, ETH-Zürich, Switzerland; and was visiting scholar at the Quality of Life Technologies center of Carnegie Mellon University. Since Mónica arrived in Madeira in 2011, she has been co-principal investigator and co-founder of the NeuroRehabLab Research Group, an interdisciplinary research group that investigates at the intersection of technology, neuroscience and clinical practice to find novel solutions to increase the quality of life of those with special needs. Mónica has been particularly involved in the development and clinical assessment of Virtual Reality (VR) technologies for stroke rehabilitation, exploring specific brain mechanisms that relate to functional recovery to approach motor and cognitive rehabilitation by means of non-invasive and low-cost technologies. More recently, Mónica has also been involved in the development of VR solutions for supporting mental health after early pregnancy loss. Her research addresses aspects such as serious gaming and personalization of training. In 2016, Mónica has been awarded the ISVR Early Career Investigator Award, an award granted by the International Society for Virtual Rehabilitation to recognize and acknowledge outstanding contributions by early career scientists whose research relates to virtual rehabilitation. Since 2020, Mónica is a member of the Ethics Committee of UMa.",
+      },
     },
   ];
 
@@ -225,22 +244,28 @@ export function Team() {
     {
       id: "psico-2",
       name: "Beatriz Castro",
-      role: "Psicóloga Clínica",
+      role: t("team.defaultRolePsi"),
       initials: "BC",
       avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
       image: "/team/beatriz-castro.png",
       category: "Psicologia Clínica",
-      bio: "Psicóloga clínica com atuação dedicada ao contexto pediátrico e infanto-juvenil. No Projeto C.A.I.X.A., é responsável pela adequação pedagógica e emocional dos conteúdos, assegurando que os conceitos de prevenção oncológica são transmitidos de forma acessível, segura e positiva para as crianças.",
+      bio: {
+        pt: "Psicóloga clínica com atuação dedicada ao contexto pediátrico e infanto-juvenil. No Projeto C.A.I.X.A., é responsável pela adequação pedagógica e emocional dos conteúdos, assegurando que os conceitos de prevenção oncológica são transmitidos de forma acessível, segura e positiva para as crianças.",
+        en: "Clinical psychologist dedicated to pediatric and youth care. In Project C.A.I.X.A., she is responsible for the pedagogical and emotional adaptation of content, ensuring that cancer prevention concepts are conveyed in an accessible, safe, and positive manner for children.",
+      },
     },
     {
       id: "psico-1",
       name: "Petra Santos",
-      role: "Psicóloga Clínica",
+      role: t("team.defaultRolePsi"),
       initials: "PS",
       avatarGradient: "from-pink-500 to-pink-800 ring-[#4D5061]/30",
       image: "/team/petra-santos.png",
       category: "Psicologia Clínica",
-      bio: "Psicóloga clínica com foco em intervenções de promoção de saúde e bem-estar infantil. No âmbito do Projeto C.A.I.X.A., colabora na avaliação neuropsicológica e no estudo do impacto das experiências imersivas na aquisição de comportamentos preventivos.",
+      bio: {
+        pt: "Psicóloga clínica com foco em intervenções de promoção de saúde e bem-estar infantil. No âmbito do Projeto C.A.I.X.A., colabora na avaliação neuropsicológica e no estudo do impacto das experiências imersivas na aquisição de comportamentos preventivos.",
+        en: "Clinical psychologist focusing on child health promotion and well-being interventions. Within Project C.A.I.X.A., she collaborates on neuropsychological assessment and the study of the impact of immersive experiences on acquiring preventive behaviors.",
+      },
     },
   ];
 
@@ -249,22 +274,28 @@ export function Team() {
     {
       id: "dev-1",
       name: "Miguel Costa",
-      role: "Desenvolvedor Frontend",
+      role: t("team.defaultRoleDevF"),
       initials: "MC",
       avatarGradient: "from-[#c6d2db] to-[#c6d2db] ring-[#30323D]/30",
       image: "/team/miguel-costa.png",
       category: "Desenvolvimento de Software",
-      bio: "Desenvolvedor de software especializado em frontend, arquitetura web e interfaces interativas. No Projeto C.A.I.X.A., é responsável pela implementação e integração da plataforma digital, criando interfaces intuitivas e dinâmicas que ligam os utilizadores à experiência do projeto.",
+      bio: {
+        pt: "Sou licenciado e mestre em Engenharia Informática pela Universidade da Madeira. A minha dissertação de mestrado centrou-se na utilização de tecnologias interativas e jogos sérios aplicados à educação para a saúde, com especial foco na prevenção do cancro em crianças.",
+        en: "I hold both a Bachelor's and a Master's degree in Computer Engineering from the University of Madeira. My Master's dissertation focused on the use of interactive technologies and serious games in health education, with a particular emphasis on cancer prevention in children.",
+      },
     },
     {
       id: "dev-2",
       name: "Roberto Fernandes",
-      role: "Desenvolvedor Backend",
+      role: t("team.defaultRoleDevB"),
       initials: "RF",
       avatarGradient: "from-[#c6d2db] to-[#c6d2db] ring-[#30323D]/30",
       image: "/team/roberto-f.png",
       category: "Desenvolvimento de Software",
-      bio: "Engenheiro de software focado em desenvolvimento backend, gestão de dados e conectividade de sistemas. No Projeto C.A.I.X.A., estrutura a lógica de suporte e persistência de dados das aplicações, garantindo a robustez e segurança de todo o ecossistema tecnológico.",
+      bio: {
+        pt: "Engenheiro de software focado em desenvolvimento backend, gestão de dados e conectividade de sistemas. No Projeto C.A.I.X.A., estrutura a lógica de suporte e persistência de dados das aplicações, garantindo a robustez e segurança de todo o ecossistema tecnológico.",
+        en: "Software engineer focused on backend development, data management, and system connectivity. In Project C.A.I.X.A., he structures the core logic and data persistence of applications, ensuring the robustness and security of the entire technological ecosystem.",
+      },
     },
   ];
 
@@ -273,14 +304,20 @@ export function Team() {
     {
       id: "des-ux",
       name: "Juan Ponte",
-      role: "Designer UX / UI",
+      role: t("team.defaultRoleDes"),
       initials: "JP",
       avatarGradient: "from-cyan-600 to-cyan-800 ring-[#E06126]/20",
       image: "/team/juan-ponte.png",
       category: "Design & Experiência",
-      bio: "Designer UX/UI especializado na conceção de interfaces e experiências digitais interativas. No Projeto C.A.I.X.A., é responsável pelo design visual, desenho de personagens, usabilidade e linguagem gráfica, criando um universo lúdico e cativante para as crianças.",
+      bio: {
+        pt: "Designer UX/UI especializado na conceção de interfaces e experiências digitais interativas. No Projeto C.A.I.X.A., é responsável pelo design visual, desenho de personagens, usabilidade e linguagem gráfica, criando um universo lúdico e cativante para as crianças.",
+        en: "UX/UI designer specializing in the conception of interactive interfaces and digital experiences. In Project C.A.I.X.A., he is responsible for visual design, character art, usability, and graphic language, creating a playful and captivating universe for children.",
+      },
     },
   ];
+
+  const allMembers = [...leader, ...psychologists, ...developers, ...designers];
+  const selectedMember = allMembers.find((m) => m.id === selectedMemberId) || null;
 
   return (
     <section id="equipa" className="relative border-t border-slate-200/60 bg-[#FCFAF9] py-20 sm:py-28 scroll-mt-20">
@@ -308,7 +345,7 @@ export function Team() {
                 key={member.id}
                 member={member}
                 isLeader={true}
-                onOpenBio={setSelectedMember}
+                onOpenBio={(m) => setSelectedMemberId(m.id)}
               />
             ))}
           </div>
@@ -327,7 +364,7 @@ export function Team() {
               <MemberCard
                 key={psychologist.id}
                 member={psychologist}
-                onOpenBio={setSelectedMember}
+                onOpenBio={(m) => setSelectedMemberId(m.id)}
               />
             ))}
           </div>
@@ -346,7 +383,7 @@ export function Team() {
               <MemberCard
                 key={dev.id}
                 member={dev}
-                onOpenBio={setSelectedMember}
+                onOpenBio={(m) => setSelectedMemberId(m.id)}
               />
             ))}
           </div>
@@ -365,7 +402,7 @@ export function Team() {
               <MemberCard
                 key={designer.id}
                 member={designer}
-                onOpenBio={setSelectedMember}
+                onOpenBio={(m) => setSelectedMemberId(m.id)}
               />
             ))}
           </div>
@@ -375,7 +412,7 @@ export function Team() {
       {/* Modal / Popup de Biografia */}
       <BioModal
         member={selectedMember}
-        onClose={() => setSelectedMember(null)}
+        onClose={() => setSelectedMemberId(null)}
       />
     </section>
   );

@@ -63,6 +63,31 @@ export function Partners() {
           </div>
         </div>
 
+        {/* Logos RAM - Secretaria Regional de Educação e Secretaria Regional de Saúde (3ª linha) */}
+        <div className="mt-8 sm:mt-12 flex flex-col items-center justify-center gap-4 sm:gap-6 md:flex-row md:items-center md:justify-center md:gap-10 lg:gap-14 py-2">
+          {/* Secretaria Regional de Educação, Ciência e Tecnologia */}
+          <div className="flex shrink-0 items-center justify-center p-1 transition-all duration-300 hover:scale-105">
+            <Image
+              src="/partners/RAM-educacao-logo.png"
+              alt="Secretaria Regional de Educação, Ciência e Tecnologia - Região Autónoma da Madeira"
+              width={993}
+              height={369}
+              className="h-24 w-auto sm:h-28 md:h-32 object-contain opacity-95 transition-opacity hover:opacity-100"
+            />
+          </div>
+
+          {/* Secretaria Regional de Saúde e Proteção Civil */}
+          <div className="flex shrink-0 items-center justify-center p-1 transition-all duration-300 hover:scale-105">
+            <Image
+              src="/partners/RAM-secretaria-logo.png"
+              alt="Secretaria Regional de Saúde e Proteção Civil - Região Autónoma da Madeira"
+              width={1000}
+              height={325}
+              className="h-22 w-auto sm:h-26 md:h-30 object-contain opacity-95 transition-opacity hover:opacity-100"
+            />
+          </div>
+        </div>
+
         {/* Cofinanciamento Madeira 2030 - mantido abaixo, fluido e centrado */}
         <div className="mt-12 sm:mt-16 flex items-center justify-center px-2 py-2">
           <div className="w-full max-w-4xl flex items-center justify-center transition-all duration-300 hover:scale-[1.02]">
@@ -75,6 +100,9 @@ export function Partners() {
             />
           </div>
         </div>
+
+        
+
       </div>
     </section>
   );

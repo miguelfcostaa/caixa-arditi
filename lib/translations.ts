@@ -25,7 +25,7 @@ export const translations = {
       image2Alt: "O Projeto C.A.I.X.A. - Imagem 2",
     },
     partners: {
-      title: "APOIADO POR:",
+      title: "ESTE PROJETO É APOIADO POR:",
       cofinancingAlt: "MADEIRA 2030, da Região Autónoma da Madeira",
     },
     team: {
@@ -89,7 +89,7 @@ export const translations = {
       image2Alt: "Project C.A.I.X.A. - Image 2",
     },
     partners: {
-      title: "SUPPORTED BY:",
+      title: "THIS PROJECT IS SUPPORTED BY:",
       cofinancingAlt: "MADEIRA 2030, Autonomous Region of Madeira",
     },
     team: {

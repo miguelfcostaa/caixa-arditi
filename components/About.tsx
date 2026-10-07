@@ -9,7 +9,7 @@ export function About() {
   return (
     <section
       id="sobre"
-      className="relative flex min-h-screen flex-col justify-center border-t border-slate-200/60 bg-[#F5F2EE] py-20 sm:py-28 lg:py-32 scroll-mt-20"
+      className="relative flex min-h-screen flex-col justify-center border-t border-slate-200/60 bg-[#F5F2EE] py-16 sm:py-24 lg:py-32 scroll-mt-20"
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
@@ -18,7 +18,7 @@ export function About() {
             <div className="mb-3 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.1em] text-[#F85308]">
               <span>{t("about.tag")}</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tight text-[#07213D] sm:text-3xl text-justify">
+            <h2 className="text-3xl font-bold tracking-tight text-[#07213D] sm:text-4xl text-justify">
               {t("about.title")}
             </h2>
             <p className="mt-6 sm:mt-8 text-base leading-relaxed text-justify text-[#334155]">
@@ -28,7 +28,7 @@ export function About() {
 
           {/* Coluna 2: 2 Imagens sobrepostas verticalmente (sem sombras) */}
           <div className="flex w-full flex-col items-center justify-center gap-4 sm:gap-6">
-            <div className="relative h-80 w-[90%] max-w-md lg:max-w-lg overflow-hidden rounded-2xl bg-white/40">
+            <div className="relative h-56 sm:h-80 w-[90%] max-w-md lg:max-w-lg overflow-hidden rounded-2xl bg-white/40">
               <Image
                 src="/images/image1.jpg"
                 alt={t("about.image1Alt")}
@@ -37,7 +37,7 @@ export function About() {
                 className="object-cover"
               />
             </div>
-            <div className="relative h-80 w-[90%] max-w-md lg:max-w-lg overflow-hidden rounded-2xl bg-white/40">
+            <div className="relative h-56 sm:h-80 w-[90%] max-w-md lg:max-w-lg overflow-hidden rounded-2xl bg-white/40">
               <Image
                 src="/images/image2.jpg"
                 alt={t("about.image2Alt")}

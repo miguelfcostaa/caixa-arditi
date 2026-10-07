@@ -146,13 +146,13 @@ function MemberCard({
   const hasValidImage = Boolean(member.image && !imgError);
 
   return (
-    <div className="group relative flex flex-col items-center rounded-2xl p-6 text-center transition-all hover:-translate-y-1">
+    <div className="group relative flex flex-col items-center rounded-2xl p-3 sm:p-6 text-center transition-all hover:-translate-y-1">
       {/* Moldura da Imagem / Fotografia - Clicável para abrir o popup */}
       <button
         type="button"
         onClick={() => onOpenBio(member)}
         aria-label={`${t("team.viewBio")} - ${member.name}`}
-        className={`group/avatar relative mb-4 flex h-32 w-32 sm:h-36 sm:w-36 items-center justify-center overflow-hidden rounded-full border-4 border-[#FCFAF9] bg-gradient-to-br ${member.avatarGradient} shadow-md ring-1 ring-slate-200 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg hover:ring-2 hover:ring-[#F85308] cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#F85308]`}
+        className={`group/avatar relative mb-2 sm:mb-4 flex h-24 w-24 sm:h-36 sm:w-36 items-center justify-center overflow-hidden rounded-full border-4 border-[#FCFAF9] bg-gradient-to-br ${member.avatarGradient} shadow-md ring-1 ring-slate-200 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg hover:ring-2 hover:ring-[#F85308] cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#F85308]`}
       >
         {hasValidImage ? (
           <Image
@@ -175,7 +175,7 @@ function MemberCard({
       <button
         type="button"
         onClick={() => onOpenBio(member)}
-        className="text-base font-bold text-[#07213D] transition-colors group-hover:text-[#F85308] hover:text-[#F85308] sm:text-lg cursor-pointer focus:outline-hidden"
+        className="text-sm font-bold text-[#07213D] transition-colors group-hover:text-[#F85308] hover:text-[#F85308] sm:text-lg cursor-pointer focus:outline-hidden"
       >
         {member.name}
       </button>
@@ -207,8 +207,8 @@ export function Team() {
       image: "/team/ana-lucia-faria.png",
       category: "Investigação & Coordenação",
       bio: {
-        pt: "Sou Psicóloga Clínica e da Saúde (com especialidade avançada em Neuropsicologia) pela Ordem dos Psicólogos Portugueses, doutorada em Psicologia da Reabilitação pela Universidade de Coimbra em 2020. Os principais resultados da minha tese foram o desenvolvimento de um novo modelo de personalização da reabilitação cognitiva com diretrizes objetivas, utilizadas para criar três ferramentas inovadoras — Task Generator, Reh@Task e Reh@City — e a sua validação clínica com doentes vítimas de AVC no Serviço de Saúde da Madeira (SESARAM). Em 2015 foi-me atribuída uma bolsa de doutoramento pela ARDITI, tendo como instituição de acolhimento o M-ITI/LARSyS. Durante os meus estudos de doutoramento, estive envolvida no projeto europeu RehabNet (303891 FP7-PEOPLE-2011). Como investigadora de pós-doutoramento, integrei a equipa de coordenação do projeto interdisciplinar BRaNT (PTDC/CCI-COM/31046/2017), que aborda as limitações científicas das práticas atuais de reabilitação cognitiva através de jogos de realidade virtual com personalização automática baseada em Inteligência Artificial. Desde 2010 leciono como professora convidada na Universidade da Madeira. \n\n Publiquei, maioritariamente como primeira autora, 8 artigos em revistas científicas com revisão por pares, tais como o Journal of NeuroEngineering and Rehabilitation (IF: 4.632), Frontiers in Psychology (IF: 2.323), Journal of Medical Internet Research (IF: 4.945) e Virtual Reality (IF: 3.634). Atualmente, estou a desenvolver uma revisão sistemática sobre a validade ecológica de tecnologias baseadas em realidade virtual para a avaliação e reabilitação de Lesões Cerebrais Adquiridas (LCA), em colaboração com investigadores da Universitat Politècnica de València. Além disso, publiquei 1 capítulo de livro e 12 artigos em conferências (alguns ACM e IEEE). Fui distinguida com a Best Student Paper Commendation em 2014 e 2016 no ICDVRAT e o Best Student Paper na Conferência de Psicologia Aplicada e Comportamento Humano de 2018. Tenho participado ativamente com posters e apresentações orais em reuniões clínicas de relevo internacional, como o International Congress of Neuropsychological Rehabilitation in ABI (Prémio de Melhor Comunicação), International Neuropsychological Society Meetings e European Stroke Organisation Conference. \n\n Psicóloga Clínica e da Saúde, Especialista em Neuropsicologia \n Professora Convidada na Universidade da Madeira \n Responsável pela área de Psicologia no NeuroRehabLab",
-        en: "I am a Health and Clinical Psychologist (Neuropsychology sub-specialty) by Ordem dos Psicólogos with a Ph.D. in Rehabilitation Psychology from the University of Coimbra in 2020. The main outcomes of my thesis were: the development of a new cognitive rehabilitation personalization framework with objective guidelines that were used to create three innovative tools-Task Generator, Reh@Task, and Reh@City and; its clinical validation with stroke patients from Madeira Health Service. In 2015 I was awarded a doctoral scholarship from ARDITI, with host institution M-ITI/LARSyS. During my doctoral studies, I have been involved in an EU project called RehabNet(303891 FP7-PEOPLE-2011). As a post-doctoral researcher, I was in the coordination team of an interdisciplinary project called BRaNT(PTDC/CCI-COM/31046/2017), which addresses the scientific limitations of current cognitive rehabilitation practices through virtual reality games that will allow automatic personalization through Artificial Intelligence approaches. Since 2010 that I teach as invited professor in the University of Madeira. \n\n I published, mostly as first author, 8 articles in peer-reviewed journals such as Journal of NeuroEngineering and Rehabilitation (IF:4.632), Frontiers in Psychology (IF:2.323), Journal of Medical Internet Research RAT (IF:4.945) and Virtual Reality (IF: 3.634). Currently, I am working on a systematic review about the Ecological validity of virtual reality-based technologies for the assessment and rehabilitation of ABI, together with Universitat Politècnica de València researchers. Additionally, I published 1 book chapter and 12 conference articles, some ACM and IEEE. I was awarded a Best Student Paper Commendation in 2014 and 2016 ICDVRAT and Best Student Paper in the 2018 Conference on Applied Psychology and Human Behavior. I have been an active participant, with posters and oral presentations, in relevant clinical meetings, such as the International Congress of Neuropsychological Rehabilitation in ABI (Best Communication prize), the International Neuropsychological Society Meetings, and the European Stroke Organisation Conference. \n\n Clinical and Health Psychologist, specialized in Neuropsychology \n University of Madeira Professor \n NeuroRehabLab Psychology Lead",
+        pt: "É Psicóloga Clínica e da Saúde (com especialidade avançada em Neuropsicologia) pela Ordem dos Psicólogos Portugueses, doutorada em Psicologia da Reabilitação pela Universidade de Coimbra em 2020. Os principais resultados da sua tese foram o desenvolvimento de um novo modelo de personalização da reabilitação cognitiva com diretrizes objetivas, utilizadas para criar três ferramentas inovadoras — Task Generator, Reh@Task e Reh@City — e a sua validação clínica com doentes vítimas de AVC no Serviço de Saúde da Madeira (SESARAM). Em 2015 foi-lhe atribuída uma bolsa de doutoramento pela ARDITI, tendo como instituição de acolhimento o M-ITI/LARSyS. Durante os seus estudos de doutoramento, esteve envolvida no projeto europeu RehabNet (303891 FP7-PEOPLE-2011). Como investigadora de pós-doutoramento, integrou a equipa de coordenação do projeto interdisciplinar BRaNT (PTDC/CCI-COM/31046/2017), que aborda as limitações científicas das práticas atuais de reabilitação cognitiva através de jogos de realidade virtual com personalização automática baseada em Inteligência Artificial. Desde 2010 leciona como professora convidada na Universidade da Madeira. \n\n Publicou, maioritariamente como primeira autora, 8 artigos em revistas científicas com revisão por pares, tais como o Journal of NeuroEngineering and Rehabilitation (IF: 4.632), Frontiers in Psychology (IF: 2.323), Journal of Medical Internet Research (IF: 4.945) e Virtual Reality (IF: 3.634). Atualmente, está a desenvolver uma revisão sistemática sobre a validade ecológica de tecnologias baseadas em realidade virtual para a avaliação e reabilitação de Lesões Cerebrais Adquiridas (LCA), em colaboração com investigadores da Universitat Politècnica de València. Além disso, publicou 1 capítulo de livro e 12 artigos em conferências (alguns ACM e IEEE). Foi distinguida com a Best Student Paper Commendation em 2014 e 2016 no ICDVRAT e o Best Student Paper na Conferência de Psicologia Aplicada e Comportamento Humano de 2018. Tem participado ativamente com posters e apresentações orais em reuniões clínicas de relevo internacional, como o International Congress of Neuropsychological Rehabilitation in ABI (Prémio de Melhor Comunicação), International Neuropsychological Society Meetings e European Stroke Organisation Conference. \n\n Psicóloga Clínica e da Saúde, Especialista em Neuropsicologia \n Professora Convidada na Universidade da Madeira \n Responsável pela área de Psicologia no NeuroRehabLab",
+        en: "She is a Clinical and Health Psychologist (with an advanced specialization in Neuropsychology) accredited by the Portuguese Psychologists’ Association, and holds a PhD in Rehabilitation Psychology from the University of Coimbra, completed in 2020. The main outcomes of her thesis were the development of a new model for personalizing cognitive rehabilitation with objective guidelines, which were used to create three innovative tools — Task Generator, Reh@Task, and Reh@City — and their clinical validation with stroke patients at the Madeira Health Service (SESARAM). In 2015, she was awarded a PhD scholarship by ARDITI, with M-ITI/LARSyS as the host institution. During her doctoral studies, she was involved in the European RehabNet project (303891 FP7-PEOPLE-2011). As a postdoctoral researcher, she was part of the coordination team of the interdisciplinary BRaNT project (PTDC/CCI-COM/31046/2017), which addresses the scientific limitations of current cognitive rehabilitation practices through virtual reality games with automatic personalization based on Artificial Intelligence. Since 2010, she has taught as a guest lecturer at the University of Madeira. \n\n She has published 8 peer-reviewed journal articles, mostly as first author, in journals such as the Journal of NeuroEngineering and Rehabilitation (IF: 4.632), Frontiers in Psychology (IF: 2.323), Journal of Medical Internet Research (IF: 4.945), and Virtual Reality (IF: 3.634). She is currently developing a systematic review on the ecological validity of virtual reality-based technologies for the assessment and rehabilitation of Acquired Brain Injuries (ABI), in collaboration with researchers from the Universitat Politècnica de València. In addition, she has published 1 book chapter and 12 conference papers, including ACM and IEEE publications. She received the Best Student Paper Commendation in 2014 and 2016 at ICDVRAT, as well as the Best Student Paper award at the 2018 Conference on Applied Psychology and Human Behaviour. She has actively participated with posters and oral presentations at internationally relevant clinical meetings, including the International Congress of Neuropsychological Rehabilitation in ABI (Best Communication Award), International Neuropsychological Society Meetings, and the European Stroke Organisation Conference. \n\n Clinical and Health Psychologist, Specialist in Neuropsychology \n Guest Lecturer at the University of Madeira \n Head of the Psychology Area at NeuroRehabLab",
       },
     },
     {
@@ -220,8 +220,8 @@ export function Team() {
       image: "/team/luis.png",
       category: "Investigação & Coordenação",
       bio: {
-        pt: "Licenciei-me em Design Interativo (Universidade da Madeira) e obtive o Mestrado em Tecnologias do Entretenimento (Carnegie Mellon University). Em 2021, concluí o Doutoramento em Média Digitais na Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa (FCT – UNL), onde desenvolvi uma plataforma que utiliza elementos como a música e a reminiscência para a estimulação cognitiva, denominada Musiquence. \n\n Atualmente, sou docente na Universidade da Madeira, onde colaboro ativamente em projetos de investigação no NeuroRehabLab e no NOVA LINCS. A minha função consiste, sobretudo, no desenvolvimento de jogos sérios (serious games) e no estudo do seu impacto em populações clínicas (ex.: neurológicas e psiquiátricas).",
-        en: "I graduated in Interactive Design (University of Madeira) and have a Master in Entertainment Technologies (Carnegie Mellon University). In 2021, I completed the PhD in Digital Media at the Faculty of Sciences and Technology of Universidade Nova de Lisboa (FCT – UNL), where I developed a platform that uses elements such as music and reminiscence for cognitive stimulation called Musiquence. \n\n I’m currently a professor at the University of Madeira, where I actively collaborate on research projects at the NeuroRehabLab and NovaLincs. My role consists, above all, in developing serious games and studying their impact on clinical populations (e.g., Neurological and Psychiatric).",
+        pt: "É licenciado em Design Interativo pela Universidade da Madeira e mestre em Tecnologias do Entretenimento pela Carnegie Mellon University. Em 2021, concluiu o Doutoramento em Média Digitais na Faculdade de Ciências e Tecnologia da Universidade NOVA de Lisboa (FCT NOVA), onde desenvolveu a Musiquence, uma plataforma que recorre a elementos como a música e a reminiscência para a estimulação cognitiva. \n\n Atualmente, é docente na Universidade da Madeira e colabora ativamente em projetos de investigação no NeuroRehabLab e no NOVA LINCS. O seu trabalho centra-se sobretudo no desenvolvimento de jogos sérios e no estudo do seu impacto em populações clínicas, incluindo populações com condições neurológicas e psiquiátricas.",
+        en: "He holds a Bachelor's degree in Interactive Design from the University of Madeira and a Master's degree in Entertainment Technology from Carnegie Mellon University. In 2021, he completed his PhD in Digital Media at the NOVA School of Science and Technology (NOVA FCT), where he developed Musiquence, a platform that uses elements such as music and reminiscence for cognitive stimulation. \n\n He is currently a lecturer at the University of Madeira and actively collaborates on research projects at NeuroRehabLab and NOVA LINCS. His work focuses primarily on the development of serious games and the study of their impact on clinical populations, including people with neurological and psychiatric conditions.",
       },
     },
     {
@@ -233,8 +233,8 @@ export function Team() {
       image: "/team/monica-cameirao.png",
       category: "Investigação & Coordenação",
       bio: {
-        pt: "A Mónica é Professora Auxiliar e investigadora na Universidade da Madeira (UMa) e membro integrado do NOVA Laboratory for Computer Science and Informatics (NOVA LINCS). É a atual Diretora do Programa de Doutoramento em Engenharia Informática da UMa. No passado, trabalhou como assistente de investigação no Laboratório SPECS da Universitat Pompeu Fabra e no Institute of Neuroinformatics da ETH-Zürich, na Suíça; foi também investigadora visitante no Quality of Life Technologies Center da Carnegie Mellon University. Desde que chegou à Madeira em 2011, é co-investigadora principal e co-fundadora do Grupo de Investigação NeuroRehabLab, um grupo interdisciplinar que investiga na interseção entre tecnologia, neurociência e prática clínica para encontrar soluções inovadoras que melhorem a qualidade de vida de pessoas com necessidades especiais. A Mónica tem estado particularmente envolvida no desenvolvimento e avaliação clínica de tecnologias de Realidade Virtual (RV) para a reabilitação pós-AVC, explorando mecanismos cerebrais específicos relacionados com a recuperação funcional para abordar a reabilitação motora e cognitiva através de tecnologias não invasivas e de baixo custo. Mais recentemente, tem colaborado no desenvolvimento de soluções de RV para apoio à saúde mental após perda gestacional precoce. A sua investigação foca aspetos como jogos sérios (serious games) e personalização do treino. Em 2016, foi distinguida com o prémio ISVR Early Career Investigator Award pela International Society for Virtual Rehabilitation, em reconhecimento das contribuições de excelência de jovens cientistas na área da reabilitação virtual. Desde 2020, é membro da Comissão de Ética da UMa.",
-        en: "Mónica is an Assistant Professor and researcher at the University of Madeira (UMa) and integrated member of the NOVA Laboratory for Computer Science and Informatics (NOVA LINCS). She is the current Director of the PhD Program in Informatics Engineering of UMa. In the past she worked as research assistant at the SPECS Laboratory of the Universitat Pompeu Fabra and at the Institute of Neuroinformatics, ETH-Zürich, Switzerland; and was visiting scholar at the Quality of Life Technologies center of Carnegie Mellon University. Since Mónica arrived in Madeira in 2011, she has been co-principal investigator and co-founder of the NeuroRehabLab Research Group, an interdisciplinary research group that investigates at the intersection of technology, neuroscience and clinical practice to find novel solutions to increase the quality of life of those with special needs. Mónica has been particularly involved in the development and clinical assessment of Virtual Reality (VR) technologies for stroke rehabilitation, exploring specific brain mechanisms that relate to functional recovery to approach motor and cognitive rehabilitation by means of non-invasive and low-cost technologies. More recently, Mónica has also been involved in the development of VR solutions for supporting mental health after early pregnancy loss. Her research addresses aspects such as serious gaming and personalization of training. In 2016, Mónica has been awarded the ISVR Early Career Investigator Award, an award granted by the International Society for Virtual Rehabilitation to recognize and acknowledge outstanding contributions by early career scientists whose research relates to virtual rehabilitation. Since 2020, Mónica is a member of the Ethics Committee of UMa.",
+        pt: "É Professora Auxiliar e investigadora na Universidade da Madeira (UMa) e membro integrado do NOVA Laboratory for Computer Science and Informatics (NOVA LINCS). É a atual Diretora do Programa de Doutoramento em Engenharia Informática da UMa. No passado, trabalhou como assistente de investigação no Laboratório SPECS da Universitat Pompeu Fabra e no Institute of Neuroinformatics da ETH-Zürich, na Suíça; foi também investigadora visitante no Quality of Life Technologies Center da Carnegie Mellon University. Desde que chegou à Madeira em 2011, é co-investigadora principal e co-fundadora do Grupo de Investigação NeuroRehabLab, um grupo interdisciplinar que investiga na interseção entre tecnologia, neurociência e prática clínica para encontrar soluções inovadoras que melhorem a qualidade de vida de pessoas com necessidades especiais. A Mónica tem estado particularmente envolvida no desenvolvimento e avaliação clínica de tecnologias de Realidade Virtual (RV) para a reabilitação pós-AVC, explorando mecanismos cerebrais específicos relacionados com a recuperação funcional para abordar a reabilitação motora e cognitiva através de tecnologias não invasivas e de baixo custo. Mais recentemente, tem colaborado no desenvolvimento de soluções de RV para apoio à saúde mental após perda gestacional precoce. A sua investigação foca aspetos como jogos sérios (serious games) e personalização do treino. Em 2016, foi distinguida com o prémio ISVR Early Career Investigator Award pela International Society for Virtual Rehabilitation, em reconhecimento das contribuições de excelência de jovens cientistas na área da reabilitação virtual. Desde 2020, é membro da Comissão de Ética da UMa.",
+        en: "She is an Assistant Professor and researcher at the University of Madeira (UMa) and integrated member of the NOVA Laboratory for Computer Science and Informatics (NOVA LINCS). She is the current Director of the PhD Program in Informatics Engineering of UMa. In the past she worked as research assistant at the SPECS Laboratory of the Universitat Pompeu Fabra and at the Institute of Neuroinformatics, ETH-Zürich, Switzerland; and was visiting scholar at the Quality of Life Technologies center of Carnegie Mellon University. Since Mónica arrived in Madeira in 2011, she has been co-principal investigator and co-founder of the NeuroRehabLab Research Group, an interdisciplinary research group that investigates at the intersection of technology, neuroscience and clinical practice to find novel solutions to increase the quality of life of those with special needs. Mónica has been particularly involved in the development and clinical assessment of Virtual Reality (VR) technologies for stroke rehabilitation, exploring specific brain mechanisms that relate to functional recovery to approach motor and cognitive rehabilitation by means of non-invasive and low-cost technologies. More recently, Mónica has also been involved in the development of VR solutions for supporting mental health after early pregnancy loss. Her research addresses aspects such as serious gaming and personalization of training. In 2016, Mónica has been awarded the ISVR Early Career Investigator Award, an award granted by the International Society for Virtual Rehabilitation to recognize and acknowledge outstanding contributions by early career scientists whose research relates to virtual rehabilitation. Since 2020, Mónica is a member of the Ethics Committee of UMa.",
       },
     },
   ];
@@ -250,8 +250,8 @@ export function Team() {
       image: "/team/beatriz-castro.png",
       category: "Psicologia Clínica",
       bio: {
-        pt: "Psicóloga clínica com atuação dedicada ao contexto pediátrico e infanto-juvenil. No Projeto C.A.I.X.A., é responsável pela adequação pedagógica e emocional dos conteúdos, assegurando que os conceitos de prevenção oncológica são transmitidos de forma acessível, segura e positiva para as crianças.",
-        en: "Clinical psychologist dedicated to pediatric and youth care. In Project C.A.I.X.A., she is responsible for the pedagogical and emotional adaptation of content, ensuring that cancer prevention concepts are conveyed in an accessible, safe, and positive manner for children.",
+        pt: "Psicóloga clínica.",
+        en: "Clinical psychologist.",
       },
     },
     {
@@ -263,8 +263,8 @@ export function Team() {
       image: "/team/petra-santos.png",
       category: "Psicologia Clínica",
       bio: {
-        pt: "Petra Santos é Psicóloga, Membro Efetivo da Ordem dos Psicólogos Portugueses (Cédula Profissional n.º 32238), Mestre em Psicologia Clínica, da Saúde e Bem-Estar pela Universidade da Madeira e Formadora Certificada. Atualmente, encontra-se na Agência Regional para o Desenvolvimento da Investigação, Tecnologia e Inovação (ARDITI), como Psicóloga no Projeto C.A.I.X.A.: Da Consciencialização à Ação: Impacto Neuropsicológico das Tecnologias XR na Aprendizagem para Prevenção do Cancro Infantil. No âmbito do projeto, participa na conceção e desenvolvimento de atividades e conteúdos psicoeducativos para integração numa plataforma digital gamificada. O seu contributo centra-se na promoção da literacia em saúde e de estilos de vida saudáveis desde a infância e adolescência, numa perspetiva de prevenção do cancro ao longo do ciclo vital. Possui experiência em avaliação e intervenção psicológica em contextos clínicos, de saúde e comunitários, com particular destaque na área da Psico-Oncologia, na qual realizou intervenção psicológica com doentes oncológicos e familiares, dinamizou ações de formação e sensibilização e, colaborou em projetos institucionais e em contexto multidisciplinar. O seu percurso inclui ainda experiência nos Cuidados de Saúde Primários e no apoio psicossocial a vítimas de violência doméstica. Paralelamente, é autora e coautora de publicações nas áreas da Psicologia, Bem-Estar, Luto e Terapia Narrativa. A sua dissertação de mestrado incidiu sobre os contributos da Terapia Narrativa no processo de luto complicado.",
-        en: "Petra Santos is a Psychologist, Member of the Portuguese Psychologists Association (No. 32238), holds a Master’s degree in Clinical, Health and Well-Being Psychology from the University of Madeira, and is a Certified Trainer. She is currently working at the Regional Agency for the Development of Research, Technology and Innovation (ARDITI) as a Psychologist in the C.A.I.X.A. Project – From Awareness to Action: Neuropsychological Impact of XR Technologies on Learning for Childhood Cancer Prevention. Within the project, she contributes to the design and development of psychoeducational activities and content for integration into a gamified digital platform. Her contribution focuses on promoting health literacy and healthy lifestyles from childhood and adolescence, with a view to cancer prevention across the lifespan. She has experience in psychological assessment and intervention across clinical, healthcare, and community settings, with a particular focus on Psycho-Oncology, where she provided psychological intervention to cancer patients and their families, delivered training and awareness-raising initiatives, and collaborated on institutional projects and within multidisciplinary teams. Her professional background also includes experience in Primary Healthcare and in providing psychosocial support to victims of domestic violence. Alongside her professional practice, she is the author and co-author of publications in the fields of Psychology, Well-Being, Grief, and Narrative Therapy. Her Master’s dissertation focused on the contributions of Narrative Therapy to the process of complicated grief.",
+        pt: "É Psicóloga, Membro Efetivo da Ordem dos Psicólogos Portugueses (Cédula Profissional n.º 32238), Mestre em Psicologia Clínica, da Saúde e Bem-Estar pela Universidade da Madeira e Formadora Certificada. Atualmente, encontra-se na Agência Regional para o Desenvolvimento da Investigação, Tecnologia e Inovação (ARDITI), como Psicóloga no Projeto C.A.I.X.A.: Da Consciencialização à Ação: Impacto Neuropsicológico das Tecnologias XR na Aprendizagem para Prevenção do Cancro Infantil. No âmbito do projeto, participa na conceção e desenvolvimento de atividades e conteúdos psicoeducativos para integração numa plataforma digital gamificada. O seu contributo centra-se na promoção da literacia em saúde e de estilos de vida saudáveis desde a infância e adolescência, numa perspetiva de prevenção do cancro ao longo do ciclo vital. Possui experiência em avaliação e intervenção psicológica em contextos clínicos, de saúde e comunitários, com particular destaque na área da Psico-Oncologia, na qual realizou intervenção psicológica com doentes oncológicos e familiares, dinamizou ações de formação e sensibilização e, colaborou em projetos institucionais e em contexto multidisciplinar. O seu percurso inclui ainda experiência nos Cuidados de Saúde Primários e no apoio psicossocial a vítimas de violência doméstica. Paralelamente, é autora e coautora de publicações nas áreas da Psicologia, Bem-Estar, Luto e Terapia Narrativa. A sua dissertação de mestrado incidiu sobre os contributos da Terapia Narrativa no processo de luto complicado.",
+        en: "She is a Psychologist, Member of the Portuguese Psychologists Association (No. 32238), holds a Master’s degree in Clinical, Health and Well-Being Psychology from the University of Madeira, and is a Certified Trainer. She is currently working at the Regional Agency for the Development of Research, Technology and Innovation (ARDITI) as a Psychologist in the C.A.I.X.A. Project – From Awareness to Action: Neuropsychological Impact of XR Technologies on Learning for Childhood Cancer Prevention. Within the project, she contributes to the design and development of psychoeducational activities and content for integration into a gamified digital platform. Her contribution focuses on promoting health literacy and healthy lifestyles from childhood and adolescence, with a view to cancer prevention across the lifespan. She has experience in psychological assessment and intervention across clinical, healthcare, and community settings, with a particular focus on Psycho-Oncology, where she provided psychological intervention to cancer patients and their families, delivered training and awareness-raising initiatives, and collaborated on institutional projects and within multidisciplinary teams. Her professional background also includes experience in Primary Healthcare and in providing psychosocial support to victims of domestic violence. Alongside her professional practice, she is the author and co-author of publications in the fields of Psychology, Well-Being, Grief, and Narrative Therapy. Her Master’s dissertation focused on the contributions of Narrative Therapy to the process of complicated grief.",
       },
     },
   ];
@@ -280,8 +280,8 @@ export function Team() {
       image: "/team/miguel-costa.png",
       category: "Desenvolvimento de Software",
       bio: {
-        pt: "Sou licenciado e mestre em Engenharia Informática pela Universidade da Madeira. A minha dissertação de mestrado centrou-se na utilização de tecnologias interativas e jogos sérios aplicados à educação para a saúde, com especial foco na prevenção do cancro em crianças.",
-        en: "I hold both a Bachelor's and a Master's degree in Computer Engineering from the University of Madeira. My Master's dissertation focused on the use of interactive technologies and serious games in health education, with a particular emphasis on cancer prevention in children.",
+        pt: "É licenciado e mestre em Engenharia Informática pela Universidade da Madeira. A sua dissertação de mestrado centrou-se na utilização de tecnologias interativas e jogos sérios aplicados à educação para a saúde, com especial foco na prevenção do cancro em crianças.",
+        en: "He holds both a Bachelor's and a Master's degree in Computer Engineering from the University of Madeira. His Master's dissertation focused on the use of interactive technologies and serious games in health education, with a particular emphasis on cancer prevention in children.",
       },
     },
     {
@@ -293,8 +293,8 @@ export function Team() {
       image: "/team/roberto-f.png",
       category: "Desenvolvimento de Software",
       bio: {
-        pt: "Engenheiro de software focado em desenvolvimento backend, gestão de dados e conectividade de sistemas. No Projeto C.A.I.X.A., estrutura a lógica de suporte e persistência de dados das aplicações, garantindo a robustez e segurança de todo o ecossistema tecnológico. ",
-        en: "Software engineer focused on backend development, data management, and system connectivity. In Project C.A.I.X.A., he structures the core logic and data persistence of applications, ensuring the robustness and security of the entire technological ecosystem.",
+        pt: "Engenheiro de software. ",
+        en: "Software engineer .",
       },
     },
   ];
@@ -310,8 +310,8 @@ export function Team() {
       image: "/team/juan-ponte.png",
       category: "Design & Experiência",
       bio: {
-        pt: "Designer UX/UI especializado na conceção de interfaces e experiências digitais interativas. No Projeto C.A.I.X.A., é responsável pelo design visual, desenho de personagens, usabilidade e linguagem gráfica, criando um universo lúdico e cativante para as crianças.",
-        en: "UX/UI designer specializing in the conception of interactive interfaces and digital experiences. In Project C.A.I.X.A., he is responsible for visual design, character art, usability, and graphic language, creating a playful and captivating universe for children.",
+        pt: "Designer UX/UI ",
+        en: "UX/UI designer ",
       },
     },
   ];
@@ -337,7 +337,7 @@ export function Team() {
   const selectedMember = allMembers.find((m) => m.id === selectedMemberId) || null;
 
   return (
-    <section id="equipa" className="relative border-t border-slate-200/60 bg-[#FCFAF9] py-20 sm:py-28 scroll-mt-20">
+    <section id="equipa" className="relative border-t border-slate-200/60 bg-[#FCFAF9] py-16 sm:py-24 lg:py-32 scroll-mt-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho */}
         <div className="text-center">
@@ -356,7 +356,7 @@ export function Team() {
               {t("team.leaderTitle")}
             </h3>
           </div>
-          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-3">
             {leader.map((member) => (
               <MemberCard
                 key={member.id}
@@ -369,14 +369,14 @@ export function Team() {
         </div>
 
         {/* Nível 2: Psicologia (2 psicólogas) */}
-        <div className="mt-16">
+        <div className="mt-10 sm:mt-16">
           <div className="mb-6 flex items-center justify-center gap-2">
             <HeartHandshake className="h-4 w-4 text-pink-600" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-pink-600">
               {t("team.psychTitle")}
             </h3>
           </div>
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mx-auto grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2">
             {psychologists.map((psychologist) => (
               <MemberCard
                 key={psychologist.id}
@@ -388,14 +388,14 @@ export function Team() {
         </div>
 
         {/* Nível 3: Desenvolvimento de Software (2 desenvolvedores) */}
-        <div className="mt-16">
+        <div className="mt-10 sm:mt-16">
           <div className="mb-6 flex items-center justify-center gap-2">
             <Code2 className="h-4 w-4 text-[#07213D]" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#07213D]">
               {t("team.devTitle")}
             </h3>
           </div>
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mx-auto grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2">
             {developers.map((dev) => (
               <MemberCard
                 key={dev.id}
@@ -407,7 +407,7 @@ export function Team() {
         </div>
 
         {/* Nível 4: Design (1 UX/UI e 1 Designer) */}
-        <div className="mt-16">
+        <div className="mt-10 sm:mt-16">
           <div className="mb-6 flex items-center justify-center gap-2">
             <Palette className="h-4 w-4 text-cyan-700" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-700">
@@ -426,7 +426,7 @@ export function Team() {
         </div>
 
         {/* Nível 5: Parceiros */}
-        <div className="mt-16">
+        <div className="mt-10 sm:mt-16">
           <div className="mb-6 flex items-center justify-center gap-2">
             <Handshake className="h-4 w-4 text-emerald-700" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-700">

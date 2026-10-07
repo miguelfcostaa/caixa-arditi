@@ -62,7 +62,7 @@ export function Footer() {
             <div className="mt-5 flex flex-wrap items-center gap-2">
               <a
                 href={`mailto:${COORDINATOR_EMAIL}`}
-                className="inline-flex items-center gap-2 rounded-lg bg-[#F85308] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#D64505]"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#F85308] px-3 py-2.5 text-xs sm:text-sm sm:px-4 font-semibold text-white transition-colors hover:bg-[#D64505]"
               >
                 <Mail className="h-4 w-4 shrink-0" />
                 <span className="break-all">{COORDINATOR_EMAIL}</span>
@@ -117,7 +117,7 @@ export function Footer() {
         </div>
 
         {/* Barra Inferior com Navegação Rápida e Direitos */}
-        <div className="mt-14 flex flex-col items-center gap-6 border-t border-slate-800/80 pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 sm:mt-14 flex flex-col items-center gap-6 border-t border-slate-800/80 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center justify-center sm:justify-start gap-2">
             <Link
               href="#"
@@ -128,7 +128,7 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-slate-400">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-semibold text-slate-400">
             <Link href="#" onClick={handleScrollToTop} className="hover:text-white transition-colors">
               {t("navbar.home")}
             </Link>

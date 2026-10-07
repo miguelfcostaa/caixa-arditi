@@ -7,7 +7,7 @@ export function Partners() {
   const { t } = useLanguage();
 
   return (
-    <section id="parcerias" className="relative flex min-h-screen flex-col justify-center border-t border-slate-200/60 bg-[#F5F2EE] py-24 sm:py-32 scroll-mt-20">
+    <section id="parcerias" className="relative flex flex-col justify-center border-t border-slate-200/60 bg-[#F5F2EE] py-16 sm:py-24 lg:py-32 scroll-mt-20">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Título direto */}
         <div className="text-center">

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { User, HeartHandshake, Code2, Palette, X } from "lucide-react";
+import { User, HeartHandshake, Code2, Palette, Handshake, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface TeamMember {
@@ -263,8 +263,8 @@ export function Team() {
       image: "/team/petra-santos.png",
       category: "Psicologia Clínica",
       bio: {
-        pt: "Psicóloga clínica com foco em intervenções de promoção de saúde e bem-estar infantil. No âmbito do Projeto C.A.I.X.A., colabora na avaliação neuropsicológica e no estudo do impacto das experiências imersivas na aquisição de comportamentos preventivos.",
-        en: "Clinical psychologist focusing on child health promotion and well-being interventions. Within Project C.A.I.X.A., she collaborates on neuropsychological assessment and the study of the impact of immersive experiences on acquiring preventive behaviors.",
+        pt: "Petra Santos é Psicóloga, Membro Efetivo da Ordem dos Psicólogos Portugueses (Cédula Profissional n.º 32238), Mestre em Psicologia Clínica, da Saúde e Bem-Estar pela Universidade da Madeira e Formadora Certificada. Atualmente, encontra-se na Agência Regional para o Desenvolvimento da Investigação, Tecnologia e Inovação (ARDITI), como Psicóloga no Projeto C.A.I.X.A.: Da Consciencialização à Ação: Impacto Neuropsicológico das Tecnologias XR na Aprendizagem para Prevenção do Cancro Infantil. No âmbito do projeto, participa na conceção e desenvolvimento de atividades e conteúdos psicoeducativos para integração numa plataforma digital gamificada. O seu contributo centra-se na promoção da literacia em saúde e de estilos de vida saudáveis desde a infância e adolescência, numa perspetiva de prevenção do cancro ao longo do ciclo vital. Possui experiência em avaliação e intervenção psicológica em contextos clínicos, de saúde e comunitários, com particular destaque na área da Psico-Oncologia, na qual realizou intervenção psicológica com doentes oncológicos e familiares, dinamizou ações de formação e sensibilização e, colaborou em projetos institucionais e em contexto multidisciplinar. O seu percurso inclui ainda experiência nos Cuidados de Saúde Primários e no apoio psicossocial a vítimas de violência doméstica. Paralelamente, é autora e coautora de publicações nas áreas da Psicologia, Bem-Estar, Luto e Terapia Narrativa. A sua dissertação de mestrado incidiu sobre os contributos da Terapia Narrativa no processo de luto complicado.",
+        en: "Petra Santos is a Psychologist, Member of the Portuguese Psychologists Association (No. 32238), holds a Master’s degree in Clinical, Health and Well-Being Psychology from the University of Madeira, and is a Certified Trainer. She is currently working at the Regional Agency for the Development of Research, Technology and Innovation (ARDITI) as a Psychologist in the C.A.I.X.A. Project – From Awareness to Action: Neuropsychological Impact of XR Technologies on Learning for Childhood Cancer Prevention. Within the project, she contributes to the design and development of psychoeducational activities and content for integration into a gamified digital platform. Her contribution focuses on promoting health literacy and healthy lifestyles from childhood and adolescence, with a view to cancer prevention across the lifespan. She has experience in psychological assessment and intervention across clinical, healthcare, and community settings, with a particular focus on Psycho-Oncology, where she provided psychological intervention to cancer patients and their families, delivered training and awareness-raising initiatives, and collaborated on institutional projects and within multidisciplinary teams. Her professional background also includes experience in Primary Healthcare and in providing psychosocial support to victims of domestic violence. Alongside her professional practice, she is the author and co-author of publications in the fields of Psychology, Well-Being, Grief, and Narrative Therapy. Her Master’s dissertation focused on the contributions of Narrative Therapy to the process of complicated grief.",
       },
     },
   ];
@@ -316,7 +316,24 @@ export function Team() {
     },
   ];
 
-  const allMembers = [...leader, ...psychologists, ...developers, ...designers];
+  // 5. Parceiros
+  const partners: TeamMember[] = [
+    {
+      id: "parceiro-1",
+      name: "Ricardo Sousa",
+      role: t("team.defaultRolePartnerLPCC"),
+      initials: "RS",
+      avatarGradient: "from-emerald-600 to-teal-800 ring-emerald-700/20",
+      image: "/team/ricardo-sousa.png",
+      category: "Parcerias",
+      bio: {
+        pt: "",
+        en: "",
+      },
+    },
+  ];
+
+  const allMembers = [...leader, ...psychologists, ...developers, ...designers, ...partners];
   const selectedMember = allMembers.find((m) => m.id === selectedMemberId) || null;
 
   return (
@@ -402,6 +419,25 @@ export function Team() {
               <MemberCard
                 key={designer.id}
                 member={designer}
+                onOpenBio={(m) => setSelectedMemberId(m.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Nível 5: Parceiros */}
+        <div className="mt-16">
+          <div className="mb-6 flex items-center justify-center gap-2">
+            <Handshake className="h-4 w-4 text-emerald-700" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-700">
+              {t("team.partnersTitle")}
+            </h3>
+          </div>
+          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-1">
+            {partners.map((partner) => (
+              <MemberCard
+                key={partner.id}
+                member={partner}
                 onOpenBio={(m) => setSelectedMemberId(m.id)}
               />
             ))}

@@ -34,6 +34,7 @@ export const translations = {
       psychTitle: "Psicólogas",
       devTitle: "Desenvolvedores de Software",
       designTitle: "Designers",
+      partnersTitle: "Parceiros",
       bioTitle: "Biografia & Contribuição",
       close: "Fechar biografia",
       defaultRoleInv: "Investigador Principal",
@@ -41,6 +42,7 @@ export const translations = {
       defaultRoleDevF: "Desenvolvedor Frontend",
       defaultRoleDevB: "Desenvolvedor Backend",
       defaultRoleDes: "Designer UX / UI",
+      defaultRolePartnerLPCC: "Presidente da NRM-LPCC",
       defaultBio:
         "",
     },
@@ -96,6 +98,7 @@ export const translations = {
       psychTitle: "Psychologists",
       devTitle: "Software Developers",
       designTitle: "Designers",
+      partnersTitle: "Partners",
       bioTitle: "Biography & Contribution",
       close: "Close biography",
       defaultRoleInv: "Principal Investigator",
@@ -103,6 +106,7 @@ export const translations = {
       defaultRoleDevF: "Frontend Developer",
       defaultRoleDevB: "Backend Developer",
       defaultRoleDes: "UX / UI Designer",
+      defaultRolePartnerLPCC: "President of NRM-LPCC",
       defaultBio:
         ""
     },

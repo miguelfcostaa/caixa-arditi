@@ -117,8 +117,8 @@ export function Footer() {
         </div>
 
         {/* Barra Inferior com Navegação Rápida e Direitos */}
-        <div className="mt-14 flex flex-col gap-6 border-t border-slate-800/80 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-2">
+        <div className="mt-14 flex flex-col items-center gap-6 border-t border-slate-800/80 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center justify-center sm:justify-start gap-2">
             <Link
               href="#"
               onClick={handleScrollToTop}
@@ -128,7 +128,7 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 text-xs font-semibold text-slate-400">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-slate-400">
             <Link href="#" onClick={handleScrollToTop} className="hover:text-white transition-colors">
               {t("navbar.home")}
             </Link>
@@ -143,7 +143,7 @@ export function Footer() {
             </Link>
           </div>
 
-          <p className="text-xs text-[#F1F0EF]/60">
+          <p className="text-center sm:text-right text-xs text-[#F1F0EF]/60">
             {t("footer.rights")}
           </p>
         </div>

@@ -250,8 +250,8 @@ export function Team() {
       image: "/team/beatriz-castro.png",
       category: "Psicologia Clínica",
       bio: {
-        pt: "Psicóloga clínica.",
-        en: "Clinical psychologist.",
+        pt: "Atualmente, exerce funções como Assistente de Investigação na ARDITI, integrando o projeto C.A.I.X.A., onde participa na conceção e desenvolvimento de atividades psicoeducativas para integração numa plataforma digital gamificada, com o objetivo de promover a literacia em saúde e a adoção de estilos de vida saudáveis associados à prevenção do cancro ao longo do ciclo vital.Anteriormente, desenvolveu atividade em contexto hospitalar, na área da prevenção do suicídio. Entre 2018 e 2023, dedicou-se à dinamização de projetos nas áreas das práticas artísticas, do desenvolvimento pessoal e inclusão social, com especial incidência no trabalho com crianças e jovens na promoção de competências emocionais, sociais e relacionais. Entre 2017 e 2018, trabalhou com crianças com Perturbação do Espetro do Autismo (PEA), através de intervenção baseada na Análise Comportamental Aplicada (ABA). \n O seu percurso privilegia uma abordagem centrada na pessoa, na inclusão e na promoção do bem-estar ao longo das diferentes etapas do ciclo vital. \n\n Mestre em Psicologia Clínica da Saúde e Bem-Estar \n Pós-graduada em Práticas Artísticas e Inclusão Social \n Formadora Certificada ",
+        en: "She currently works as a Research Assistant at ARDITI, as part of the C.A.I.X.A. project, where she contributes to the design and development of psychoeducational activities for integration into a gamified digital platform, with the aim of promoting health literacy and the adoption of healthy lifestyles associated with cancer prevention across the lifespan. \n Previously, she worked in a hospital setting in the field of suicide prevention. Between 2018 and 2023, she was involved in the development and delivery of projects in the areas of artistic practices, personal development, and social inclusion, with a particular focus on working with children and young people to foster emotional, social, and interpersonal skills. Between 2017 and 2018, she worked with children with Autism Spectrum Disorder (ASD), delivering interventions based on Applied Behaviour Analysis (ABA). \n Her professional approach is centred on the individual, inclusion, and the promotion of well-being across the lifespan. \n\n Master’s Degree in Clinical and Health Psychology and Well-being \n Postgraduate Qualification in Artistic Practices and Social Inclusion \n Certified Trainer",
       },
     },
     {
@@ -280,8 +280,8 @@ export function Team() {
       image: "/team/miguel-costa.png",
       category: "Desenvolvimento de Software",
       bio: {
-        pt: "É licenciado e mestre em Engenharia Informática pela Universidade da Madeira. A sua dissertação de mestrado centrou-se na utilização de tecnologias interativas e jogos sérios aplicados à educação para a saúde, com especial foco na prevenção do cancro em crianças.",
-        en: "He holds both a Bachelor's and a Master's degree in Computer Engineering from the University of Madeira. His Master's dissertation focused on the use of interactive technologies and serious games in health education, with a particular emphasis on cancer prevention in children.",
+        pt: "É licenciado e mestre em Engenharia Informática pela Universidade da Madeira. A sua dissertação de mestrado centrou-se na utilização de tecnologias interativas e jogos sérios aplicados à educação para a saúde, com especial foco na prevenção do cancro em crianças. No âmbito do projeto, é responsável pela arquitetura, desenvolvimento e manutenção técnica da plataforma XR, incluindo a programação em Unity 3D, a integração dos ativos 2D e 3D desenvolvidos pelos artistas, a implementação da interface de utilizador e o desenvolvimento das mecânicas de jogo e das atividades lúdico-educativas.",
+        en: "He holds both a Bachelor's and a Master's degree in Computer Engineering from the University of Madeira. His Master's dissertation focused on the use of interactive technologies and serious games in health education, with a particular emphasis on cancer prevention in children. Within the project, he is responsible for the architecture, development, and technical maintenance of the XR platform, including programming in Unity 3D, integrating 2D and 3D assets developed by the artists, implementing the user interface, and developing the game mechanics and educational activities.",
       },
     },
     {
@@ -310,7 +310,7 @@ export function Team() {
       image: "/team/juan-ponte.png",
       category: "Design & Experiência",
       bio: {
-        pt: "Designer UX/UI ",
+        pt: "Com formação em Design de Medias Interativos, foi responsável em 2017 pelo design de interfaces do jogo de estratégia por turnos “Keepers of Intheris”. Nos últimos anos, tem desenvolvido trabalho nas áreas de Design Gráfico, Motion Graphics e Web Design. \n No projeto C.A.I.X.A., assume a função de UX/UI Designer, sendo responsável pela experiência do utilizador e pelo design da interface, de forma a garantir uma experiência digital intuitiva, funcional e adaptada à tecnologia utilizada.",
         en: "UX/UI designer ",
       },
     },

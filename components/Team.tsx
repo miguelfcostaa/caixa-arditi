@@ -293,8 +293,8 @@ export function Team() {
       image: "/team/roberto-f.png",
       category: "Desenvolvimento de Software",
       bio: {
-        pt: "Engenheiro de software. ",
-        en: "Software engineer .",
+        pt: "Roberto Fernandes é licenciado e mestre em Engenharia Informática pela Universidade da Madeira. \n\n Na sua dissertação de mestrado, desenvolvida no contexto da oncologia pediátrica, integrou o reconhecimento automático de emoções faciais no Musiquence, uma plataforma de criação de atividades já utilizada por profissionais de saúde. O sistema permite que as atividades se adaptem ao estado emocional da criança durante a sessão, e foi desenhado com a privacidade dos dados como requisito central. \n\n No âmbito do projeto, é responsável pela arquitetura, desenvolvimento e manutenção técnica dos servidores, bem como pela conceção da base de dados que gere os perfis de utilizadores e os dados sensíveis recolhidos ao longo da implementação.",
+        en: "Roberto Fernandes holds a bachelor's and a master's degree in Computer Engineering from the University of Madeira. \n\n In his master's thesis, developed in the context of paediatric oncology, he integrated automatic facial emotion recognition into Musiquence, an activity-authoring platform already used by healthcare professionals. The system allows activities to adapt to the child's emotional state during the session, and was designed with data privacy as a core requirement. \n\n Within the project, he is responsible for the architecture, development and technical maintenance of the servers, as well as for designing the database that manages user profiles and the sensitive data collected throughout the implementation.",
       },
     },
   ];
@@ -311,7 +311,7 @@ export function Team() {
       category: "Design & Experiência",
       bio: {
         pt: "Com formação em Design de Medias Interativos, foi responsável em 2017 pelo design de interfaces do jogo de estratégia por turnos “Keepers of Intheris”. Nos últimos anos, tem desenvolvido trabalho nas áreas de Design Gráfico, Motion Graphics e Web Design. \n No projeto C.A.I.X.A., assume a função de UX/UI Designer, sendo responsável pela experiência do utilizador e pelo design da interface, de forma a garantir uma experiência digital intuitiva, funcional e adaptada à tecnologia utilizada.",
-        en: "UX/UI designer ",
+        en: "With a background in Interactive Media Design, Juan designed the interfaces for the turn-based strategy game “Keepers of Intheris” in 2016. In recent years, has worked across Graphic Design, Motion Graphics and Web Design. \n In the C.A.I.X.A. project, he is the UX/UI Designer, responsible for the user experience and interface design, ensuring that the digital experience is intuitive, functional, and optimized for the technology used while taking into account the proposed interactions and activities.",
       },
     },
   ];

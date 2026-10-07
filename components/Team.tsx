@@ -327,8 +327,8 @@ export function Team() {
       image: "/team/ricardo-sousa.png",
       category: "Parcerias",
       bio: {
-        pt: "",
-        en: "",
+        pt: "Presidente da Direcção do Núcleo Regional da Madeira da Liga Portuguesa Contra o Cancro.",
+        en: "President of the Board of Directors of the Madeira Regional Branch of the Portuguese League Against Cancer.",
       },
     },
   ];

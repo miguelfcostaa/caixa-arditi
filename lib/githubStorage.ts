@@ -88,11 +88,13 @@ export async function saveNewsArticle(
       article.image = imageRelativePath;
 
       // Guarda a imagem no sistema de ficheiros local
+      let localImageWriteError: unknown;
       try {
         await fs.mkdir(LOCAL_IMAGES_DIR, { recursive: true });
         const localImagePath = path.join(LOCAL_IMAGES_DIR, sanitizedName);
         await fs.writeFile(localImagePath, imageFile.buffer);
       } catch (err) {
+        localImageWriteError = err;
         console.error("Erro ao guardar imagem localmente:", err);
       }
 
@@ -115,9 +117,15 @@ export async function saveNewsArticle(
           if (checkRes.ok) {
             const data = await checkRes.json();
             existingSha = data.sha;
+          } else if (checkRes.status !== 404) {
+            return {
+              success: false,
+              localOnly: false,
+              error: `Não foi possível verificar a imagem no GitHub (${checkRes.status}).`,
+            };
           }
 
-          await fetch(
+          const imageUploadRes = await fetch(
             `https://api.github.com/repos/${repository}/contents/${imageGithubPath}`,
             {
               method: "PUT",
@@ -135,9 +143,30 @@ export async function saveNewsArticle(
               }),
             },
           );
+
+          if (!imageUploadRes.ok) {
+            const errorText = await imageUploadRes.text();
+            console.error("Erro ao enviar imagem para GitHub:", errorText);
+            return {
+              success: false,
+              localOnly: false,
+              error: `Não foi possível enviar a imagem para o GitHub (${imageUploadRes.status}).`,
+            };
+          }
         } catch (imgErr) {
           console.error("Erro ao enviar imagem para GitHub:", imgErr);
+          return {
+            success: false,
+            localOnly: false,
+            error: "Não foi possível enviar a imagem para o GitHub.",
+          };
         }
+      } else if (localImageWriteError) {
+        return {
+          success: false,
+          localOnly: true,
+          error: "Não foi possível guardar a imagem no sistema de ficheiros local.",
+        };
       }
     }
 

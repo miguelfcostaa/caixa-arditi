@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,9 +13,9 @@ import {
   Unlock,
   CheckCircle2,
   AlertCircle,
-  Sparkles,
 } from "lucide-react";
 import { NewsArticle, NewsStatus } from "@/lib/newsletterData";
+import { getNewsImageUrl } from "@/lib/newsImage";
 
 interface NewsFormProps {
   initialArticle?: NewsArticle;
@@ -93,9 +93,7 @@ export function NewsForm({ initialArticle, isNew = false }: NewsFormProps) {
   const [dateEn, setDateEn] = useState(initialArticle?.date.en || "");
 
   // Imagem
-  const [currentImage, setCurrentImage] = useState(
-    initialArticle?.image || "/images/image1.jpg",
-  );
+  const currentImage = initialArticle?.image || "/images/image1.jpg";
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageAltPt, setImageAltPt] = useState(initialArticle?.imageAlt.pt || "");
@@ -108,13 +106,6 @@ export function NewsForm({ initialArticle, isNew = false }: NewsFormProps) {
   const [contentEn, setContentEn] = useState(
     initialArticle?.content.en.join("\n\n") || "",
   );
-
-  // Atualiza slug automaticamente enquanto não estiver bloqueado
-  useEffect(() => {
-    if (!slugLocked && isNew && titlePt) {
-      setSlug(generateSlug(titlePt));
-    }
-  }, [titlePt, slugLocked, isNew]);
 
   // Atualiza automaticamente os rótulos de data quando se escolhe uma data
   const handleDateChange = (newDate: string) => {
@@ -431,7 +422,7 @@ export function NewsForm({ initialArticle, isNew = false }: NewsFormProps) {
           <div>
             <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
               <Image
-                src={imagePreview || currentImage}
+                src={imagePreview || getNewsImageUrl(currentImage)}
                 alt="Pré-visualização da imagem"
                 fill
                 className="object-cover"
@@ -553,7 +544,13 @@ export function NewsForm({ initialArticle, isNew = false }: NewsFormProps) {
                 type="text"
                 required
                 value={titlePt}
-                onChange={(e) => setTitlePt(e.target.value)}
+                onChange={(e) => {
+                  const nextTitle = e.target.value;
+                  setTitlePt(nextTitle);
+                  if (!slugLocked && isNew) {
+                    setSlug(generateSlug(nextTitle));
+                  }
+                }}
                 placeholder="Ex: Workshop com Pais no âmbito do Projeto C.A.I.X.A."
                 className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-4 py-2.5 text-base font-semibold text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
               />

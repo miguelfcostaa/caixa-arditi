@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/siteConfig";
 import { loadPublishedNews } from "@/lib/githubStorage";
+import { getNewsImageUrl } from "@/lib/newsImage";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articles = await loadPublishedNews();
@@ -23,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: absoluteUrl(`/noticias/${article.slug}`),
     changeFrequency: "monthly",
     priority: 0.7,
-    images: [absoluteUrl(article.image)],
+    images: [absoluteUrl(getNewsImageUrl(article.image))],
   }));
 
   return [...staticPages, ...articlePages];

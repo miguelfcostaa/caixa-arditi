@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArticleView } from "@/components/ArticleView";
 import { absoluteUrl, siteConfig, truncateDescription } from "@/lib/siteConfig";
 import { loadPublishedNews } from "@/lib/githubStorage";
+import { getNewsImageUrl } from "@/lib/newsImage";
 
 export const dynamic = "force-dynamic";
 
@@ -51,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       section: article.category.pt,
       images: [
         {
-          url: absoluteUrl(article.image),
+          url: absoluteUrl(getNewsImageUrl(article.image)),
           alt: article.imageAlt.pt,
         },
       ],
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title: article.title.pt,
       description,
-      images: [absoluteUrl(article.image)],
+      images: [absoluteUrl(getNewsImageUrl(article.image))],
     },
   };
 }
@@ -81,7 +82,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
     "@type": "NewsArticle",
     headline: article.title.pt,
     description,
-    image: [absoluteUrl(article.image)],
+    image: [absoluteUrl(getNewsImageUrl(article.image))],
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
     articleSection: article.category.pt,

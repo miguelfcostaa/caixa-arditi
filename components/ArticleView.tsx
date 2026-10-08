@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Calendar, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import type { NewsArticle } from "@/lib/newsletterData";
+import { getNewsImageUrl } from "@/lib/newsImage";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -60,7 +61,7 @@ export function ArticleView({
           {/* Imagem de Destaque em formato banner esticado (~1200x200), cover stretch e overflow hidden */}
           <div className="relative mt-8 h-[150px] sm:h-[150px] md:h-[150px] w-full overflow-hidden bg-slate-200 shadow-sm">
             <Image
-              src={article.image}
+              src={getNewsImageUrl(article.image)}
               alt={imageAlt}
               fill
               priority
@@ -103,7 +104,7 @@ export function ArticleView({
                   >
                     <div className="relative aspect-video w-full overflow-hidden bg-slate-200">
                       <Image
-                        src={other.image}
+                        src={getNewsImageUrl(other.image)}
                         alt={other.imageAlt[locale] || other.imageAlt.pt}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

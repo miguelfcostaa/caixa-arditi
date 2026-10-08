@@ -12,6 +12,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { NewsArticle } from "@/lib/newsletterData";
+import { getNewsImageUrl } from "@/lib/newsImage";
 
 interface NewsListClientProps {
   initialNews: NewsArticle[];
@@ -147,7 +148,7 @@ export function NewsListClient({ initialNews }: NewsListClientProps) {
                 <div className="flex items-start gap-4">
                   <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 sm:h-20 sm:w-28">
                     <Image
-                      src={article.image}
+                      src={getNewsImageUrl(article.image)}
                       alt={article.imageAlt.pt || article.title.pt}
                       fill
                       className="object-cover"

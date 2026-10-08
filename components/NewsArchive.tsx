@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import type { NewsArticle } from "@/lib/newsletterData";
+import { getNewsImageUrl } from "@/lib/newsImage";
 
 export function NewsArchive({ articles }: { articles: NewsArticle[] }) {
   const router = useRouter();
@@ -64,7 +65,7 @@ export function NewsArchive({ articles }: { articles: NewsArticle[] }) {
             >
               <div className="relative aspect-video w-full overflow-hidden bg-slate-200/60">
                 <Image
-                  src={article.image}
+                  src={getNewsImageUrl(article.image)}
                   alt={article.imageAlt[locale] || article.imageAlt.pt}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import type { NewsArticle } from "@/lib/newsletterData";
+import { getNewsImageUrl } from "@/lib/newsImage";
 
 export function Newsletter({ articles }: { articles: NewsArticle[] }) {
   const { locale, t } = useLanguage();
@@ -133,7 +134,7 @@ export function Newsletter({ articles }: { articles: NewsArticle[] }) {
               >
                 <div className="relative aspect-video w-full overflow-hidden bg-slate-200/60">
                   <Image
-                    src={item.image}
+                    src={getNewsImageUrl(item.image)}
                     alt={item.imageAlt[locale] || item.imageAlt.pt}
                     fill
                     sizes="(max-width: 640px) 84vw, (max-width: 1024px) 72vw, 62vw"

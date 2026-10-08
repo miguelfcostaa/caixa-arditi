@@ -232,39 +232,5 @@
         "Integrated telemetry modules now track learning curves and compile anonymized metrics for rigorous ongoing scientific validation."
       ]
     }
-  },
-  {
-    "status": "publicada",
-    "slug": "artigo-cientifico-publicado-sobre-prevencao-pediatrica",
-    "publishedAt": "2027-02-01",
-    "title": {
-      "pt": "Artigo Científico Publicado sobre Prevenção Pediátrica",
-      "en": "Scientific Paper Published on Pediatric Prevention"
-    },
-    "category": {
-      "pt": "Publicações Científicas",
-      "en": "Scientific Publications"
-    },
-    "date": {
-      "pt": "Fevereiro 2027",
-      "en": "February 2027"
-    },
-    "image": "/images/image2.jpg",
-    "imageAlt": {
-      "pt": "Publicação de artigo científico em revista internacional com revisão por pares",
-      "en": "Publication of peer-reviewed paper in international scientific journal"
-    },
-    "content": {
-      "pt": [
-        "Os primeiros resultados da investigação desenvolvida no âmbito do Projeto C.A.I.X.A. foram aceites para publicação numa conceituada revista internacional com arbitragem científica.",
-        "O artigo analisa os mecanismos neurocognitivos que potenciam a retenção de mensagens de saúde quando mediadas por experiências imersivas face a metodologias expositivas tradicionais.",
-        "Esta conquista reforça a excelência académica do consórcio e consolida a base teórica sobre a qual toda a intervenção comunitária do projeto está alicerçada."
-      ],
-      "en": [
-        "Initial research findings from Project C.A.I.X.A. were accepted for publication in a prestigious peer-reviewed international scientific journal.",
-        "The paper investigates the neurocognitive mechanisms that enhance health message retention through immersive learning compared to traditional lecture formats.",
-        "This academic achievement reinforces the research consortium's scientific caliber and grounds the project's community outreach in rigorous theory."
-      ]
-    }
   }
 ]

@@ -20,43 +20,41 @@ const LOCAL_JSON_PATH = path.join(process.cwd(), "content", "noticias.json");
 const LOCAL_IMAGES_DIR = path.join(process.cwd(), "public", "images", "noticias");
 
 /**
- * Lê todas as notícias do ficheiro local ou da API do GitHub se local não estiver disponível.
+ * Lê todas as notícias. Quando o GitHub está configurado, o repositório é a
+ * fonte de verdade; o ficheiro local é apenas usado no modo de desenvolvimento.
  */
 export async function loadAllNews(): Promise<NewsArticle[]> {
+  const { token, repository, branch } = getGitHubConfig();
+
+  if (token) {
+    const res = await fetch(
+      `https://api.github.com/repos/${repository}/contents/content/noticias.json?ref=${branch}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github.v3+json",
+          "User-Agent": "caixa-web-admin",
+        },
+        cache: "no-store",
+      },
+    );
+
+    if (!res.ok) {
+      throw new Error(`Não foi possível ler as notícias do GitHub (${res.status}).`);
+    }
+
+    const data = await res.json();
+    const content = Buffer.from(data.content, "base64").toString("utf8");
+    return JSON.parse(content);
+  }
+
   try {
     const raw = await fs.readFile(LOCAL_JSON_PATH, "utf8");
     return JSON.parse(raw);
-  } catch {
-    // Se o ficheiro local não existir, tenta obter do GitHub
-    const { token, repository, branch } = getGitHubConfig();
-    if (token) {
-      try {
-        const res = await fetch(
-          `https://api.github.com/repos/${repository}/contents/content/noticias.json?ref=${branch}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Accept: "application/vnd.github.v3+json",
-              "User-Agent": "caixa-web-admin",
-            },
-            cache: "no-store",
-          },
-        );
-        if (res.ok) {
-          const data = await res.json();
-          const content = Buffer.from(data.content, "base64").toString("utf8");
-          const parsed = JSON.parse(content);
-          // Guarda localmente para cache
-          try {
-            await fs.mkdir(path.dirname(LOCAL_JSON_PATH), { recursive: true });
-            await fs.writeFile(LOCAL_JSON_PATH, JSON.stringify(parsed, null, 2), "utf8");
-          } catch {}
-          return parsed;
-        }
-      } catch {}
-    }
+  } catch (error) {
+    console.error("Erro ao ler content/noticias.json:", error);
+    throw new Error("Não foi possível ler o ficheiro local de notícias.");
   }
-  return [];
 }
 
 /**
@@ -144,21 +142,29 @@ export async function saveNewsArticle(
 
     const updatedJsonString = JSON.stringify(updatedNews, null, 2);
 
-    // Guarda sempre no sistema de ficheiros local
+    // Guarda no sistema de ficheiros local quando este estiver disponível.
+    let localWriteError: unknown;
     try {
       await fs.mkdir(path.dirname(LOCAL_JSON_PATH), { recursive: true });
       await fs.writeFile(LOCAL_JSON_PATH, updatedJsonString, "utf8");
     } catch (fsErr) {
+      localWriteError = fsErr;
       console.error("Erro ao gravar content/noticias.json local:", fsErr);
     }
 
     // Se não houver GitHub Token, conclui em modo local
     if (!token) {
+      if (localWriteError) {
+        return {
+          success: false,
+          localOnly: true,
+          error: "Não foi possível guardar a notícia no ficheiro local.",
+        };
+      }
       return { success: true, localOnly: true };
     }
 
     // Comita o ficheiro content/noticias.json no repositório GitHub
-    let fileSha: string | undefined;
     const getFileRes = await fetch(
       `https://api.github.com/repos/${repository}/contents/content/noticias.json?ref=${branch}`,
       {
@@ -170,10 +176,16 @@ export async function saveNewsArticle(
       },
     );
 
-    if (getFileRes.ok) {
-      const fileData = await getFileRes.json();
-      fileSha = fileData.sha;
+    if (!getFileRes.ok) {
+      return {
+        success: false,
+        localOnly: false,
+        error: `Não foi possível obter a versão atual das notícias no GitHub (${getFileRes.status}).`,
+      };
     }
+
+    const fileData = await getFileRes.json();
+    const fileSha: string = fileData.sha;
 
     const commitMessage =
       existingIndex >= 0
@@ -203,9 +215,9 @@ export async function saveNewsArticle(
       const errorText = await putRes.text();
       console.error("Erro ao comitar content/noticias.json no GitHub:", errorText);
       return {
-        success: true,
-        localOnly: true,
-        error: `Guardado localmente. GitHub API: ${putRes.statusText}`,
+        success: false,
+        localOnly: false,
+        error: `Não foi possível guardar a notícia no GitHub (${putRes.status}).`,
       };
     }
 
@@ -243,20 +255,29 @@ export async function deleteNewsArticle(
     const updatedNews = currentNews.filter((item) => item.slug !== slug);
     const updatedJsonString = JSON.stringify(updatedNews, null, 2);
 
-    // Grava localmente
+    // Grava localmente quando o sistema de ficheiros estiver disponível.
+    let localWriteError: unknown;
     try {
+      await fs.mkdir(path.dirname(LOCAL_JSON_PATH), { recursive: true });
       await fs.writeFile(LOCAL_JSON_PATH, updatedJsonString, "utf8");
     } catch (fsErr) {
+      localWriteError = fsErr;
       console.error("Erro ao atualizar ficheiro local:", fsErr);
     }
 
     // Se não houver token, termina
     if (!token) {
+      if (localWriteError) {
+        return {
+          success: false,
+          localOnly: true,
+          error: "Não foi possível atualizar o ficheiro local de notícias.",
+        };
+      }
       return { success: true, localOnly: true };
     }
 
     // Comita a remoção no GitHub
-    let fileSha: string | undefined;
     const getFileRes = await fetch(
       `https://api.github.com/repos/${repository}/contents/content/noticias.json?ref=${branch}`,
       {
@@ -268,10 +289,16 @@ export async function deleteNewsArticle(
       },
     );
 
-    if (getFileRes.ok) {
-      const fileData = await getFileRes.json();
-      fileSha = fileData.sha;
+    if (!getFileRes.ok) {
+      return {
+        success: false,
+        localOnly: false,
+        error: `Não foi possível obter a versão atual das notícias no GitHub (${getFileRes.status}).`,
+      };
     }
+
+    const fileData = await getFileRes.json();
+    const fileSha: string = fileData.sha;
 
     const putRes = await fetch(
       `https://api.github.com/repos/${repository}/contents/content/noticias.json`,
@@ -292,7 +319,17 @@ export async function deleteNewsArticle(
       },
     );
 
-    return { success: putRes.ok, localOnly: !putRes.ok };
+    if (!putRes.ok) {
+      const errorText = await putRes.text();
+      console.error("Erro ao remover notícia no GitHub:", errorText);
+      return {
+        success: false,
+        localOnly: false,
+        error: `Não foi possível remover a notícia no GitHub (${putRes.status}).`,
+      };
+    }
+
+    return { success: true, localOnly: false };
   } catch (error) {
     return {
       success: false,
@@ -402,7 +439,7 @@ export async function getDeploymentStatus(): Promise<{
       updatedAt,
       commitSha,
     };
-  } catch (error) {
+  } catch {
     return {
       status: "unknown",
       message: "Não foi possível verificar o estado do deployment.",

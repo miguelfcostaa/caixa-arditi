@@ -5,12 +5,17 @@ services:
       args:
         SITE_URL: https://caixa.arditi.pt
         GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
-    image: caixa-web:latest
+    image: caixa-arditi:latest
     restart: unless-stopped
     environment:
       SITE_URL: https://caixa.arditi.pt
       NODE_ENV: production
       HOSTNAME: 0.0.0.0
       PORT: 3000
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      GITHUB_REPOSITORY: ${GITHUB_REPOSITORY:-miguelfcostaa/caixa-arditi}
+      GITHUB_BRANCH: ${GITHUB_BRANCH:-main}
     ports:
       - "${APP_PORT:-3000}:3000"

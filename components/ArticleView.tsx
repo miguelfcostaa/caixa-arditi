@@ -9,7 +9,13 @@ import { NewsArticle, newsArticles } from "@/lib/newsletterData";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-export function ArticleView({ article }: { article: NewsArticle }) {
+export function ArticleView({
+  article,
+  banner,
+}: {
+  article: NewsArticle;
+  banner?: React.ReactNode;
+}) {
   const router = useRouter();
   const { locale } = useLanguage();
 
@@ -22,9 +28,15 @@ export function ArticleView({ article }: { article: NewsArticle }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#FCFAF9]">
-      <Navbar />
+      {banner && (
+        <aside className="fixed top-0 left-0 right-0 z-60 h-11 border-b border-amber-300 bg-amber-50">
+          {banner}
+        </aside>
+      )}
 
-      <main className="flex-1 pt-28 pb-20 sm:pt-32 sm:pb-24">
+      <Navbar topOffset={banner ? "top-11" : "top-0"} />
+
+      <main className={`flex-1 pb-20 sm:pb-24 ${banner ? "pt-36 sm:pt-40" : "pt-28 sm:pt-32"}`}>
         {/* Contentor com largura padrão uniforme max-w-6xl de todo o site */}
         <article className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           {/* Botão de retroceder */}

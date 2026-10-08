@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LanguageSelector } from "@/components/LanguageSelector";
 
-export function Navbar() {
+export function Navbar({ topOffset = "top-0" }: { topOffset?: string } = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const { t } = useLanguage();
@@ -143,7 +143,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed ${topOffset} left-0 right-0 z-50 w-full transition-all duration-300 ${
         isScrolled || mobileMenuOpen
           ? "bg-[#FCFAF9]/95 backdrop-blur-md border-b border-slate-200/60 shadow-xs"
           : "bg-transparent border-b border-transparent shadow-none"

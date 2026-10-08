@@ -10,9 +10,6 @@ import { newsArticles } from "@/lib/newsletterData";
 export function NewsArchive() {
   const router = useRouter();
   const { locale } = useLanguage();
-  const orderedArticles = [...newsArticles].sort((a, b) =>
-    b.publishedAt.localeCompare(a.publishedAt),
-  );
 
   return (
     <section className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -44,7 +41,7 @@ export function NewsArchive() {
       </header>
 
       <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
-        {orderedArticles.map((article) => {
+        {newsArticles.map((article) => {
           const title = article.title[locale] || article.title.pt;
 
           return (

@@ -167,35 +167,35 @@
   },
   {
     "status": "publicada",
-    "slug": "sessoes-de-demonstracao-nas-escolas",
-    "publishedAt": "2026-12-01",
+    "slug": "avancos-no-desenvolvimento-do-jogo-serio",
+    "publishedAt": "2027-01-01",
     "title": {
-      "pt": "Sessões de Demonstração nas Escolas da Madeira",
-      "en": "Demonstration Sessions in Madeira Schools"
+      "pt": "Avanços no Desenvolvimento do Jogo Sério",
+      "en": "Progress in Serious Game Development"
     },
     "category": {
-      "pt": "Educação & Comunidade",
-      "en": "Education & Community"
+      "pt": "Tecnologia & Inovação",
+      "en": "Technology & Innovation"
     },
     "date": {
-      "pt": "Dezembro 2026",
-      "en": "December 2026"
+      "pt": "Janeiro 2027",
+      "en": "January 2027"
     },
-    "image": "/images/newsletter1.jpg",
+    "image": "/images/newsletter2.jpg",
     "imageAlt": {
-      "pt": "Crianças a experimentar os protótipos em contexto escolar",
-      "en": "Children testing interactive prototypes in school environments"
+      "pt": "Equipa de engenharia a testar os módulos interativos do jogo",
+      "en": "Engineering team testing game mechanics and interfaces"
     },
     "content": {
       "pt": [
-        "Arrancaram as primeiras ações-piloto de demonstração em escolas do 1.º e 2.º ciclos da Região Autónoma da Madeira, onde dezenas de alunos tiveram a oportunidade de experimentar os jogos sérios do projeto.",
-        "As dinâmicas interativas focaram escolhas alimentares saudáveis, proteção solar e prática regular de atividade física através de mecânicas lúdicas em realidade aumentada.",
-        "O entusiasmo das crianças e o feedback positivo dos professores demonstraram a eficácia do formato gamificado na assimilação e retenção de conceitos preventivos essenciais."
+        "A equipa de engenharia de software concluiu mais uma fase crucial no desenvolvimento da infraestrutura de jogos sérios com suporte para múltiplos dispositivos XR.",
+        "Foram otimizados os tempos de resposta, a fidelidade visual dos avatares e a acessibilidade da interface, assegurando que crianças de diferentes idades conseguem navegar de forma intuitiva.",
+        "Os novos módulos de telemetria permitem ainda acompanhar a evolução das aprendizagens e gerar métricas anónimas para validação científica contínua."
       ],
       "en": [
-        "The first pilot demonstration sessions commenced in primary and middle schools across the Autonomous Region of Madeira, where dozens of students tested the project's serious games.",
-        "Interactive activities focused on healthy food choices, sun protection, and routine physical exercise through augmented reality mini-games.",
-        "The children's enthusiasm and educators' positive responses showcased the effectiveness of gamification in delivering vital health prevention lessons."
+        "The software engineering team concluded another vital phase in developing the serious gaming infrastructure supporting multi-device XR hardware.",
+        "Input response times, avatar rendering fidelity, and user interface accessibility were heavily optimized to ensure children of varying ages can navigate intuitively.",
+        "Integrated telemetry modules now track learning curves and compile anonymized metrics for rigorous ongoing scientific validation."
       ]
     }
   },

@@ -7,6 +7,9 @@ import { Team } from "@/components/Team";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+import { loadPublishedNews } from "@/lib/githubStorage";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   alternates: {
@@ -32,7 +35,9 @@ const organizationJsonLd = {
   logo: absoluteUrl("/logo.ico"),
 };
 
-export default function Home() {
+export default async function Home() {
+  const articles = await loadPublishedNews();
+
   return (
     <div className="flex min-h-screen flex-col bg-[#FCFAF9]">
       <script
@@ -62,7 +67,7 @@ export default function Home() {
         <Partners />
 
         {/* 5. Newsletter */}
-        <Newsletter />
+        <Newsletter articles={articles} />
       </main>
 
       {/* Rodapé */}

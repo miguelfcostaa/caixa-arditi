@@ -5,44 +5,44 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { newsArticles } from "@/lib/newsletterData";
+import type { NewsArticle } from "@/lib/newsletterData";
 
-export function Newsletter() {
+export function Newsletter({ articles }: { articles: NewsArticle[] }) {
   const { locale, t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  const isCarousel = newsArticles.length > 1;
+  const isCarousel = articles.length > 1;
   const maxVisibleDots = 5;
   const firstVisibleDot = Math.min(
     Math.max(currentIndex - Math.floor(maxVisibleDots / 2), 0),
-    Math.max(newsArticles.length - maxVisibleDots, 0),
+    Math.max(articles.length - maxVisibleDots, 0),
   );
   const visibleDotIndexes = Array.from(
-    { length: Math.min(maxVisibleDots, newsArticles.length) },
+    { length: Math.min(maxVisibleDots, articles.length) },
     (_, index) => firstVisibleDot + index,
   );
 
   // Avançar com "dar a volta" (loop circular)
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % newsArticles.length);
+    setCurrentIndex((prev) => (prev + 1) % articles.length);
   };
 
   // Recuar com "dar a volta" (loop circular)
   const handlePrev = () => {
     setCurrentIndex(
-      (prev) => (prev - 1 + newsArticles.length) % newsArticles.length,
+      (prev) => (prev - 1 + articles.length) % articles.length,
     );
   };
 
   const getSlidePosition = (index: number) => {
-    const offset = (index - currentIndex + newsArticles.length) % newsArticles.length;
+    const offset = (index - currentIndex + articles.length) % articles.length;
 
     if (offset === 0) return "active";
     if (offset === 1) return "next";
-    if (offset === newsArticles.length - 1) return "previous";
+    if (offset === articles.length - 1) return "previous";
     return "hidden";
   };
 
@@ -93,7 +93,7 @@ export function Newsletter() {
           onTouchMove={isCarousel ? handleTouchMove : undefined}
           onTouchEnd={isCarousel ? handleTouchEnd : undefined}
         >
-          {newsArticles.map((item, index) => {
+          {articles.map((item, index) => {
             const position = getSlidePosition(index);
             const isActive = position === "active";
             const isPrevious = position === "previous";
@@ -209,7 +209,7 @@ export function Newsletter() {
             <div className="flex min-w-28 items-center justify-center gap-2">
               {visibleDotIndexes.map((idx) => (
                 <button
-                  key={newsArticles[idx].slug}
+                  key={articles[idx].slug}
                   type="button"
                   onClick={() => setCurrentIndex(idx)}
                   className={`h-2.5 cursor-pointer rounded-full transition-all duration-300 focus:outline-hidden ${

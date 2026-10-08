@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { NewsArticle } from "@/lib/newsletterData";
+import type { NewsArticle } from "@/lib/newsletterData";
 
 interface GitHubConfig {
   token?: string;
@@ -55,6 +55,17 @@ export async function loadAllNews(): Promise<NewsArticle[]> {
     console.error("Erro ao ler content/noticias.json:", error);
     throw new Error("Não foi possível ler o ficheiro local de notícias.");
   }
+}
+
+/**
+ * Fonte de dados para as páginas públicas. Rascunhos nunca são devolvidos.
+ */
+export async function loadPublishedNews(): Promise<NewsArticle[]> {
+  const articles = await loadAllNews();
+
+  return articles
+    .filter((article) => article.status === "publicada")
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
 /**

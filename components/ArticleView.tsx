@@ -5,15 +5,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Calendar, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { NewsArticle, newsArticles } from "@/lib/newsletterData";
+import type { NewsArticle } from "@/lib/newsletterData";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export function ArticleView({
   article,
+  articles = [],
   banner,
 }: {
   article: NewsArticle;
+  articles?: NewsArticle[];
   banner?: React.ReactNode;
 }) {
   const router = useRouter();
@@ -24,7 +26,7 @@ export function ArticleView({
   const imageAlt = article.imageAlt[locale] || article.imageAlt.pt;
   const paragraphs = article.content[locale] || article.content.pt;
 
-  const otherArticles = newsArticles.filter((a) => a.slug !== article.slug);
+  const otherArticles = articles.filter((a) => a.slug !== article.slug);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#FCFAF9]">

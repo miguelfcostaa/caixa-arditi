@@ -3,7 +3,7 @@ import Link from "next/link";
 import { isAuthenticatedAdmin } from "@/lib/adminAuth";
 import { loadAllNews } from "@/lib/githubStorage";
 import { ArticleView } from "@/components/ArticleView";
-import { ArrowLeft, Edit2, Eye } from "lucide-react";
+import { ArrowLeft, Edit2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -62,6 +62,12 @@ export default async function PreviewNoticiaPage({ params }: PreviewPageProps) {
     </div>
   );
 
-  return <ArticleView article={article} banner={previewBanner} />;
+  return (
+    <ArticleView
+      article={article}
+      articles={allNews.filter((item) => item.status === "publicada")}
+      banner={previewBanner}
+    />
+  );
 }
 

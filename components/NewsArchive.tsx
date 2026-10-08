@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { newsArticles } from "@/lib/newsletterData";
+import type { NewsArticle } from "@/lib/newsletterData";
 
-export function NewsArchive() {
+export function NewsArchive({ articles }: { articles: NewsArticle[] }) {
   const router = useRouter();
   const { locale } = useLanguage();
 
@@ -41,7 +41,7 @@ export function NewsArchive() {
       </header>
 
       <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
-        {newsArticles.map((article) => {
+        {articles.map((article) => {
           const title = article.title[locale] || article.title.pt;
 
           return (

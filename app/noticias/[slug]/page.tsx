@@ -1,22 +1,27 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { newsArticles } from "@/lib/newsletterData";
 import { ArticleView } from "@/components/ArticleView";
 import { absoluteUrl, siteConfig, truncateDescription } from "@/lib/siteConfig";
+import { loadPublishedNews } from "@/lib/githubStorage";
+
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return newsArticles.map((article) => ({
+export async function generateStaticParams() {
+  const articles = await loadPublishedNews();
+
+  return articles.map((article) => ({
     slug: article.slug,
   }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = newsArticles.find((item) => item.slug === slug);
+  const articles = await loadPublishedNews();
+  const article = articles.find((item) => item.slug === slug);
 
   if (!article) {
     return {
@@ -62,7 +67,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function NewsArticlePage({ params }: PageProps) {
   const { slug } = await params;
-  const article = newsArticles.find((item) => item.slug === slug);
+  const articles = await loadPublishedNews();
+  const article = articles.find((item) => item.slug === slug);
 
   if (!article) {
     notFound();
@@ -105,7 +111,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
           __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <ArticleView article={article} />
+      <ArticleView article={article} articles={articles} />
     </>
   );
 }

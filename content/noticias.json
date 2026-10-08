@@ -130,39 +130,5 @@
         "The clinical feedback gathered ensures precise calibration of visual stimuli and pedagogical narratives, providing a safe, informative, and engaging experience for young audiences."
       ]
     }
-  },
-  {
-    "status": "publicada",
-    "slug": "apresentacao-na-conferencia-internacional-de-rv",
-    "publishedAt": "2026-11-01",
-    "title": {
-      "pt": "Apresentação na Conferência Internacional de Realidade Virtual",
-      "en": "Presentation at the International Virtual Reality Conference"
-    },
-    "category": {
-      "pt": "Conferências & Ciência",
-      "en": "Conferences & Science"
-    },
-    "date": {
-      "pt": "Novembro 2026",
-      "en": "November 2026"
-    },
-    "image": "/images/image1.jpg",
-    "imageAlt": {
-      "pt": "Apresentação dos resultados preliminares em conferência internacional",
-      "en": "Presentation of preliminary findings at an international conference"
-    },
-    "content": {
-      "pt": [
-        "A equipa de investigadores do Projeto C.A.I.X.A. apresentou as linhas orientadoras e a arquitetura tecnológica da plataforma numa conferência internacional de topo dedicada a tecnologias imersivas aplicadas à saúde.",
-        "A comunicação destacou o potencial da realidade mista para catalisar mudanças comportamentais duradouras em faixas etárias precoces, recebendo elogios pela abordagem interdisciplinar entre neuropsicologia e engenharia de software.",
-        "Este reconhecimento internacional reforça o compromisso da Região Autónoma da Madeira em liderar projetos pioneiros de inovação médica e digital."
-      ],
-      "en": [
-        "The research team of Project C.A.I.X.A. presented the core guidelines and technological architecture of the platform at a premier international conference dedicated to immersive health technologies.",
-        "The talk highlighted the potential of mixed reality to spark long-term behavioral change in early age groups, earning praise for its interdisciplinary synergy between neuropsychology and software engineering.",
-        "This international recognition highlights Madeira's commitment to leading pioneering initiatives in digital healthcare innovation."
-      ]
-    }
   }
 ]

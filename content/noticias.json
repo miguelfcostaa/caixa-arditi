@@ -201,40 +201,6 @@
   },
   {
     "status": "publicada",
-    "slug": "avancos-no-desenvolvimento-do-jogo-serio",
-    "publishedAt": "2027-01-01",
-    "title": {
-      "pt": "Avanços no Desenvolvimento do Jogo Sério",
-      "en": "Progress in Serious Game Development"
-    },
-    "category": {
-      "pt": "Tecnologia & Inovação",
-      "en": "Technology & Innovation"
-    },
-    "date": {
-      "pt": "Janeiro 2027",
-      "en": "January 2027"
-    },
-    "image": "/images/newsletter2.jpg",
-    "imageAlt": {
-      "pt": "Equipa de engenharia a testar os módulos interativos do jogo",
-      "en": "Engineering team testing game mechanics and interfaces"
-    },
-    "content": {
-      "pt": [
-        "A equipa de engenharia de software concluiu mais uma fase crucial no desenvolvimento da infraestrutura de jogos sérios com suporte para múltiplos dispositivos XR.",
-        "Foram otimizados os tempos de resposta, a fidelidade visual dos avatares e a acessibilidade da interface, assegurando que crianças de diferentes idades conseguem navegar de forma intuitiva.",
-        "Os novos módulos de telemetria permitem ainda acompanhar a evolução das aprendizagens e gerar métricas anónimas para validação científica contínua."
-      ],
-      "en": [
-        "The software engineering team concluded another vital phase in developing the serious gaming infrastructure supporting multi-device XR hardware.",
-        "Input response times, avatar rendering fidelity, and user interface accessibility were heavily optimized to ensure children of varying ages can navigate intuitively.",
-        "Integrated telemetry modules now track learning curves and compile anonymized metrics for rigorous ongoing scientific validation."
-      ]
-    }
-  },
-  {
-    "status": "publicada",
     "slug": "artigo-cientifico-publicado-sobre-prevencao-pediatrica",
     "publishedAt": "2027-02-01",
     "title": {

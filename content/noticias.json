@@ -30,8 +30,8 @@
     }
   },
   {
-    "status": "publicada",
     "slug": "workshop-com-pais",
+    "status": "rascunho",
     "publishedAt": "2026-10-01",
     "title": {
       "pt": "Workshop com Pais",
@@ -64,8 +64,8 @@
     }
   },
   {
-    "status": "publicada",
     "slug": "colaboracao-com-a-liga-portuguesa-contra-o-cancro",
+    "status": "rascunho",
     "publishedAt": "2026-09-01",
     "title": {
       "pt": "Colaboração com a Liga Portuguesa Contra o Cancro",
@@ -98,8 +98,8 @@
     }
   },
   {
-    "status": "publicada",
     "slug": "workshop-com-profissionais-de-saude",
+    "status": "rascunho",
     "publishedAt": "2026-09-01",
     "title": {
       "pt": "Workshop com Profissionais de Saúde",

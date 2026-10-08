@@ -4,8 +4,8 @@
     "status": "rascunho",
     "publishedAt": "2026-10-08",
     "title": {
-      "pt": "Atividade de Prevenção do Cancro do Pulmão",
-      "en": "Lung Cancer Prevention Activity"
+      "pt": "Investigação da Universidade da Madeira explora a Realidade Aumentada na prevenção do cancro do pulmão",
+      "en": "University of Madeira Research Explores Augmented Reality for Lung Cancer Prevention"
     },
     "category": {
       "pt": "Educação & Comunidade",
@@ -15,17 +15,23 @@
       "pt": "Outubro 2026",
       "en": "October 2026"
     },
-    "image": "/images/noticias/atividade-de-prevencao-do-cancro-do-pulmao-1791457542726.jpg",
+    "image": "/images/noticias/atividade-de-prevencao-do-cancro-do-pulmao-1791473855403.jpg",
     "imageAlt": {
-      "pt": "Atividade de Prevenção do Cancro do Pulmão",
-      "en": "Lung Cancer Prevention Activity"
+      "pt": "Realidade Aumentada na prevenção do cancro do pulmão",
+      "en": "Augmented Reality for Lung Cancer Prevention"
     },
     "content": {
       "pt": [
-        "Foi realizada uma atividade com alunos da escola básica e secundária de Machico."
+        "No âmbito de uma dissertação de Mestrado em Engenharia Informática da Universidade da Madeira, foi desenvolvido um jogo sério educativo com recurso à Realidade Aumentada (RA), destinado a promover a literacia em saúde e a sensibilizar crianças para a importância da prevenção do cancro do pulmão desde idades precoces.",
+        "A investigação centrou-se na criação de uma experiência interativa e lúdico-educativa, por meio da qual as crianças podem explorar o funcionamento do sistema respiratório, compreender os principais fatores de risco associados ao cancro do pulmão e adquirir conhecimentos sobre comportamentos preventivos, nomeadamente os riscos associados ao consumo de tabaco e à exposição ao fumo passivo.",
+        "A aplicação integra modelos tridimensionais, conteúdos educativos e atividades interativas, proporcionando uma abordagem dinâmica e envolvente à aprendizagem. Através da Realidade Aumentada, pretende-se facilitar a compreensão de conceitos relacionados com a saúde respiratória e incentivar a adoção de hábitos saudáveis desde a infância.",
+        "Esta investigação enquadra-se nos objetivos do Projeto C.A.I.X.A., reforçando o potencial das tecnologias imersivas e dos jogos sérios enquanto ferramentas inovadoras de educação para a saúde e contribuindo para o desenvolvimento de novas abordagens de sensibilização e prevenção oncológica junto das crianças."
       ],
       "en": [
-        "An activity related to lung cancer prevention was held for students who attend Machico's high school."
+        "As part of a Master's dissertation in Computer Engineering at the University of Madeira, an educational serious game using Augmented Reality (AR) was developed to promote health literacy and raise awareness among children about the importance of lung cancer prevention from an early age.",
+        "The research focused on creating an interactive and educational gaming experience through which children can explore how the respiratory system works, understand the main risk factors associated with lung cancer, and learn about preventive behaviours, particularly the risks associated with tobacco use and exposure to second-hand smoke.",
+        "The application integrates three-dimensional models, educational content, and interactive activities, providing a dynamic and engaging approach to learning. Through Augmented Reality, it aims to facilitate the understanding of concepts related to respiratory health and encourage the adoption of healthy habits from childhood.",
+        "This research aligns with the objectives of the C.A.I.X.A. Project, highlighting the potential of immersive technologies and serious games as innovative tools for health education and contributing to the development of new approaches to cancer prevention and awareness among children."
       ]
     }
   },

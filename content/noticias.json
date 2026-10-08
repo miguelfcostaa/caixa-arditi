@@ -98,8 +98,8 @@
     }
   },
   {
-    "status": "publicada",
     "slug": "workshop-com-profissionais-de-saude",
+    "status": "rascunho",
     "publishedAt": "2026-09-01",
     "title": {
       "pt": "Workshop com Profissionais de Saúde",

@@ -7,6 +7,7 @@ export const translations = {
       about: "O Projeto",
       team: "Equipa",
       partners: "Apoios",
+      news: "Notícias",
       contact: "Contacto",
     },
     hero: {
@@ -46,6 +47,12 @@ export const translations = {
       defaultBio:
         "",
     },
+    newsletter: {
+      title: "Notícias & Eventos",
+      item1Title: "Workshop com Pais",
+      item2Title: "Colaboração com a Liga Portuguesa Contra o Cancro",
+      item3Title: "Workshop com Profissionais de Saúde",
+    },
     footer: {
       contactTitle: "Contacto",
       contactDesc:
@@ -71,6 +78,7 @@ export const translations = {
       about: "The Project",
       team: "Team",
       partners: "Partners",
+      news: "News",
       contact: "Contact",
     },
     hero: {
@@ -109,6 +117,12 @@ export const translations = {
       defaultRolePartnerLPCC: "President of NRM-LPCC",
       defaultBio:
         ""
+    },
+    newsletter: {
+      title: "News & Events",
+      item1Title: "Workshop with Parents",
+      item2Title: "Collaboration with the Portuguese League Against Cancer",
+      item3Title: "Workshop with Healthcare Professionals",
     },
     footer: {
       projectTitle: "Project C.A.I.X.A.",

@@ -1,13 +1,49 @@
+import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Partners } from "@/components/Partners";
 import { Team } from "@/components/Team";
+import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
+import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  alternateName: siteConfig.shortName,
+  url: siteConfig.url,
+  description: siteConfig.description,
+  inLanguage: ["pt-PT", "en-GB"],
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: absoluteUrl("/logo.ico"),
+};
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-[#FCFAF9]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([websiteJsonLd, organizationJsonLd]).replace(
+            /</g,
+            "\\u003c",
+          ),
+        }}
+      />
       {/* Barra de Navegação */}
       <Navbar />
 
@@ -19,14 +55,17 @@ export default function Home() {
         {/* 2. Descrição do Projeto / Pilares */}
         <About />
 
-        {/* 4. Equipa que vai desenvolver o projeto */}
+        {/* 3. Equipa que vai desenvolver o projeto */}
         <Team />
 
-        {/* 3. Apoios / Parcerias */}
+        {/* 4. Apoios / Parcerias */}
         <Partners />
+
+        {/* 5. Newsletter */}
+        <Newsletter />
       </main>
 
-      {/* 5. Rodapé */}
+      {/* Rodapé */}
       <Footer />
     </div>
   );

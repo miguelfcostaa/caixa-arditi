@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import { Copy, Check, MapPin, Mail, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -29,15 +30,41 @@ export function Footer() {
     }
   };
 
-  const handleScrollToTop = (e: React.MouseEvent) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleNavClick = (e: React.MouseEvent, sectionId: string) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    window.history.pushState(null, "", window.location.pathname);
+    if (pathname !== "/") {
+      try {
+        sessionStorage.setItem("caixa_scroll_target", sectionId);
+      } catch {}
+      router.push("/");
+    } else {
+      if (sectionId === "inicio" || sectionId === "hero") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const element =
+          document.getElementById(sectionId) ||
+          (sectionId === "noticias" ? document.getElementById("newsletter") : null);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+      window.history.replaceState(null, "", "/");
+    }
+  };
+
+  const handleScrollToTop = (e: React.MouseEvent) => {
+    handleNavClick(e, "inicio");
   };
 
   return (
-    <footer id="contacto" className="border-t border-slate-800 bg-[#07213D] text-[#F1F0EF] scroll-mt-20">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8 sm:py-16">
+    <footer
+      id="contacto"
+      className="relative flex min-h-[calc(100vh-5rem)] flex-col justify-between border-t border-slate-800 bg-[#07213D] text-[#F1F0EF] scroll-mt-20"
+    >
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
         {/* Cabeçalho e coordenação à esquerda, instituição anfitriã e mapa à direita */}
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-12">
           <div>
@@ -120,26 +147,32 @@ export function Footer() {
         <div className="mt-10 sm:mt-14 flex flex-col items-center gap-6 border-t border-slate-800/80 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center justify-center sm:justify-start gap-2">
             <Link
-              href="#"
-              onClick={handleScrollToTop}
-              className="text-lg font-bold tracking-tight text-white hover:text-slate-200 transition-colors"
+              href="/"
+              onClick={(e) => handleNavClick(e, "inicio")}
+              className="text-lg font-bold tracking-tight text-white hover:text-slate-200 transition-colors cursor-pointer"
             >
               Projeto <span className="text-[#F85308]">C.A.I.X.A.</span>
             </Link>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-semibold text-slate-400">
-            <Link href="#" onClick={handleScrollToTop} className="hover:text-white transition-colors">
+            <Link href="/" onClick={(e) => handleNavClick(e, "inicio")} className="hover:text-white transition-colors cursor-pointer">
               {t("navbar.home")}
             </Link>
-            <Link href="#sobre" className="hover:text-white transition-colors">
+            <Link href="/" onClick={(e) => handleNavClick(e, "sobre")} className="hover:text-white transition-colors cursor-pointer">
               {t("navbar.about")}
             </Link>
-            <Link href="#equipa" className="hover:text-white transition-colors">
+            <Link href="/" onClick={(e) => handleNavClick(e, "equipa")} className="hover:text-white transition-colors cursor-pointer">
               {t("navbar.team")}
             </Link>
-            <Link href="#parcerias" className="hover:text-white transition-colors">
+            <Link href="/" onClick={(e) => handleNavClick(e, "parcerias")} className="hover:text-white transition-colors cursor-pointer">
               {t("navbar.partners")}
+            </Link>
+            <Link href="/" onClick={(e) => handleNavClick(e, "noticias")} className="hover:text-white transition-colors cursor-pointer">
+              {t("navbar.news")}
+            </Link>
+            <Link href="/" onClick={(e) => handleNavClick(e, "contacto")} className="hover:text-white transition-colors cursor-pointer">
+              {t("navbar.contact")}
             </Link>
           </div>
 

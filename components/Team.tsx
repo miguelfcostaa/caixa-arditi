@@ -306,7 +306,7 @@ export function Team() {
       name: "Juan Ponte",
       role: t("team.defaultRoleDes"),
       initials: "JP",
-      avatarGradient: "from-cyan-600 to-cyan-800 ring-[#E06126]/20",
+      avatarGradient: "from-cyan-500 to-cyan-800 ring-[#E06126]/20",
       image: "/team/juan-ponte.png",
       category: "Design & Experiência",
       bio: {
@@ -323,7 +323,7 @@ export function Team() {
       name: "Ricardo Sousa",
       role: t("team.defaultRolePartnerLPCC"),
       initials: "RS",
-      avatarGradient: "from-emerald-600 to-teal-800 ring-emerald-700/20",
+      avatarGradient: "from-red-800 to-red-500 ring-emerald-700/20",
       image: "/team/ricardo-sousa.png",
       category: "Parcerias",
       bio: {
@@ -357,13 +357,21 @@ export function Team() {
             </h3>
           </div>
           <div className="mx-auto grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-3">
-            {leader.map((member) => (
-              <MemberCard
+            {leader.map((member, index) => (
+              <div
                 key={member.id}
-                member={member}
-                isLeader={true}
-                onOpenBio={(m) => setSelectedMemberId(m.id)}
-              />
+                className={
+                  index === leader.length - 1 && leader.length % 2 !== 0
+                    ? "col-span-2 sm:col-span-1"
+                    : undefined
+                }
+              >
+                <MemberCard
+                  member={member}
+                  isLeader={true}
+                  onOpenBio={(m) => setSelectedMemberId(m.id)}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -428,8 +436,8 @@ export function Team() {
         {/* Nível 5: Parceiros */}
         <div className="mt-10 sm:mt-16">
           <div className="mb-6 flex items-center justify-center gap-2">
-            <Handshake className="h-4 w-4 text-emerald-700" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-700">
+            <Handshake className="h-4 w-4 text-red-700" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-red-700">
               {t("team.partnersTitle")}
             </h3>
           </div>

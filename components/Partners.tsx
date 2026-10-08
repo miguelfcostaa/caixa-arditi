@@ -17,86 +17,86 @@ export function Partners() {
         </div>
 
         {/* Parceiros principais - 2 em cima e 2 por baixo em mobile, linha em desktop */}
-        <div className="mt-10 sm:mt-14 grid grid-cols-2 items-center justify-items-center gap-6 sm:gap-10 md:flex md:flex-wrap md:items-center md:justify-center md:gap-14 lg:gap-20 py-2">
+        <div className="mt-8 grid grid-cols-2 items-stretch justify-items-center gap-3 py-0 sm:gap-5 md:mt-14 md:flex md:flex-wrap md:items-center md:justify-center md:gap-14 md:py-2 lg:gap-20">
           {/* ARDITI */}
-          <div className="flex h-20 w-full sm:h-24 sm:w-auto shrink-0 items-center justify-center p-2 transition-all duration-300 hover:scale-105">
+          <div className="flex h-24 w-full shrink-0 items-center justify-center p-3 transition-all duration-300 hover:scale-105 md:w-auto md:p-2">
             <Image
               src="/partners/arditi-logo.png"
               alt="ARDITI - Agência Regional para o Desenvolvimento da Investigação, Tecnologia e Inovação"
               width={633}
               height={672}
-              className="h-14 w-auto sm:h-20 md:h-24 object-contain opacity-90 transition-opacity hover:opacity-100"
+              className="h-14 w-auto sm:h-16 md:h-24 object-contain opacity-90 transition-opacity hover:opacity-100"
             />
           </div>
 
           {/* NeurorehabLab */}
-          <div className="flex h-20 w-full sm:h-24 sm:w-auto shrink-0 items-center justify-center p-2 transition-all duration-300 hover:scale-105">
+          <div className="flex h-24 w-full shrink-0 items-center justify-center p-3 transition-all duration-300 hover:scale-105 md:w-auto md:p-2">
             <Image
               src="/partners/neurorehablabLogo.png"
               alt="NeurorehabLab"
               width={704}
               height={217}
-              className="h-10 w-auto sm:h-16 md:h-20 max-w-[150px] sm:max-w-[280px] md:max-w-[340px] object-contain opacity-90 transition-opacity hover:opacity-100"
+              className="h-12 w-auto max-w-[150px] object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-14 sm:max-w-[250px] md:h-20 md:max-w-[340px]"
             />
           </div>
 
           {/* Liga Portuguesa Contra o Cancro */}
-          <div className="flex h-20 w-full sm:h-24 sm:w-auto shrink-0 items-center justify-center p-2 transition-all duration-300 hover:scale-105">
+          <div className="flex h-24 w-full shrink-0 items-center justify-center p-3 transition-all duration-300 hover:scale-105 md:w-auto md:p-2">
             <Image
               src="/partners/liga-portuguesa-contra-o-cancro-logo.png"
               alt="Liga Portuguesa Contra o Cancro"
               width={842}
               height={630}
-              className="h-14 w-auto sm:h-20 md:h-24 max-w-[130px] sm:max-w-[180px] md:max-w-[220px] object-contain opacity-90 transition-opacity hover:opacity-100"
+              className="h-18 w-auto max-w-[140px] object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-20 sm:max-w-[170px] md:h-24 md:max-w-[220px]"
             />
           </div>
 
           {/* NOVA LINCS */}
-          <div className="flex h-20 w-full sm:h-24 sm:w-auto shrink-0 items-center justify-center p-2 transition-all duration-300 hover:scale-105">
+          <div className="flex h-24 w-full shrink-0 items-center justify-center p-3 transition-all duration-300 hover:scale-105 md:w-auto md:p-2">
             <Image
               src="/partners/novalincs-logo.png"
               alt="MADEIRA N-LINCS - Universidade da Madeira"
               width={842}
               height={300}
-              className="h-14 w-auto sm:h-20 md:h-24 max-w-[130px] sm:max-w-[180px] md:max-w-[220px] object-contain opacity-90 transition-opacity hover:opacity-100"
+              className="h-16 w-auto max-w-[150px] object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-20 sm:max-w-[180px] md:h-24 md:max-w-[220px]"
             />
           </div>
         </div>
 
         {/* Logos RAM - Secretaria Regional de Educação e Secretaria Regional de Saúde (3ª linha) */}
-        <div className="mt-8 sm:mt-12 flex flex-col items-center justify-center gap-4 sm:gap-6 md:flex-row md:items-center md:justify-center md:gap-10 lg:gap-14 py-2">
+        <div className="mt-0 flex flex-col items-center justify-center gap-0 py-0 md:mt-12 md:flex-row md:items-center md:justify-center md:gap-10 md:py-2 lg:gap-14">
           {/* Secretaria Regional de Educação, Ciência e Tecnologia */}
-          <div className="flex shrink-0 items-center justify-center p-1 transition-all duration-300 hover:scale-105">
+          <div className="flex h-28 w-full max-w-sm shrink-0 items-center justify-center p-3 transition-all duration-300 hover:scale-105 md:h-auto md:w-auto md:max-w-none md:p-1">
             <Image
               src="/partners/RAM-educacao-logo.png"
               alt="Secretaria Regional de Educação, Ciência e Tecnologia - Região Autónoma da Madeira"
               width={993}
               height={369}
-              className="h-24 w-auto sm:h-28 md:h-32 object-contain opacity-95 transition-opacity hover:opacity-100"
+              className="h-24 w-auto max-w-full object-contain opacity-95 transition-opacity hover:opacity-100 sm:h-26 md:h-32"
             />
           </div>
 
           {/* Secretaria Regional de Saúde e Proteção Civil */}
-          <div className="flex shrink-0 items-center justify-center p-1 transition-all duration-300 hover:scale-105">
+          <div className="flex h-28 w-full max-w-sm shrink-0 items-center justify-center p-3 transition-all duration-300 hover:scale-105 md:h-auto md:w-auto md:max-w-none md:p-1">
             <Image
               src="/partners/RAM-secretaria-logo.png"
               alt="Secretaria Regional de Saúde e Proteção Civil - Região Autónoma da Madeira"
               width={1000}
               height={325}
-              className="h-22 w-auto sm:h-26 md:h-30 object-contain opacity-95 transition-opacity hover:opacity-100"
+              className="h-20 w-auto max-w-full object-contain opacity-95 transition-opacity hover:opacity-100 sm:h-24 md:h-30"
             />
           </div>
         </div>
 
         {/* Cofinanciamento Madeira 2030 - mantido abaixo, fluido e centrado */}
-        <div className="mt-12 sm:mt-16 flex items-center justify-center px-2 py-2">
-          <div className="w-full max-w-4xl flex items-center justify-center transition-all duration-300 hover:scale-[1.02]">
+        <div className="mt-0 flex items-center justify-center px-0 py-0 md:mt-16 md:px-2 md:py-2">
+          <div className="flex w-full max-w-4xl items-center justify-center p-1 transition-all duration-300 hover:scale-[1.02] md:p-0">
             <Image
               src="/partners/MADEIRA2030_BarraCofinan_Band_Ass_RGB_3590px.png"
               alt="MADEIRA 2030, da Região Autónoma da Madeira"
               width={3591}
               height={598}
-              className="h-auto w-full max-h-20 sm:max-h-28 md:max-h-36 object-contain opacity-90 transition-opacity hover:opacity-100"
+              className="h-auto max-h-20 w-[108%] max-w-none object-contain opacity-90 transition-opacity hover:opacity-100 sm:max-h-24 md:max-h-36 md:w-full"
             />
           </div>
         </div>

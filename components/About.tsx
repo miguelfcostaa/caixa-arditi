@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function About() {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
 
   return (
     <section
@@ -18,7 +20,7 @@ export function About() {
             <div className="mb-3 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.1em] text-[#F85308]">
               <span>{t("about.tag")}</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tight text-[#07213D] sm:text-4xl text-justify">
+            <h2 className="text-left text-3xl font-bold tracking-tight text-[#07213D] sm:text-4xl lg:text-justify">
               {t("about.title")}
             </h2>
             <p className="mt-6 sm:mt-8 text-base leading-relaxed text-justify text-[#334155]">
@@ -47,6 +49,16 @@ export function About() {
               />
             </div>
           </div>
+        </div>
+
+        <div className="mt-10 flex justify-center sm:mt-12 lg:justify-start">
+          <Link
+            href="/base-cientifica"
+            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#F85308] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F85308]/25 transition-all hover:-translate-y-0.5 hover:bg-[#e04804] hover:shadow-xl hover:shadow-[#F85308]/30"
+          >
+            {locale === "pt" ? "Saber mais" : "Learn more"}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </section>

@@ -2,11 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 export function Navbar() {
-  const { locale, setLocale, t } = useLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
@@ -16,6 +20,11 @@ export function Navbar() {
       setIsScrolled(window.scrollY > 20);
       if (window.scrollY < 80) {
         setActiveSection("inicio");
+      } else if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 80
+      ) {
+        setActiveSection("contacto");
       }
     };
 
@@ -27,6 +36,7 @@ export function Navbar() {
       { id: "sobre", name: "sobre" },
       { id: "equipa", name: "equipa" },
       { id: "parcerias", name: "parcerias" },
+      { id: "newsletter", name: "noticias" },
       { id: "contacto", name: "contacto" },
     ];
 
@@ -55,20 +65,80 @@ export function Navbar() {
     };
   }, []);
 
-  const handleScrollToTop = (e: React.MouseEvent) => {
+  // Se o utilizador navegou a partir de outra página (ex: /noticias/[slug]), efetua o scroll suave ao chegar à Home
+  useEffect(() => {
+    if (pathname === "/") {
+      try {
+        const targetId = sessionStorage.getItem("caixa_scroll_target");
+        if (targetId) {
+          sessionStorage.removeItem("caixa_scroll_target");
+          setTimeout(() => {
+            if (targetId === "inicio" || targetId === "hero") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setActiveSection("inicio");
+            } else {
+              const el =
+                document.getElementById(targetId) ||
+                (targetId === "noticias" ? document.getElementById("newsletter") : null) ||
+                (targetId === "newsletter" ? document.getElementById("newsletter") : null);
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth" });
+                setActiveSection(targetId === "newsletter" ? "noticias" : targetId);
+              }
+            }
+            window.history.replaceState(null, "", "/");
+          }, 150);
+        }
+      } catch {}
+    }
+  }, [pathname]);
+
+  // Função centralizada para navegar suavemente e sem adicionar qualquer #hash ao link/URL
+  const handleNavClick = (e: React.MouseEvent, sectionId: string) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    window.history.pushState(null, "", window.location.pathname);
-    setActiveSection("inicio");
+
+    const wasMobileOpen = mobileMenuOpen;
     if (mobileMenuOpen) setMobileMenuOpen(false);
+
+    if (pathname !== "/") {
+      try {
+        sessionStorage.setItem("caixa_scroll_target", sectionId);
+      } catch {}
+      router.push("/");
+    } else {
+      const executeScroll = () => {
+        if (sectionId === "inicio" || sectionId === "hero") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          setActiveSection("inicio");
+        } else {
+          const element =
+            document.getElementById(sectionId) ||
+            (sectionId === "noticias" ? document.getElementById("newsletter") : null) ||
+            (sectionId === "newsletter" ? document.getElementById("newsletter") : null);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+            setActiveSection(sectionId === "newsletter" ? "noticias" : sectionId);
+          }
+        }
+        // Mantém a barra de endereço estritamente limpa (sem #equipa, #sobre, etc.)
+        window.history.replaceState(null, "", "/");
+      };
+
+      if (wasMobileOpen) {
+        setTimeout(executeScroll, 60);
+      } else {
+        executeScroll();
+      }
+    }
   };
 
   const navLinks = [
-    { label: t("navbar.home"), href: "#", onClick: handleScrollToTop, id: "inicio" },
-    { label: t("navbar.about"), href: "#sobre", id: "sobre" },
-    { label: t("navbar.team"), href: "#equipa", id: "equipa" },
-    { label: t("navbar.partners"), href: "#parcerias", id: "parcerias" },
-    { label: t("navbar.contact"), href: "#contacto", id: "contacto" },
+    { label: t("navbar.home"), id: "inicio" },
+    { label: t("navbar.about"), id: "sobre" },
+    { label: t("navbar.team"), id: "equipa" },
+    { label: t("navbar.partners"), id: "parcerias" },
+    { label: t("navbar.news"), id: "noticias" },
+    { label: t("navbar.contact"), id: "contacto" },
   ];
 
   return (
@@ -82,24 +152,24 @@ export function Navbar() {
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logótipo do Projeto */}
         <Link
-          href="#"
-          onClick={handleScrollToTop}
+          href="/"
+          onClick={(e) => handleNavClick(e, "inicio")}
           className="group flex items-center gap-1.5 transition-opacity hover:opacity-90"
         >
           <img src="/logo.ico" alt="Logo do Projeto C.A.I.X.A." className="h-10 w-auto sm:h-12" />
         </Link>
 
-        {/* Lado Direito Desktop: Links, Seletor de Idioma e Botão de Contacto */}
-        <div className="hidden items-center gap-7 md:flex">
-          <nav className="flex items-center gap-7">
+        {/* Lado Direito Desktop: Links e Seletor de Idioma */}
+        <div className="hidden items-center gap-5 lg:gap-7 md:flex">
+          <nav className="flex items-center gap-5 lg:gap-7">
             {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
+              const isActive = pathname === "/" && activeSection === link.id;
               return (
                 <Link
                   key={link.id}
-                  href={link.href}
-                  onClick={link.onClick}
-                  className={`relative py-1 text-sm font-semibold transition-colors ${
+                  href="/"
+                  onClick={(e) => handleNavClick(e, link.id)}
+                  className={`relative py-1 text-sm font-semibold transition-colors cursor-pointer ${
                     isActive
                       ? "text-[#F85308]"
                       : "text-[#07213D] hover:text-[#F85308]"
@@ -117,61 +187,13 @@ export function Navbar() {
           {/* Divisória subtil */}
           <div className="h-5 w-px bg-slate-300/70" />
 
-          {/* Seletor de Idioma (PT | EN) */}
-          <div className="flex items-center rounded-full bg-slate-200/70 p-0.5 text-xs font-bold text-[#07213D]">
-            <button
-              type="button"
-              onClick={() => setLocale("pt")}
-              className={`rounded-full px-2.5 py-1 transition-all cursor-pointer ${
-                locale === "pt"
-                  ? "bg-white text-[#F85308] shadow-xs font-extrabold"
-                  : "text-[#07213D]/70 hover:text-[#07213D]"
-              }`}
-              aria-label="Mudar para Português"
-            >
-              PT
-            </button>
-            <button
-              type="button"
-              onClick={() => setLocale("en")}
-              className={`rounded-full px-2.5 py-1 transition-all cursor-pointer ${
-                locale === "en"
-                  ? "bg-white text-[#F85308] shadow-xs font-extrabold"
-                  : "text-[#07213D]/70 hover:text-[#07213D]"
-              }`}
-              aria-label="Switch to English"
-            >
-              EN
-            </button>
-          </div>
+          {/* Seletor de Idioma Dropdown */}
+          <LanguageSelector />
         </div>
 
         {/* Ações Mobile: Seletor de Idioma + Botão Menu */}
-        <div className="flex items-center gap-3 md:hidden">
-          <div className="flex items-center rounded-full bg-slate-200/70 p-0.5 text-xs font-bold text-[#07213D]">
-            <button
-              type="button"
-              onClick={() => setLocale("pt")}
-              className={`rounded-full px-2 py-0.5 text-[11px] transition-all cursor-pointer ${
-                locale === "pt"
-                  ? "bg-white text-[#F85308] shadow-xs font-extrabold"
-                  : "text-[#07213D]/70"
-              }`}
-            >
-              PT
-            </button>
-            <button
-              type="button"
-              onClick={() => setLocale("en")}
-              className={`rounded-full px-2 py-0.5 text-[11px] transition-all cursor-pointer ${
-                locale === "en"
-                  ? "bg-white text-[#F85308] shadow-xs font-extrabold"
-                  : "text-[#07213D]/70"
-              }`}
-            >
-              EN
-            </button>
-          </div>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSelector />
 
           <button
             type="button"
@@ -193,19 +215,13 @@ export function Navbar() {
         <div className="border-t border-slate-200/60 bg-[#FCFAF9] px-4 pt-3 pb-6 shadow-lg md:hidden">
           <nav className="flex flex-col space-y-2">
             {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
+              const isActive = pathname === "/" && activeSection === link.id;
               return (
                 <Link
                   key={link.id}
-                  href={link.href}
-                  onClick={(e) => {
-                    if (link.onClick) {
-                      link.onClick(e);
-                    }
-                    setActiveSection(link.id);
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`rounded-lg px-3 py-2 text-sm font-semibold ${
+                  href="/"
+                  onClick={(e) => handleNavClick(e, link.id)}
+                  className={`rounded-lg px-3 py-2 text-sm font-semibold cursor-pointer ${
                     isActive
                       ? "bg-[#F85308]/10 text-[#F85308]"
                       : "text-[#07213D]/85 hover:bg-slate-100 hover:text-[#F85308]"

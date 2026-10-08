@@ -1,0 +1,16 @@
+services:
+  website:
+    build:
+      context: .
+      args:
+        SITE_URL: https://caixa.arditi.pt
+        GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
+    image: caixa-web:latest
+    restart: unless-stopped
+    environment:
+      SITE_URL: https://caixa.arditi.pt
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+    ports:
+      - "${APP_PORT:-3000}:3000"

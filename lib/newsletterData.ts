@@ -1,0 +1,259 @@
+export interface NewsArticle {
+  slug: string;
+  publishedAt: string;
+  title: {
+    pt: string;
+    en: string;
+  };
+  category: {
+    pt: string;
+    en: string;
+  };
+  date: {
+    pt: string;
+    en: string;
+  };
+  image: string;
+  imageAlt: {
+    pt: string;
+    en: string;
+  };
+  content: {
+    pt: string[];
+    en: string[];
+  };
+}
+
+export const newsArticles: NewsArticle[] = [
+  {
+    slug: "workshop-com-pais",
+    publishedAt: "2026-10-01",
+    title: {
+      pt: "Workshop com Pais",
+      en: "Workshop with Parents",
+    },
+    category: {
+      pt: "Iniciativas Comunitárias",
+      en: "Community Initiatives",
+    },
+    date: {
+      pt: "Outubro 2026",
+      en: "October 2026",
+    },
+    image: "/images/newsletter1.jpg",
+    imageAlt: {
+      pt: "Workshop com Pais no âmbito do Projeto C.A.I.X.A.",
+      en: "Workshop with Parents under Project C.A.I.X.A.",
+    },
+    content: {
+      pt: [
+        "No âmbito do Projeto C.A.I.X.A., realizou-se uma sessão de trabalho participativa com pais e encarregados de educação para auscultar as principais preocupações e necessidades no domínio da literacia em saúde e prevenção primária do cancro infantil.",
+        "Durante o encontro, foram apresentados os conceitos e primeiras abordagens das ferramentas interativas de Realidade Virtual e Realidade Aumentada (XR), permitindo recolher contributos fundamentais para a adequação das dinâmicas pedagógicas e dos ambientes virtuais.",
+        "A participação ativa dos familiares constitui um pilar essencial para garantir que as soluções desenvolvidas tenham um impacto real, sustentável e positivo nos hábitos de vida das crianças.",
+      ],
+      en: [
+        "As part of Project C.A.I.X.A., a participatory workshop was held with parents and guardians to assess key concerns and needs in the field of health literacy and primary childhood cancer prevention.",
+        "During the session, the concepts and initial approaches of interactive Virtual Reality and Augmented Reality (XR) tools were introduced, gathering vital feedback to refine the educational dynamics and virtual environments.",
+        "The active involvement of families is an essential pillar in ensuring that the developed solutions have a real, sustainable, and positive impact on children's healthy lifestyles.",
+      ],
+    },
+  },
+  {
+    slug: "colaboracao-com-a-liga-portuguesa-contra-o-cancro",
+    publishedAt: "2026-09-01",
+    title: {
+      pt: "Colaboração com a Liga Portuguesa Contra o Cancro",
+      en: "Collaboration with the Portuguese League Against Cancer",
+    },
+    category: {
+      pt: "Parcerias Institucionais",
+      en: "Institutional Partnerships",
+    },
+    date: {
+      pt: "Setembro 2026",
+      en: "September 2026",
+    },
+    image: "/images/newsletter2.jpg",
+    imageAlt: {
+      pt: "Reunião de colaboração com a Liga Portuguesa Contra o Cancro",
+      en: "Collaboration meeting with the Portuguese League Against Cancer",
+    },
+    content: {
+      pt: [
+        "O Projeto C.A.I.X.A. estabeleceu uma estreita colaboração com a Liga Portuguesa Contra o Cancro (Núcleo Regional da Madeira), fortalecendo as sinergias entre a investigação científica e as ações de sensibilização na comunidade.",
+        "Esta parceria estratégica assegura o rigor clínico e a validação contínua dos conteúdos preventivos integrados nas experiências imersivas, garantindo uma mensagem pedagógica coerente com as melhores práticas de saúde pública.",
+        "Juntos, combinamos a experiência de décadas da LPCC no apoio e prevenção oncológica com tecnologias inovadoras para alcançar as crianças da Região Autónoma da Madeira de forma lúdica e eficaz.",
+      ],
+      en: [
+        "Project C.A.I.X.A. established a close collaboration with the Portuguese League Against Cancer (Madeira Regional Branch), reinforcing synergies between scientific research and community awareness campaigns.",
+        "This strategic partnership ensures clinical rigor and continuous validation of preventive content embedded in immersive experiences, aligning educational messaging with public health best practices.",
+        "Together, we combine LPCC's decades of expertise in oncological support and prevention with cutting-edge technologies to reach children across the Autonomous Region of Madeira effectively and playfully.",
+      ],
+    },
+  },
+  {
+    slug: "workshop-com-profissionais-de-saude",
+    publishedAt: "2026-09-01",
+    title: {
+      pt: "Workshop com Profissionais de Saúde",
+      en: "Workshop with Healthcare Professionals",
+    },
+    category: {
+      pt: "Investigação & Validação Clínica",
+      en: "Research & Clinical Validation",
+    },
+    date: {
+      pt: "Setembro 2026",
+      en: "September 2026",
+    },
+    image: "/images/image2.jpg",
+    imageAlt: {
+      pt: "Sessão de trabalho com profissionais de saúde",
+      en: "Working session with healthcare professionals",
+    },
+    content: {
+      pt: [
+        "Investigadores e psicólogos da equipa do Projeto C.A.I.X.A. reuniram-se com profissionais de saúde e especialistas em pediatria e oncologia para validação dos módulos interativos.",
+        "A sessão centrou-se na análise neuropsicológica das mecânicas de jogo e na avaliação do impacto cognitivo e emocional das experiências de realidade estendida (XR) em contexto pediátrico.",
+        "Os contributos técnicos recolhidos permitem calibrar com precisão os estímulos visuais e a narrativa pedagógica, assegurando uma experiência segura, informativa e motivadora.",
+      ],
+      en: [
+        "Researchers and psychologists from Project C.A.I.X.A. met with healthcare professionals, pediatricians, and oncology specialists to validate the interactive modules.",
+        "The session focused on neuropsychological analysis of gaming mechanics and evaluation of cognitive and emotional impacts of extended reality (XR) experiences in pediatric settings.",
+        "The clinical feedback gathered ensures precise calibration of visual stimuli and pedagogical narratives, providing a safe, informative, and engaging experience for young audiences.",
+      ],
+    },
+  },
+  {
+    slug: "apresentacao-na-conferencia-internacional-de-rv",
+    publishedAt: "2026-11-01",
+    title: {
+      pt: "Apresentação na Conferência Internacional de Realidade Virtual",
+      en: "Presentation at the International Virtual Reality Conference",
+    },
+    category: {
+      pt: "Conferências & Ciência",
+      en: "Conferences & Science",
+    },
+    date: {
+      pt: "Novembro 2026",
+      en: "November 2026",
+    },
+    image: "/images/image1.jpg",
+    imageAlt: {
+      pt: "Apresentação dos resultados preliminares em conferência internacional",
+      en: "Presentation of preliminary findings at an international conference",
+    },
+    content: {
+      pt: [
+        "A equipa de investigadores do Projeto C.A.I.X.A. apresentou as linhas orientadoras e a arquitetura tecnológica da plataforma numa conferência internacional de topo dedicada a tecnologias imersivas aplicadas à saúde.",
+        "A comunicação destacou o potencial da realidade mista para catalisar mudanças comportamentais duradouras em faixas etárias precoces, recebendo elogios pela abordagem interdisciplinar entre neuropsicologia e engenharia de software.",
+        "Este reconhecimento internacional reforça o compromisso da Região Autónoma da Madeira em liderar projetos pioneiros de inovação médica e digital.",
+      ],
+      en: [
+        "The research team of Project C.A.I.X.A. presented the core guidelines and technological architecture of the platform at a premier international conference dedicated to immersive health technologies.",
+        "The talk highlighted the potential of mixed reality to spark long-term behavioral change in early age groups, earning praise for its interdisciplinary synergy between neuropsychology and software engineering.",
+        "This international recognition highlights Madeira's commitment to leading pioneering initiatives in digital healthcare innovation.",
+      ],
+    },
+  },
+  {
+    slug: "sessoes-de-demonstracao-nas-escolas",
+    publishedAt: "2026-12-01",
+    title: {
+      pt: "Sessões de Demonstração nas Escolas da Madeira",
+      en: "Demonstration Sessions in Madeira Schools",
+    },
+    category: {
+      pt: "Educação & Comunidade",
+      en: "Education & Community",
+    },
+    date: {
+      pt: "Dezembro 2026",
+      en: "December 2026",
+    },
+    image: "/images/newsletter1.jpg",
+    imageAlt: {
+      pt: "Crianças a experimentar os protótipos em contexto escolar",
+      en: "Children testing interactive prototypes in school environments",
+    },
+    content: {
+      pt: [
+        "Arrancaram as primeiras ações-piloto de demonstração em escolas do 1.º e 2.º ciclos da Região Autónoma da Madeira, onde dezenas de alunos tiveram a oportunidade de experimentar os jogos sérios do projeto.",
+        "As dinâmicas interativas focaram escolhas alimentares saudáveis, proteção solar e prática regular de atividade física através de mecânicas lúdicas em realidade aumentada.",
+        "O entusiasmo das crianças e o feedback positivo dos professores demonstraram a eficácia do formato gamificado na assimilação e retenção de conceitos preventivos essenciais.",
+      ],
+      en: [
+        "The first pilot demonstration sessions commenced in primary and middle schools across the Autonomous Region of Madeira, where dozens of students tested the project's serious games.",
+        "Interactive activities focused on healthy food choices, sun protection, and routine physical exercise through augmented reality mini-games.",
+        "The children's enthusiasm and educators' positive responses showcased the effectiveness of gamification in delivering vital health prevention lessons.",
+      ],
+    },
+  },
+  {
+    slug: "avancos-no-desenvolvimento-do-jogo-serio",
+    publishedAt: "2027-01-01",
+    title: {
+      pt: "Avanços no Desenvolvimento do Jogo Sério",
+      en: "Progress in Serious Game Development",
+    },
+    category: {
+      pt: "Tecnologia & Inovação",
+      en: "Technology & Innovation",
+    },
+    date: {
+      pt: "Janeiro 2027",
+      en: "January 2027",
+    },
+    image: "/images/newsletter2.jpg",
+    imageAlt: {
+      pt: "Equipa de engenharia a testar os módulos interativos do jogo",
+      en: "Engineering team testing game mechanics and interfaces",
+    },
+    content: {
+      pt: [
+        "A equipa de engenharia de software concluiu mais uma fase crucial no desenvolvimento da infraestrutura de jogos sérios com suporte para múltiplos dispositivos XR.",
+        "Foram otimizados os tempos de resposta, a fidelidade visual dos avatares e a acessibilidade da interface, assegurando que crianças de diferentes idades conseguem navegar de forma intuitiva.",
+        "Os novos módulos de telemetria permitem ainda acompanhar a evolução das aprendizagens e gerar métricas anónimas para validação científica contínua.",
+      ],
+      en: [
+        "The software engineering team concluded another vital phase in developing the serious gaming infrastructure supporting multi-device XR hardware.",
+        "Input response times, avatar rendering fidelity, and user interface accessibility were heavily optimized to ensure children of varying ages can navigate intuitively.",
+        "Integrated telemetry modules now track learning curves and compile anonymized metrics for rigorous ongoing scientific validation.",
+      ],
+    },
+  },
+  {
+    slug: "artigo-cientifico-publicado-sobre-prevencao-pediatrica",
+    publishedAt: "2027-02-01",
+    title: {
+      pt: "Artigo Científico Publicado sobre Prevenção Pediátrica",
+      en: "Scientific Paper Published on Pediatric Prevention",
+    },
+    category: {
+      pt: "Publicações Científicas",
+      en: "Scientific Publications",
+    },
+    date: {
+      pt: "Fevereiro 2027",
+      en: "February 2027",
+    },
+    image: "/images/image2.jpg",
+    imageAlt: {
+      pt: "Publicação de artigo científico em revista internacional com revisão por pares",
+      en: "Publication of peer-reviewed paper in international scientific journal",
+    },
+    content: {
+      pt: [
+        "Os primeiros resultados da investigação desenvolvida no âmbito do Projeto C.A.I.X.A. foram aceites para publicação numa conceituada revista internacional com arbitragem científica.",
+        "O artigo analisa os mecanismos neurocognitivos que potenciam a retenção de mensagens de saúde quando mediadas por experiências imersivas face a metodologias expositivas tradicionais.",
+        "Esta conquista reforça a excelência académica do consórcio e consolida a base teórica sobre a qual toda a intervenção comunitária do projeto está alicerçada.",
+      ],
+      en: [
+        "Initial research findings from Project C.A.I.X.A. were accepted for publication in a prestigious peer-reviewed international scientific journal.",
+        "The paper investigates the neurocognitive mechanisms that enhance health message retention through immersive learning compared to traditional lecture formats.",
+        "This academic achievement reinforces the research consortium's scientific caliber and grounds the project's community outreach in rigorous theory.",
+      ],
+    },
+  },
+];

@@ -31,8 +31,14 @@ export function Hero() {
           {/* Botões de Chamada para Ação */}
           <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center">
             <Link
-              href="#sobre"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F85308] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F85308]/25 transition-all hover:bg-[#e04804] hover:shadow-xl hover:shadow-[#F85308]/30 hover:-translate-y-0.5"
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById("sobre");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                window.history.replaceState(null, "", "/");
+              }}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F85308] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F85308]/25 transition-all hover:bg-[#e04804] hover:shadow-xl hover:shadow-[#F85308]/30 hover:-translate-y-0.5 cursor-pointer"
             >
               <span>{t("hero.btnAbout")}</span>
               <ArrowRight className="h-4 w-4" />

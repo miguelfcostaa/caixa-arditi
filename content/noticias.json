@@ -30,8 +30,8 @@
     }
   },
   {
-    "status": "publicada",
     "slug": "workshop-com-pais",
+    "status": "rascunho",
     "publishedAt": "2026-10-01",
     "title": {
       "pt": "Workshop com Pais",

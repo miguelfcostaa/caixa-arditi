@@ -86,14 +86,27 @@ export function Newsletter({ articles }: { articles: NewsArticle[] }) {
           </div>
         </div>
 
-        {/* Zona do Carousel: notícia principal com prévias laterais */}
-        <div
-          className="relative mt-5 h-[350px] overflow-hidden sm:mt-12 sm:h-[500px] lg:h-[540px]"
-          onTouchStart={isCarousel ? handleTouchStart : undefined}
-          onTouchMove={isCarousel ? handleTouchMove : undefined}
-          onTouchEnd={isCarousel ? handleTouchEnd : undefined}
-        >
-          {articles.map((item, index) => {
+        {articles.length === 0 ? (
+          <div className="mx-4 mt-10 px-6 py-14 text-center sm:mx-6 sm:mt-12 lg:mx-8">
+            <p className="text-base font-semibold text-[#07213D] sm:text-lg">
+              {locale === "pt"
+                ? "Ainda não existem notícias publicadas."
+                : "There are no published news yet."}
+            </p>
+            <p className="mt-2 text-sm text-slate-500">
+              {locale === "pt" ? "Volte em breve." : "Please check back soon."}
+            </p>
+          </div>
+        ) : (
+          <>
+            {/* Zona do Carousel: notícia principal com prévias laterais */}
+            <div
+              className="relative mt-5 h-[350px] overflow-hidden sm:mt-12 sm:h-[500px] lg:h-[540px]"
+              onTouchStart={isCarousel ? handleTouchStart : undefined}
+              onTouchMove={isCarousel ? handleTouchMove : undefined}
+              onTouchEnd={isCarousel ? handleTouchEnd : undefined}
+            >
+              {articles.map((item, index) => {
             const position = getSlidePosition(index);
             const isActive = position === "active";
             const isPrevious = position === "previous";
@@ -178,10 +191,10 @@ export function Newsletter({ articles }: { articles: NewsArticle[] }) {
                 )}
               </div>
             );
-          })}
+              })}
 
-          {isCarousel && (
-            <>
+              {isCarousel && (
+                <>
               <button
                 type="button"
                 onClick={handlePrev}
@@ -198,42 +211,43 @@ export function Newsletter({ articles }: { articles: NewsArticle[] }) {
               >
                 <ChevronRight className="h-5 w-5" />
               </button>
-            </>
-          )}
-
-        </div>
-
-        {/* Paginação limitada */}
-        {isCarousel && (
-          <div className="mt-5 flex items-center justify-center sm:mt-7">
-            <div className="flex min-w-28 items-center justify-center gap-2">
-              {visibleDotIndexes.map((idx) => (
-                <button
-                  key={articles[idx].slug}
-                  type="button"
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`h-2.5 cursor-pointer rounded-full transition-all duration-300 focus:outline-hidden ${
-                    currentIndex === idx
-                      ? "w-8 bg-[#F85308]"
-                      : "w-2.5 bg-slate-300 hover:bg-slate-400"
-                  }`}
-                  aria-label={`Ir para o slide ${idx + 1}`}
-                  aria-current={currentIndex === idx ? "true" : undefined}
-                />
-              ))}
+                </>
+              )}
             </div>
-          </div>
-        )}
 
-        <div className="mt-14 flex justify-center px-4 sm:mt-14">
-          <Link
-            href="/noticias"
-            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#F85308] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F85308]/25 transition-all hover:-translate-y-0.5 hover:bg-[#e04804] hover:shadow-xl hover:shadow-[#F85308]/30"
-          >
-            {locale === "pt" ? "Ver todas" : "View all"}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+            {/* Paginação limitada */}
+            {isCarousel && (
+              <div className="mt-5 flex items-center justify-center sm:mt-7">
+                <div className="flex min-w-28 items-center justify-center gap-2">
+                  {visibleDotIndexes.map((idx) => (
+                    <button
+                      key={articles[idx].slug}
+                      type="button"
+                      onClick={() => setCurrentIndex(idx)}
+                      className={`h-2.5 cursor-pointer rounded-full transition-all duration-300 focus:outline-hidden ${
+                        currentIndex === idx
+                          ? "w-8 bg-[#F85308]"
+                          : "w-2.5 bg-slate-300 hover:bg-slate-400"
+                      }`}
+                      aria-label={`Ir para o slide ${idx + 1}`}
+                      aria-current={currentIndex === idx ? "true" : undefined}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="mt-14 flex justify-center px-4 sm:mt-14">
+              <Link
+                href="/noticias"
+                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#F85308] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F85308]/25 transition-all hover:-translate-y-0.5 hover:bg-[#e04804] hover:shadow-xl hover:shadow-[#F85308]/30"
+              >
+                {locale === "pt" ? "Ver todas" : "View all"}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

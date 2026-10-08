@@ -40,8 +40,20 @@ export function NewsArchive({ articles }: { articles: NewsArticle[] }) {
         </p>
       </header>
 
-      <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
-        {articles.map((article) => {
+      {articles.length === 0 ? (
+        <div className="mt-10 px-6 py-14 text-center sm:mt-12">
+          <p className="text-base font-semibold text-[#07213D] sm:text-lg">
+            {locale === "pt"
+              ? "Ainda não existem notícias publicadas."
+              : "There are no published news yet."}
+          </p>
+          <p className="mt-2 text-sm text-slate-500">
+            {locale === "pt" ? "Volte em breve." : "Please check back soon."}
+          </p>
+        </div>
+      ) : (
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
+          {articles.map((article) => {
           const title = article.title[locale] || article.title.pt;
 
           return (
@@ -78,8 +90,9 @@ export function NewsArchive({ articles }: { articles: NewsArticle[] }) {
               </div>
             </Link>
           );
-        })}
-      </div>
+          })}
+        </div>
+      )}
     </section>
   );
 }

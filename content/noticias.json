@@ -1,5 +1,41 @@
 [
   {
+    "slug": "investigacao-desenvolve-narrativas-interativas-que-se-adaptam-as-emocoes-de-criancas-com-cancro",
+    "status": "rascunho",
+    "publishedAt": "2026-10-09",
+    "title": {
+      "pt": "Investigação Desenvolve Narrativas Interativas que se Adaptam às Emoções de Crianças com Cancro",
+      "en": "Research Develops Interactive Narratives that Adapt to the Emotions of Children with Cancer"
+    },
+    "category": {
+      "pt": "Educação & Comunidade",
+      "en": "Education & Community"
+    },
+    "date": {
+      "pt": "Outubro 2026",
+      "en": "October 2026"
+    },
+    "image": "/images/noticias/investigacao-desenvolve-narrativas-interativas-que-se-adaptam-as-emocoes-de-criancas-com-cancro-1791551711230.jpeg",
+    "imageAlt": {
+      "pt": "Reconhecimento de emoções",
+      "en": "Emotion recognition"
+    },
+    "content": {
+      "pt": [
+        "No âmbito de uma dissertação de Mestrado em Engenharia Informática da Universidade da Madeira, foi desenvolvido um módulo de reconhecimento de emoções faciais para a plataforma Musiquence, destinado a criar narrativas interativas capazes de se adaptar ao estado emocional de crianças em contexto de oncologia pediátrica.",
+        "A investigação centrou-se na integração da inteligência artificial (IA) numa ferramenta já utilizada por profissionais de saúde para criar atividades de estimulação cognitiva sem necessidade de programação. Através da câmara, o sistema identifica a expressão facial da criança durante a atividade e, em função da emoção detetada, altera o percurso da narrativa, conduzindo-a para conteúdos ajustados ao seu estado emocional.",
+        "A solução permite ao profissional de saúde definir, para cada momento da atividade, o caminho a seguir consoante a criança se mostre feliz, triste, surpreendida ou neutra, e gera no final de cada sessão um relatório com as emoções registadas. O reconhecimento é realizado localmente, sem gravação de imagens nem transmissão de dados, respeitando a privacidade exigida num contexto pediátrico. A ferramenta foi avaliada por profissionais de saúde, que a consideraram útil para a sua prática.",
+        "Esta investigação enquadra-se nos objetivos do Projeto C.A.I.X.A., reforçando o potencial da computação afetiva e das narrativas digitais enquanto ferramentas de apoio emocional a crianças com cancro, e contribuindo para intervenções mais personalizadas e sensíveis às necessidades de cada criança."
+      ],
+      "en": [
+        "As part of a Master’s dissertation in Informatics Engineering at the University of Madeira, a facial emotion recognition module was developed for the Musiquence platform, enabling interactive narratives that adapt to the emotional state of children in paediatric oncology settings.",
+        "The research focused on integrating artificial intelligence (AI) into a tool already used by health professionals to create cognitive stimulation activities without programming. Using the camera, the system identifies the child’s facial expression during the activity and, depending on the emotion detected, changes the course of the narrative, guiding the child towards content suited to their emotional state.",
+        "The solution allows health professionals to define, for each moment of the activity, the path to follow depending on whether the child appears happy, sad, surprised or neutral, and produces a report of the recorded emotions at the end of each session. Recognition runs locally, with no images stored and no data transmitted, meeting the privacy requirements of a paediatric setting. The tool was evaluated by health professionals, who considered it useful for their practice.",
+        "This research is aligned with the goals of the C.A.I.X.A. Project, reinforcing the potential of affective computing and digital narratives as tools for the emotional support of children with cancer, and contributing to more personalised interventions that are sensitive to each child’s needs."
+      ]
+    }
+  },
+  {
     "slug": "atividade-de-prevencao-do-cancro-do-pulmao",
     "status": "publicada",
     "publishedAt": "2026-10-08",

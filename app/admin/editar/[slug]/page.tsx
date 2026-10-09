@@ -29,15 +29,6 @@ export default async function EditarNoticiaPage({ params }: EditarPageProps) {
       <AdminNavbar />
 
       <main className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#07213D] sm:text-3xl">
-            Editar Notícia
-          </h1>
-          <p className="mt-1 text-sm text-slate-500">
-            A editar: <span className="font-semibold text-slate-700">{article.title.pt}</span>
-          </p>
-        </div>
-
         <NewsForm initialArticle={article} isNew={false} />
       </main>
     </div>

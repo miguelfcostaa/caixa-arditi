@@ -53,7 +53,13 @@ export function NewsArchive({ articles }: { articles: NewsArticle[] }) {
           </p>
         </div>
       ) : (
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          className={`mt-10 grid gap-6 sm:mt-12 ${
+            articles.length === 1
+              ? "mx-auto max-w-sm grid-cols-1"
+              : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          }`}
+        >
           {articles.map((article) => {
           const title = article.title[locale] || article.title.pt;
 

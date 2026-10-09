@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import {
 Save,
@@ -15,7 +14,7 @@ CheckCircle2,
 AlertCircle,
 } from "lucide-react";
 import { NewsArticle, NewsStatus } from "@/lib/newsletterData";
-import { getNewsImageUrl } from "@/lib/newsImage";
+import { NewsImage } from "@/components/NewsImage";
 
 interface NewsFormProps {
 initialArticle?: NewsArticle;
@@ -93,11 +92,9 @@ const [datePt, setDatePt] = useState(initialArticle?.date.pt || "");
 const [dateEn, setDateEn] = useState(initialArticle?.date.en || "");
 
 // Imagem
-const currentImage = initialArticle?.image || "/images/image1.jpg";
+const currentImage = initialArticle?.image || "";
 const [imageFile, setImageFile] = useState<File | null>(null);
 const [imagePreview, setImagePreview] = useState<string | null>(null);
-const [imageAltPt, setImageAltPt] = useState(initialArticle?.imageAlt.pt || "");
-const [imageAltEn, setImageAltEn] = useState(initialArticle?.imageAlt.en || "");
 
 // Conteúdo / Parágrafos (como texto multilinhas para fácil edição)
 const [contentPt, setContentPt] = useState(
@@ -176,10 +173,6 @@ const handleSubmit = async (e: React.FormEvent, isPreview = false) => {
         en: dateEn.trim() || datePt.trim() || publishedAt,
         },
         image: currentImage,
-        imageAlt: {
-        pt: imageAltPt.trim() || titlePt.trim(),
-        en: imageAltEn.trim() || titleEn.trim() || titlePt.trim(),
-        },
         content: {
         pt: paragraphsPt.length > 0 ? paragraphsPt : [titlePt.trim()],
         en: paragraphsEn.length > 0 ? paragraphsEn : paragraphsPt,
@@ -254,7 +247,7 @@ return (
             disabled={loading}
             className="inline-flex items-center gap-2 rounded-xl bg-[#07213D] px-5 py-2 text-xs font-semibold text-white shadow-md transition-colors hover:bg-[#07213D]/90 disabled:opacity-50 sm:text-sm cursor-pointer"
         >
-            <Save className="h-4 w-4 text-[#F85308]" />
+            <Save className="h-4 w-4" />
             <span>{loading ? "A guardar..." : "Guardar Notícia"}</span>
         </button>
         </div>
@@ -332,11 +325,6 @@ return (
                 <span>Rascunho</span>
             </label>
             </div>
-            <p className="mt-1.5 text-xs text-slate-400">
-            {status === "publicada"
-                ? "Visível no website público e sitemap."
-                : "Apenas visível no painel administrativo."}
-            </p>
         </div>
 
         {/* Data de Publicação */}
@@ -355,58 +343,52 @@ return (
             onChange={(e) => handleDateChange(e.target.value)}
             className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
             />
-            <p className="mt-1.5 text-xs text-slate-400">
-            Usada para ordenação cronológica.
-            </p>
         </div>
 
         {/* Slug URL */}
         <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center justify-between">
-            <label
-                htmlFor="slug"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
-            >
-                Identificador (Slug URL)
-            </label>
-            <button
-                type="button"
-                onClick={() => setSlugLocked(!slugLocked)}
-                className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 cursor-pointer"
-                title={slugLocked ? "Desbloquear edição do slug" : "Bloquear slug"}
-            >
-                {slugLocked ? (
-                <>
-                    <Lock className="h-3 w-3" />
-                    <span>Bloqueado</span>
-                </>
-                ) : (
-                <>
-                    <Unlock className="h-3 w-3 text-amber-600" />
-                    <span className="text-amber-600">Edição manual</span>
-                </>
-                )}
-            </button>
+                <label
+                    htmlFor="slug"
+                    className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+                >
+                    Identificador (Slug URL)
+                </label>
+                <button
+                    type="button"
+                    onClick={() => setSlugLocked(!slugLocked)}
+                    className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 cursor-pointer"
+                    title={slugLocked ? "Desbloquear edição do slug" : "Bloquear slug"}
+                >
+                    {slugLocked ? (
+                    <>
+                        <Lock className="h-3 w-3" />
+                        <span>Bloqueado</span>
+                    </>
+                    ) : (
+                    <>
+                        <Unlock className="h-3 w-3 text-amber-600" />
+                        <span className="text-amber-600">Edição manual</span>
+                    </>
+                    )}
+                </button>
             </div>
             <div className="relative mt-2">
-            <input
-                id="slug"
-                type="text"
-                required
-                readOnly={slugLocked}
-                value={slug}
-                onChange={(e) => setSlug(generateSlug(e.target.value))}
-                placeholder="slug-da-noticia"
-                className={`block w-full rounded-xl border px-3.5 py-2 text-sm transition-colors focus:outline-hidden ${
-                slugLocked
-                    ? "border-slate-200 bg-slate-100 text-slate-500 cursor-not-allowed"
-                    : "border-slate-300 bg-white text-slate-900 focus:border-[#F85308] focus:ring-2 focus:ring-[#F85308]/20"
-                }`}
-            />
+                <input
+                    id="slug"
+                    type="text"
+                    required
+                    readOnly={slugLocked}
+                    value={slug}
+                    onChange={(e) => setSlug(generateSlug(e.target.value))}
+                    placeholder="slug-da-noticia"
+                    className={`block w-full rounded-xl border px-3.5 py-2 text-sm transition-colors focus:outline-hidden ${
+                    slugLocked
+                        ? "border-slate-200 bg-slate-100 text-slate-500 cursor-not-allowed"
+                        : "border-slate-300 bg-white text-slate-900 focus:border-[#F85308] focus:ring-2 focus:ring-[#F85308]/20"
+                    }`}
+                />
             </div>
-            <p className="mt-1.5 text-xs text-slate-400">
-            URL: /noticias/{slug || "slug-da-noticia"}
-            </p>
         </div>
         </div>
     </div>
@@ -417,11 +399,8 @@ return (
         <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
             <h3 className="text-base font-bold text-[#07213D] sm:text-lg">
-            Conteúdo Bilingue da Notícia
+            Conteúdo da Notícia
             </h3>
-            <p className="mt-1 text-xs text-slate-500">
-            Alterne entre os separadores para gerir a versão em Português e em Inglês.
-            </p>
         </div>
 
         <div className="flex rounded-xl bg-slate-100 p-1">
@@ -434,8 +413,7 @@ return (
                 : "text-slate-600 hover:text-slate-900"
             }`}
             >
-            <span>🇵🇹 Português</span>
-            {titlePt && <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />}
+            <span>Português</span>
             </button>
 
             <button
@@ -447,8 +425,7 @@ return (
                 : "text-slate-600 hover:text-slate-900"
             }`}
             >
-            <span>🇬🇧 English</span>
-            {titleEn && <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />}
+            <span>English</span>
             </button>
         </div>
         </div>
@@ -530,9 +507,7 @@ return (
                 >
                 Conteúdo do Artigo (Português)
                 </label>
-                <span className="text-xs text-slate-400">
-                Separe os parágrafos com uma linha em branco
-                </span>
+               
             </div>
             <textarea
                 id="contentPt"
@@ -616,9 +591,6 @@ return (
                 >
                 Article Content (English)
                 </label>
-                <span className="text-xs text-slate-400">
-                Separate paragraphs with an empty line
-                </span>
             </div>
             <textarea
                 id="contentEn"
@@ -639,15 +611,14 @@ return (
             Imagem de Destaque
         </h3>
 
-        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="mt-6 w-full">
             {/* Pré-visualização e Upload */}
             <div>
-            <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
-                <Image
-                src={imagePreview || getNewsImageUrl(currentImage)}
-                alt="Pré-visualização da imagem"
-                fill
-                className="object-cover"
+            <div className="relative h-36 w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 sm:h-44 lg:h-48">
+                <NewsImage
+                src={imagePreview || currentImage}
+                alt={titlePt.trim() || "Imagem da notícia"}
+                className="object-cover object-center"
                 unoptimized
                 />
             </div>
@@ -671,42 +642,6 @@ return (
             </div>
             </div>
 
-            {/* Descrições da Imagem (Acessibilidade Alt) */}
-            <div className="space-y-4">
-            <div>
-                <label
-                htmlFor="imageAltPt"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
-                >
-                Descrição da Imagem (PT — Acessibilidade)
-                </label>
-                <input
-                id="imageAltPt"
-                type="text"
-                value={imageAltPt}
-                onChange={(e) => setImageAltPt(e.target.value)}
-                placeholder="Descreva a imagem em português..."
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
-                />
-            </div>
-
-            <div>
-                <label
-                htmlFor="imageAltEn"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
-                >
-                Descrição da Imagem (EN — Accessibility)
-                </label>
-                <input
-                id="imageAltEn"
-                type="text"
-                value={imageAltEn}
-                onChange={(e) => setImageAltEn(e.target.value)}
-                placeholder="Describe the image in English..."
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
-                />
-            </div>
-            </div>
         </div>
     </div>
 
@@ -724,7 +659,7 @@ return (
         disabled={loading}
         className="inline-flex items-center gap-2 rounded-xl bg-[#07213D] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#07213D]/90 disabled:opacity-50 cursor-pointer"
         >
-        <Save className="h-4 w-4 text-[#F85308]" />
+        <Save className="h-4 w-4" />
         <span>{loading ? "A guardar..." : "Guardar e Publicar"}</span>
         </button>
     </div>

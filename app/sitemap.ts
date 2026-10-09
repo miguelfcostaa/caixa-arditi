@@ -24,7 +24,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: absoluteUrl(`/noticias/${article.slug}`),
     changeFrequency: "monthly",
     priority: 0.7,
-    images: [absoluteUrl(getNewsImageUrl(article.image))],
+    images: article.image
+      ? [absoluteUrl(getNewsImageUrl(article.image))]
+      : undefined,
   }));
 
   return [...staticPages, ...articlePages];

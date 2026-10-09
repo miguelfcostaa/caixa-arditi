@@ -85,11 +85,7 @@ export async function POST(request: Request) {
         pt: articleData.date?.pt?.trim() || "",
         en: articleData.date?.en?.trim() || articleData.date?.pt?.trim() || "",
       },
-      image: articleData.image || "/images/image1.jpg",
-      imageAlt: {
-        pt: articleData.imageAlt?.pt?.trim() || articleData.title.pt.trim(),
-        en: articleData.imageAlt?.en?.trim() || articleData.title.en?.trim() || articleData.title.pt.trim(),
-      },
+      image: articleData.image?.trim() || "",
       content: {
         pt: Array.isArray(articleData.content?.pt)
           ? articleData.content.pt.filter((p) => p && p.trim())

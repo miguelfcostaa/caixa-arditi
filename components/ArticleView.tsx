@@ -1,12 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Calendar, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import type { NewsArticle } from "@/lib/newsletterData";
-import { getNewsImageUrl } from "@/lib/newsImage";
+import { NewsImage } from "@/components/NewsImage";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -24,7 +23,6 @@ export function ArticleView({
 
   const title = article.title[locale] || article.title.pt;
   const date = article.date[locale] || article.date.pt;
-  const imageAlt = article.imageAlt[locale] || article.imageAlt.pt;
   const paragraphs = article.content[locale] || article.content.pt;
 
   const otherArticles = articles.filter((a) => a.slug !== article.slug);
@@ -60,10 +58,9 @@ export function ArticleView({
 
           {/* Imagem de Destaque em formato banner esticado (~1200x200), cover stretch e overflow hidden */}
           <div className="relative mt-8 h-[150px] sm:h-[150px] md:h-[150px] w-full overflow-hidden bg-slate-200 shadow-sm">
-            <Image
-              src={getNewsImageUrl(article.image)}
-              alt={imageAlt}
-              fill
+            <NewsImage
+              src={article.image}
+              alt={title}
               priority
          
               className="h-full w-full object-cover object-center"
@@ -103,10 +100,9 @@ export function ArticleView({
                     className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#dcdacf] bg-[#F5F2EE] shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer"
                   >
                     <div className="relative aspect-video w-full overflow-hidden bg-slate-200">
-                      <Image
-                        src={getNewsImageUrl(other.image)}
-                        alt={other.imageAlt[locale] || other.imageAlt.pt}
-                        fill
+                      <NewsImage
+                        src={other.image}
+                        alt={other.title[locale] || other.title.pt}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
@@ -134,7 +130,7 @@ export function ArticleView({
             </div>
           )}
 
-          <div className="mt-6 flex justify-center">
+          <div className="mt-20 flex justify-center">
             <Link
               href="/noticias"
               className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#F85308] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F85308]/25 transition-all hover:-translate-y-0.5 hover:bg-[#e04804] hover:shadow-xl hover:shadow-[#F85308]/30"

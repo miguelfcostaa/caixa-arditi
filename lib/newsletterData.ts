@@ -19,10 +19,6 @@ export interface NewsArticle {
     en: string;
   };
   image: string;
-  imageAlt: {
-    pt: string;
-    en: string;
-  };
   content: {
     pt: string[];
     en: string[];
@@ -53,11 +49,7 @@ const allNewsArticles: NewsArticle[] = sortByDateDesc(
       pt: item.date?.pt || "",
       en: item.date?.en || item.date?.pt || "",
     },
-    image: item.image || "/images/image1.jpg",
-    imageAlt: {
-      pt: item.imageAlt?.pt || item.title?.pt || "",
-      en: item.imageAlt?.en || item.title?.en || "",
-    },
+    image: item.image || "",
     content: {
       pt: Array.isArray(item.content?.pt) ? item.content.pt : [],
       en: Array.isArray(item.content?.en) ? item.content.en : [],

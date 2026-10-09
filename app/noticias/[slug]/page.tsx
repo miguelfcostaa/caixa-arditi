@@ -33,6 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const canonicalPath = `/noticias/${article.slug}`;
   const description = truncateDescription(article.content.pt[0]);
+  const socialImage = article.image
+    ? absoluteUrl(getNewsImageUrl(article.image))
+    : undefined;
 
   return {
     title: article.title.pt,
@@ -50,18 +53,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       publishedTime: article.publishedAt,
       section: article.category.pt,
-      images: [
-        {
-          url: absoluteUrl(getNewsImageUrl(article.image)),
-          alt: article.imageAlt.pt,
-        },
-      ],
+      images: socialImage
+        ? [{ url: socialImage, alt: article.title.pt }]
+        : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: article.title.pt,
       description,
-      images: [absoluteUrl(getNewsImageUrl(article.image))],
+      images: socialImage ? [socialImage] : undefined,
     },
   };
 }
@@ -82,7 +82,9 @@ export default async function NewsArticlePage({ params }: PageProps) {
     "@type": "NewsArticle",
     headline: article.title.pt,
     description,
-    image: [absoluteUrl(getNewsImageUrl(article.image))],
+    image: article.image
+      ? [absoluteUrl(getNewsImageUrl(article.image))]
+      : undefined,
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
     articleSection: article.category.pt,

@@ -1,12 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import type { NewsArticle } from "@/lib/newsletterData";
-import { getNewsImageUrl } from "@/lib/newsImage";
+import { NewsImage } from "@/components/NewsImage";
 
 export function NewsArchive({ articles }: { articles: NewsArticle[] }) {
   const router = useRouter();
@@ -70,10 +69,9 @@ export function NewsArchive({ articles }: { articles: NewsArticle[] }) {
               className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#dcdacf] bg-[#F5F2EE] shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#F85308] focus-visible:ring-offset-4"
             >
               <div className="relative aspect-video w-full overflow-hidden bg-slate-200/60">
-                <Image
-                  src={getNewsImageUrl(article.image)}
-                  alt={article.imageAlt[locale] || article.imageAlt.pt}
-                  fill
+                <NewsImage
+                  src={article.image}
+                  alt={title}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />

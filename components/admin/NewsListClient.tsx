@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -12,7 +11,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { NewsArticle } from "@/lib/newsletterData";
-import { getNewsImageUrl } from "@/lib/newsImage";
+import { NewsImage } from "@/components/NewsImage";
 
 interface NewsListClientProps {
   initialNews: NewsArticle[];
@@ -147,10 +146,9 @@ export function NewsListClient({ initialNews }: NewsListClientProps) {
                 {/* Lado Esquerdo: Imagem + Detalhes */}
                 <div className="flex items-start gap-4">
                   <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 sm:h-20 sm:w-28">
-                    <Image
-                      src={getNewsImageUrl(article.image)}
-                      alt={article.imageAlt.pt || article.title.pt}
-                      fill
+                    <NewsImage
+                      src={article.image}
+                      alt={article.title.pt}
                       className="object-cover"
                       unoptimized
                     />

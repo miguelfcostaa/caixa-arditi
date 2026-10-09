@@ -68,40 +68,6 @@
     }
   },
   {
-    "slug": "workshop-com-pais",
-    "status": "rascunho",
-    "publishedAt": "2026-10-01",
-    "title": {
-      "pt": "Workshop com Pais",
-      "en": "Workshop with Parents"
-    },
-    "category": {
-      "pt": "Iniciativas Comunitárias",
-      "en": "Community Initiatives"
-    },
-    "date": {
-      "pt": "Outubro 2026",
-      "en": "October 2026"
-    },
-    "image": "/images/newsletter1.jpg",
-    "imageAlt": {
-      "pt": "Workshop com Pais no âmbito do Projeto C.A.I.X.A.",
-      "en": "Workshop with Parents under Project C.A.I.X.A."
-    },
-    "content": {
-      "pt": [
-        "No âmbito do Projeto C.A.I.X.A., realizou-se uma sessão de trabalho participativa com pais e encarregados de educação para auscultar as principais preocupações e necessidades no domínio da literacia em saúde e prevenção primária do cancro infantil.",
-        "Durante o encontro, foram apresentados os conceitos e primeiras abordagens das ferramentas interativas de Realidade Virtual e Realidade Aumentada (XR), permitindo recolher contributos fundamentais para a adequação das dinâmicas pedagógicas e dos ambientes virtuais.",
-        "A participação ativa dos familiares constitui um pilar essencial para garantir que as soluções desenvolvidas tenham um impacto real, sustentável e positivo nos hábitos de vida das crianças."
-      ],
-      "en": [
-        "As part of Project C.A.I.X.A., a participatory workshop was held with parents and guardians to assess key concerns and needs in the field of health literacy and primary childhood cancer prevention.",
-        "During the session, the concepts and initial approaches of interactive Virtual Reality and Augmented Reality (XR) tools were introduced, gathering vital feedback to refine the educational dynamics and virtual environments.",
-        "The active involvement of families is an essential pillar in ensuring that the developed solutions have a real, sustainable, and positive impact on children's healthy lifestyles."
-      ]
-    }
-  },
-  {
     "slug": "colaboracao-com-a-liga-portuguesa-contra-o-cancro",
     "status": "rascunho",
     "publishedAt": "2026-09-01",

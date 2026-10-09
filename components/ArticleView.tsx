@@ -57,7 +57,7 @@ export function ArticleView({
           </div>
 
           {/* Imagem de Destaque em formato banner esticado (~1200x200), cover stretch e overflow hidden */}
-          <div className="relative mt-8 h-[150px] sm:h-[150px] md:h-[150px] w-full overflow-hidden bg-slate-200 shadow-sm">
+          <div className="relative mt-8 h-[190px] sm:h-[190px] md:h-[190px] w-full overflow-hidden bg-slate-200 shadow-sm">
             <NewsImage
               src={article.image}
               alt={title}

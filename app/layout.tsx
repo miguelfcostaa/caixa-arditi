@@ -87,12 +87,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${montserrat.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >
-        <body
-            suppressHydrationWarning
-            className="min-h-full flex flex-col bg-[#FCFAF9] text-[#07213D] selection:bg-[#F85308] selection:text-white font-sans"
-        >
-            <LanguageProvider>{children}</LanguageProvider>
-        </body>
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-[#FCFAF9] text-[#07213D] selection:bg-[#F85308] selection:text-white font-sans"
+      >
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

@@ -12,8 +12,35 @@ import { loadPublishedNews } from "@/lib/githubStorage";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  title: {
+    absolute: "Projeto C.A.I.X.A. | Prevenção do Cancro Infantil com XR",
+  },
+  description: siteConfig.description,
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
+    alternateLocale: siteConfig.alternateLocale,
+    title: "Prevenção do Cancro Infantil com XR | Projeto C.A.I.X.A.",
+    description: siteConfig.description,
+    images: [
+      {
+        url: absoluteUrl("/opengraph-image"),
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Prevenção do Cancro Infantil com XR | Projeto C.A.I.X.A.",
+    description: siteConfig.description,
+    images: [absoluteUrl("/opengraph-image")],
   },
 };
 

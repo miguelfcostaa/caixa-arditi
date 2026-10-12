@@ -5,25 +5,24 @@ import { getNewsImageUrl } from "@/lib/newsImage";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articles = await loadPublishedNews();
+  const latestPublishedAt = articles[0]?.publishedAt;
+  const latestContentUpdate = latestPublishedAt
+    ? new Date(`${latestPublishedAt}T00:00:00.000Z`)
+    : undefined;
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: absoluteUrl("/"),
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
+      lastModified: latestContentUpdate,
     },
     {
       url: absoluteUrl("/noticias"),
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
+      lastModified: latestContentUpdate,
     },
   ];
 
   const articlePages: MetadataRoute.Sitemap = articles.map((article) => ({
     url: absoluteUrl(`/noticias/${article.slug}`),
-    changeFrequency: "monthly",
-    priority: 0.7,
+    lastModified: new Date(`${article.publishedAt}T00:00:00.000Z`),
     images: article.image
       ? [absoluteUrl(getNewsImageUrl(article.image))]
       : undefined,

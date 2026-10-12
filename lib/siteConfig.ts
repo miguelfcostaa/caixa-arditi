@@ -12,7 +12,7 @@ export const siteConfig = {
   name: "Projeto C.A.I.X.A.",
   shortName: "C.A.I.X.A.",
   description:
-    "Projeto dedicado à prevenção primária do cancro infantil através da literacia em saúde e de experiências interativas com tecnologias XR.",
+    "Projeto de prevenção primária do cancro infantil que promove a literacia em saúde através de experiências interativas com tecnologias XR na Madeira.",
   url: urlWithProtocol.replace(/\/$/, ""),
   locale: "pt_PT",
   alternateLocale: "en_GB",

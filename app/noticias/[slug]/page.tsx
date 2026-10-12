@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = truncateDescription(article.content.pt[0]);
   const socialImage = article.image
     ? absoluteUrl(getNewsImageUrl(article.image))
-    : undefined;
+    : absoluteUrl("/opengraph-image");
 
   return {
     title: article.title.pt,
@@ -53,15 +53,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       publishedTime: article.publishedAt,
       section: article.category.pt,
-      images: socialImage
-        ? [{ url: socialImage, alt: article.title.pt }]
-        : undefined,
+      images: [{ url: socialImage, alt: article.title.pt }],
     },
     twitter: {
       card: "summary_large_image",
       title: article.title.pt,
       description,
-      images: socialImage ? [socialImage] : undefined,
+      images: [socialImage],
     },
   };
 }
@@ -87,9 +85,22 @@ export default async function NewsArticlePage({ params }: PageProps) {
       : undefined,
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
+    url: canonicalUrl,
     articleSection: article.category.pt,
+    keywords: [
+      article.category.pt,
+      "prevenção do cancro infantil",
+      "literacia em saúde",
+      "tecnologias XR",
+    ],
+    isAccessibleForFree: true,
     inLanguage: "pt-PT",
     mainEntityOfPage: canonicalUrl,
+    isPartOf: {
+      "@type": "WebSite",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
     author: {
       "@type": "Organization",
       name: siteConfig.name,
@@ -105,13 +116,40 @@ export default async function NewsArticlePage({ params }: PageProps) {
       },
     },
   };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Início",
+        item: siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Notícias",
+        item: absoluteUrl("/noticias"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: article.title.pt,
+        item: canonicalUrl,
+      },
+    ],
+  };
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+          __html: JSON.stringify([articleJsonLd, breadcrumbJsonLd]).replace(
+            /</g,
+            "\\u003c",
+          ),
         }}
       />
       <ArticleView article={article} articles={articles} />

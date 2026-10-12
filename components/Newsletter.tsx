@@ -114,20 +114,20 @@ export function Newsletter({ articles }: { articles: NewsArticle[] }) {
 
             const positionClasses = {
               active:
-                "left-1/2 z-20 w-[74%] -translate-x-1/2 scale-100 opacity-100 sm:w-[66%] lg:w-[52%]",
+                "z-20 opacity-100 [transform:translate3d(-50%,-50%,0)_scale(1)]",
               previous:
-                "left-[-25%] z-10 w-[60%] scale-[0.82] opacity-45 blur-[3px] sm:left-[-24%] sm:w-[50%] lg:left-[-20%] lg:w-[42%]",
+                "z-10 opacity-45 [transform:translate3d(-118%,-50%,0)_scale(.82)] sm:[transform:translate3d(-126%,-50%,0)_scale(.82)] lg:[transform:translate3d(-146%,-50%,0)_scale(.82)]",
               next:
-                "right-[-25%] z-10 w-[60%] scale-[0.82] opacity-45 blur-[3px] sm:right-[-24%] sm:w-[50%] lg:right-[-20%] lg:w-[42%]",
+                "z-10 opacity-45 [transform:translate3d(18%,-50%,0)_scale(.82)] sm:[transform:translate3d(26%,-50%,0)_scale(.82)] lg:[transform:translate3d(46%,-50%,0)_scale(.82)]",
               hidden:
-                "left-1/2 z-0 w-[62%] -translate-x-1/2 scale-75 opacity-0 pointer-events-none",
+                "pointer-events-none z-0 opacity-0 [transform:translate3d(-50%,-50%,0)_scale(.76)]",
             }[position];
 
             const card = (
               <div
-                className={`group flex w-full flex-col overflow-hidden rounded-2xl border border-[#dcdacf] bg-[#F5F2EE] text-left shadow-sm ${
+                className={`group relative flex w-full flex-col overflow-hidden rounded-2xl border border-[#dcdacf] bg-[#F5F2EE] text-left shadow-sm ${
                   isActive
-                    ? "transition-shadow duration-300 hover:-translate-y-1 hover:shadow-md"
+                    ? "transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-md"
                     : "shadow-lg"
                 }`}
               >
@@ -136,7 +136,11 @@ export function Newsletter({ articles }: { articles: NewsArticle[] }) {
                     src={item.image}
                     alt={item.title[locale] || item.title.pt}
                     sizes="(max-width: 640px) 84vw, (max-width: 1024px) 72vw, 62vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className={`object-cover ${
+                      isActive
+                        ? "transition-transform duration-500 group-hover:scale-[1.025]"
+                        : ""
+                    }`}
                   />
                 </div>
 
@@ -156,13 +160,20 @@ export function Newsletter({ articles }: { articles: NewsArticle[] }) {
                     </span>
                   </div>
                 </div>
+
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-0 z-10 bg-[#FCFAF9]/25 transition-opacity duration-[420ms] ${
+                    isActive ? "opacity-0" : "opacity-100"
+                  }`}
+                />
               </div>
             );
 
             return (
               <div
                 key={item.slug}
-                className={`absolute top-1/2 -translate-y-1/2 transition-all duration-500 ease-out ${positionClasses}`}
+                className={`absolute top-1/2 left-1/2 w-[74%] will-change-transform transition-[transform,opacity] duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:w-[66%] lg:w-[52%] ${positionClasses}`}
                 aria-hidden={position === "hidden" ? true : undefined}
               >
                 {isActive ? (

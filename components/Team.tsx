@@ -201,7 +201,7 @@ export function Team() {
     {
       id: "chefe-ana",
       name: "Ana Lúcia Faria",
-      role: t("team.defaultRoleInv"),
+      role: "PhD",
       initials: "AF",
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
       image: "/team/ana-lucia-faria.png",
@@ -227,7 +227,7 @@ export function Team() {
     {
       id: "chefe-monica",
       name: "Mónica Cameirão",
-      role: t("team.defaultRoleInv"),
+      role: "PhD",
       initials: "MC",
       avatarGradient: "from-amber-500 to-amber-700 ring-amber-700/30",
       image: "/team/monica-cameirao.png",

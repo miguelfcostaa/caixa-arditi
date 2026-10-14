@@ -24,6 +24,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/images/noticias/:filename*",
+        destination: "/api/noticias/imagens/:filename*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

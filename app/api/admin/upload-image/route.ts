@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     const localFilePath = path.join(localImagesDir, filename);
     await fs.writeFile(localFilePath, buffer);
 
-    const relativeUrl = `/images/noticias/${filename}`;
+    const relativeUrl = `/api/noticias/imagens/${filename}`;
 
     // 2. Se o GitHub Token estiver ativo, comita no GitHub
     const token = process.env.GITHUB_TOKEN?.trim();

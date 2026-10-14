@@ -47,7 +47,7 @@ const CATEGORY_SUGGESTIONS_EN = [
 "Community Initiatives",
 "Institutional Partnerships",
 "Research & Clinical Validation",
-"Conferências & Ciência",
+"Conferences & Science",
 "Education & Community",
 "Technology & Innovation",
 "Scientific Publications",
@@ -537,6 +537,7 @@ return (
                 value={contentPt}
                 onChange={setContentPt}
                 placeholder="Escreva o conteúdo da notícia em português..."
+                locale="pt"
             />
             </div>
         </div>
@@ -615,6 +616,7 @@ return (
                 value={contentEn}
                 onChange={setContentEn}
                 placeholder="Write the news article content in English..."
+                locale="en"
             />
             </div>
         </div>

@@ -42,11 +42,16 @@ img, picture, svg image {
 }
 
 /* Imagens no conteúdo de notícias (WYSIWYG e Páginas de Notícia) */
-.article-rich-content img,
+.article-rich-content img {
+  border-radius: 0.875rem;
+  border: none !important;
+  max-width: 100%;
+}
+
 .tiptap img {
   border-radius: 0.875rem;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08);
-  border: 1px solid #e2e8f0;
+  border: 1px solid #cbd5e1 !important;
   max-width: 100%;
 }
 

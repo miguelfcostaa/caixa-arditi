@@ -34,7 +34,79 @@ interface RichTextEditorProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  locale?: "pt" | "en";
 }
+
+const EDITOR_TRANSLATIONS = {
+  pt: {
+    h2: "Título 2 (H2)",
+    h3: "Título 3 (H3)",
+    bold: "Negrito (Bold)",
+    italic: "Itálico",
+    underline: "Sublinhado",
+    strike: "Riscado",
+    bulletList: "Lista de Marcadores (Bullet Points)",
+    orderedList: "Lista Numerada",
+    blockquote: "Citação (Blockquote)",
+    divider: "Linha Divisória",
+    link: "Inserir / Editar Link",
+    unlink: "Remover Link",
+    image: "Imagem",
+    insertImage: "Inserir Imagem",
+    undo: "Desfazer",
+    redo: "Refazer",
+    selectedImage: "Imagem Selecionada:",
+    width: "Largura:",
+    height: "Altura:",
+    layout: "Disposição:",
+    center: "Centro",
+    centerTitle: "Centrada",
+    sideBySide: "Lado a Lado",
+    sideBySideTitle: "Lado a Lado com outras imagens",
+    delete: "Eliminar",
+    deleteTitle: "Eliminar imagem selecionada",
+    promptLink: "Introduza o URL do link:",
+    uploadError: "Erro ao carregar a imagem.",
+    autoWidthTitle: "Ajustar automaticamente ao limite (50% se for lado a lado)",
+    setWidthTitle: (label: string) => `Definir largura para ${label}`,
+    autoHeightTitle: "Proporção natural da imagem",
+    setHeightTitle: (label: string) => `Definir altura para ${label}`,
+  },
+  en: {
+    h2: "Heading 2 (H2)",
+    h3: "Heading 3 (H3)",
+    bold: "Bold",
+    italic: "Italic",
+    underline: "Underline",
+    strike: "Strikethrough",
+    bulletList: "Bullet List",
+    orderedList: "Numbered List",
+    blockquote: "Quote (Blockquote)",
+    divider: "Divider Line",
+    link: "Insert / Edit Link",
+    unlink: "Remove Link",
+    image: "Image",
+    insertImage: "Insert Image",
+    undo: "Undo",
+    redo: "Redo",
+    selectedImage: "Selected Image:",
+    width: "Width:",
+    height: "Height:",
+    layout: "Layout:",
+    center: "Center",
+    centerTitle: "Centered",
+    sideBySide: "Side by Side",
+    sideBySideTitle: "Side by side with other images",
+    delete: "Delete",
+    deleteTitle: "Delete selected image",
+    promptLink: "Enter link URL:",
+    uploadError: "Error uploading image.",
+    autoWidthTitle: "Adjust automatically to limit (50% if side-by-side)",
+    setWidthTitle: (label: string) => `Set width to ${label}`,
+    autoHeightTitle: "Natural image ratio",
+    setHeightTitle: (label: string) => `Set height to ${label}`,
+  },
+};
 
 // Extensão customizada do Image do Tiptap com suporte para largura, altura e layout (lado a lado / centro / float)
 const CustomImage = Image.extend({
@@ -97,7 +169,7 @@ const CustomImage = Image.extend({
       mergeAttributes(rest, {
         "data-layout": layout,
         style: combinedStyle,
-        class: "custom-article-image rounded-xl shadow-xs border border-slate-200/80 transition-all",
+        class: "custom-article-image rounded-xl shadow-xs transition-all",
       }),
     ];
   },
@@ -106,7 +178,9 @@ const CustomImage = Image.extend({
 export function RichTextEditor({
   value,
   onChange,
+  locale = "pt",
 }: RichTextEditorProps) {
+  const t = EDITOR_TRANSLATIONS[locale] || EDITOR_TRANSLATIONS.pt;
   const singleFileInputRef = useRef<HTMLInputElement>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
 
@@ -186,7 +260,7 @@ export function RichTextEditor({
     if (res.ok && data.url) {
       return data.url;
     }
-    alert(data.error || "Erro ao carregar a imagem.");
+    alert(data.error || t.uploadError);
     return null;
   };
 
@@ -233,7 +307,7 @@ export function RichTextEditor({
   // Inserir link
   const setLink = () => {
     const previousUrl = editor.getAttributes("link").href;
-    const url = window.prompt("Introduza o URL do link:", previousUrl || "https://");
+    const url = window.prompt(t.promptLink, previousUrl || "https://");
 
     if (url === null) return;
     if (url === "") {
@@ -259,7 +333,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Título 2 (H2)"
+          title={t.h2}
         >
           <Heading2 className="h-4 w-4" />
         </button>
@@ -272,7 +346,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Título 3 (H3)"
+          title={t.h3}
         >
           <Heading3 className="h-4 w-4" />
         </button>
@@ -288,7 +362,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Negrito (Bold)"
+          title={t.bold}
         >
           <Bold className="h-4 w-4" />
         </button>
@@ -301,7 +375,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Itálico"
+          title={t.italic}
         >
           <Italic className="h-4 w-4" />
         </button>
@@ -314,7 +388,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Sublinhado"
+          title={t.underline}
         >
           <UnderlineIcon className="h-4 w-4" />
         </button>
@@ -327,7 +401,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Riscado"
+          title={t.strike}
         >
           <Strikethrough className="h-4 w-4" />
         </button>
@@ -343,7 +417,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Lista de Marcadores (Bullet Points)"
+          title={t.bulletList}
         >
           <List className="h-4 w-4" />
         </button>
@@ -356,7 +430,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Lista Numerada"
+          title={t.orderedList}
         >
           <ListOrdered className="h-4 w-4" />
         </button>
@@ -369,7 +443,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Citação (Blockquote)"
+          title={t.blockquote}
         >
           <Quote className="h-4 w-4" />
         </button>
@@ -378,7 +452,7 @@ export function RichTextEditor({
           type="button"
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
           className="flex h-8 w-8 items-center justify-center rounded-lg text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D] transition-colors cursor-pointer"
-          title="Linha Divisória"
+          title={t.divider}
         >
           <Minus className="h-4 w-4" />
         </button>
@@ -394,7 +468,7 @@ export function RichTextEditor({
               ? "bg-[#07213D] text-white shadow-xs"
               : "text-[#07213D]/70 hover:bg-slate-200/60 hover:text-[#07213D]"
           }`}
-          title="Inserir / Editar Link"
+          title={t.link}
         >
           <Link2 className="h-4 w-4" />
         </button>
@@ -404,7 +478,7 @@ export function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().unsetLink().run()}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
-            title="Remover Link"
+            title={t.unlink}
           >
             <Unlink className="h-4 w-4" />
           </button>
@@ -418,14 +492,14 @@ export function RichTextEditor({
           onClick={() => singleFileInputRef.current?.click()}
           disabled={uploadingImage}
           className="flex h-8 items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-[#07213D]/80 hover:bg-[#F85308]/10 hover:text-[#F85308] transition-colors cursor-pointer disabled:opacity-50"
-          title="Inserir Imagem"
+          title={t.insertImage}
         >
           {uploadingImage ? (
             <Loader2 className="h-4 w-4 animate-spin text-[#F85308]" />
           ) : (
             <ImagePlus className="h-4 w-4 text-[#F85308]" />
           )}
-          <span className="hidden sm:inline">Imagem</span>
+          <span className="hidden sm:inline">{t.image}</span>
         </button>
         <input
           ref={singleFileInputRef}
@@ -442,7 +516,7 @@ export function RichTextEditor({
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-[#07213D]/50 hover:bg-slate-200/60 hover:text-[#07213D] disabled:opacity-30 transition-colors cursor-pointer"
-            title="Desfazer"
+            title={t.undo}
           >
             <Undo className="h-3.5 w-3.5" />
           </button>
@@ -451,7 +525,7 @@ export function RichTextEditor({
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-[#07213D]/50 hover:bg-slate-200/60 hover:text-[#07213D] disabled:opacity-30 transition-colors cursor-pointer"
-            title="Refazer"
+            title={t.redo}
           >
             <Redo className="h-3.5 w-3.5" />
           </button>
@@ -463,12 +537,12 @@ export function RichTextEditor({
           <div className="flex flex-wrap items-center gap-2 border-t border-amber-200 bg-amber-50/95 px-3 py-2 text-xs text-[#07213D] animate-in fade-in duration-150">
           <div className="flex items-center gap-1.5 font-bold text-[#F85308]">
             <Sliders className="h-3.5 w-3.5" />
-            <span>Imagem Selecionada:</span>
+            <span>{t.selectedImage}</span>
           </div>
 
           {/* Presets de Largura */}
           <div className="flex items-center gap-1">
-            <span className="font-semibold text-[#07213D]/60 text-[11px]">Largura:</span>
+            <span className="font-semibold text-[#07213D]/60 text-[11px]">{t.width}</span>
             {[
               { label: "Auto", val: "auto" },
               { label: "50%", val: "calc(50% - 0.5rem)" },
@@ -493,7 +567,7 @@ export function RichTextEditor({
                     ? "bg-[#07213D] text-white shadow-xs"
                     : "bg-white text-[#07213D] border border-slate-200 hover:border-slate-300"
                 }`}
-                title={val === "auto" ? "Ajustar automaticamente ao limite (50% se for lado a lado)" : `Definir largura para ${label}`}
+                title={val === "auto" ? t.autoWidthTitle : t.setWidthTitle(label)}
               >
                 {label}
               </button>
@@ -504,7 +578,7 @@ export function RichTextEditor({
 
           {/* Presets de Altura */}
           <div className="flex items-center gap-1">
-            <span className="font-semibold text-[#07213D]/60 text-[11px]">Altura:</span>
+            <span className="font-semibold text-[#07213D]/60 text-[11px]">{t.height}</span>
             {[
               { label: "Auto", val: "auto" },
               { label: "220px", val: "220px" },
@@ -520,7 +594,7 @@ export function RichTextEditor({
                     ? "bg-[#07213D] text-white shadow-xs"
                     : "bg-white text-[#07213D] border border-slate-200 hover:border-slate-300"
                 }`}
-                title={val === "auto" ? "Proporção natural da imagem" : `Definir altura para ${label}`}
+                title={val === "auto" ? t.autoHeightTitle : t.setHeightTitle(label)}
               >
                 {label}
               </button>
@@ -531,7 +605,7 @@ export function RichTextEditor({
 
           {/* Disposição */}
           <div className="flex items-center gap-1">
-            <span className="font-semibold text-[#07213D]/60 text-[11px]">Disposição:</span>
+            <span className="font-semibold text-[#07213D]/60 text-[11px]">{t.layout}</span>
             <button
               type="button"
               onClick={() => updateImageAttr({ layout: "center" })}
@@ -540,10 +614,10 @@ export function RichTextEditor({
                   ? "bg-[#07213D] text-white shadow-xs"
                   : "bg-white border border-slate-200 hover:border-slate-300"
               }`}
-              title="Centrada"
+              title={t.centerTitle}
             >
               <AlignCenter className="h-3 w-3" />
-              <span>Centro</span>
+              <span>{t.center}</span>
             </button>
 
             <button
@@ -559,10 +633,10 @@ export function RichTextEditor({
                   ? "bg-[#07213D] text-white shadow-xs"
                   : "bg-white border border-slate-200 hover:border-slate-300"
               }`}
-              title="Lado a Lado com outras imagens"
+              title={t.sideBySideTitle}
             >
               <Columns2 className="h-3 w-3" />
-              <span>Lado a Lado</span>
+              <span>{t.sideBySide}</span>
             </button>
 
 
@@ -573,10 +647,10 @@ export function RichTextEditor({
             type="button"
             onClick={() => editor.chain().focus().deleteSelection().run()}
             className="ml-auto flex items-center gap-1 rounded-md bg-rose-50 px-2 py-1 text-[11px] font-bold text-rose-700 hover:bg-rose-100 transition-colors cursor-pointer border border-rose-200"
-            title="Eliminar imagem selecionada"
+            title={t.deleteTitle}
           >
             <Trash2 className="h-3.5 w-3.5 text-rose-600" />
-            <span>Eliminar</span>
+            <span>{t.delete}</span>
           </button>
         </div>
       )}

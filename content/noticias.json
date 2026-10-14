@@ -1,31 +1,5 @@
 [
   {
-    "slug": "isto-e-um-teste",
-    "status": "rascunho",
-    "publishedAt": "2026-10-14",
-    "title": {
-      "pt": "Isto é um teste",
-      "en": "Isto é um teste"
-    },
-    "category": {
-      "pt": "Iniciativas Comunitárias",
-      "en": "Iniciativas Comunitárias"
-    },
-    "date": {
-      "pt": "Outubro 2026",
-      "en": "Outubro 2026"
-    },
-    "image": "/images/noticias/isto-e-um-teste-1791982076848.jpg",
-    "content": {
-      "pt": [
-        "<p>No âmbito de uma dissertação de Mestrado em Engenharia Informática da Universidade da Madeira, foi desenvolvido um jogo sério educativo com recurso à Realidade Aumentada (RA), destinado a promover a literacia em saúde e a sensibilizar crianças para a importância da prevenção do cancro do pulmão desde idades precoces.</p><p>A investigação centrou-se na criação de uma experiência interativa e lúdico-educativa, por meio da qual as crianças podem explorar o funcionamento do sistema respiratório, compreender os principais fatores de risco associados ao cancro do pulmão e adquirir conhecimentos sobre comportamentos preventivos, nomeadamente os riscos associados ao consumo de tabaco e à exposição ao fumo passivo.</p><p>A aplicação integra modelos tridimensionais, conteúdos educativos e atividades interativas, proporcionando uma abordagem dinâmica e envolvente à aprendizagem. Através da Realidade Aumentada, pretende-se facilitar a compreensão de conceitos relacionados com a saúde respiratória e incentivar a adoção de hábitos saudáveis desde a infância.</p><p><img src=\"/images/noticias/conteudo-94ddbcd7-d885-489f-bedc-ebb933-1791983229526.jpg\" data-layout=\"side-by-side\" class=\"custom-article-image rounded-xl shadow-xs border border-slate-200/80 transition-all\" style=\"width: calc(50% - 0.5rem); height: 220px; object-fit: cover; vertical-align: top;\"><img src=\"/images/noticias/conteudo-peditorio-liga-portuguesa-cont-1791983836349.png\" alt=\"peditorio-liga-portuguesa-contra-o-cancro-rtp.png\" data-layout=\"side-by-side\" class=\"custom-article-image rounded-xl shadow-xs border border-slate-200/80 transition-all\" style=\"width: calc(50% - 0.5rem); height: 220px; object-fit: cover; vertical-align: top;\"></p><p>Esta investigação enquadra-se nos objetivos do Projeto C.A.I.X.A., reforçando o potencial das tecnologias imersivas e dos jogos sérios enquanto ferramentas inovadoras de educação para a saúde e contribuindo para o desenvolvimento de novas abordagens de sensibilização e prevenção oncológica junto das crianças.</p>"
-      ],
-      "en": [
-        "<h2>teste h2</h2><h3>teste h3</h3><p><em>teste</em></p><p><strong>ajhvashkcbsa</strong></p><p><s>ac</s></p><blockquote><p>akscjb</p></blockquote><ul><li><p>1</p></li><li><p>2</p></li><li><p>3</p></li><li><p>4</p></li></ul><img class=\"rounded-xl max-w-full h-auto my-6 shadow-sm border border-slate-200 block mx-auto\" src=\"/images/noticias/conteudo-fortytwo-mdu-53qrvr4-unsplash-1791982041766.jpg\" alt=\"fortytwo-MDu-53qRVr4-unsplash.jpg\"><p>acaksncjacnakca</p>"
-      ]
-    }
-  },
-  {
     "slug": "investigacao-desenvolve-narrativas-interativas-que-se-adaptam-as-emocoes-de-criancas-com-cancro",
     "status": "publicada",
     "publishedAt": "2026-10-09",

@@ -121,12 +121,18 @@ const CustomImage = Image.extend({
       width: {
         default: "auto",
         parseHTML: (element) =>
-          element.style.width || element.getAttribute("width") || "auto",
+          element.getAttribute("data-width") ||
+          element.style.width ||
+          element.getAttribute("width") ||
+          "auto",
       },
       height: {
         default: "220px",
         parseHTML: (element) =>
-          element.style.height || element.getAttribute("height") || "220px",
+          element.getAttribute("data-height") ||
+          element.style.height ||
+          element.getAttribute("height") ||
+          "220px",
       },
       layout: {
         default: "center",
@@ -137,7 +143,7 @@ const CustomImage = Image.extend({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const { width = "auto", height = "220px", layout = "center", style = "", ...rest } = HTMLAttributes;
+    const { width = "auto", height = "220px", layout = "center", style: _ignoredStyle, ...rest } = HTMLAttributes;
     const styleParts: string[] = [];
 
     if (width && width !== "auto") {
@@ -162,13 +168,13 @@ const CustomImage = Image.extend({
       styleParts.push("display: block; margin: 1.5rem auto;");
     }
 
-    const combinedStyle = `${style} ${styleParts.join(" ")}`.trim();
-
     return [
       "img",
       mergeAttributes(rest, {
         "data-layout": layout,
-        style: combinedStyle,
+        "data-width": width || "auto",
+        "data-height": height || "220px",
+        style: styleParts.join(" "),
         class: "custom-article-image rounded-xl shadow-xs transition-all",
       }),
     ];
@@ -550,28 +556,34 @@ export function RichTextEditor({
               { label: "75%", val: "75%" },
               { label: "33%", val: "calc(33.333% - 0.5rem)" },
               { label: "25%", val: "25%" },
-            ].map(({ label, val }) => (
-              <button
-                key={label}
-                type="button"
-                onClick={() =>
-                  updateImageAttr({
-                    width: val,
-                    layout: val === "calc(50% - 0.5rem)" || val.includes("33")
-                      ? "side-by-side"
-                      : activeImgAttrs.layout,
-                  })
-                }
-                className={`rounded-md px-2 py-1 text-[11px] font-bold transition-all cursor-pointer ${
-                  activeImgAttrs.width === val || (val === "auto" && (!activeImgAttrs.width || activeImgAttrs.width === "auto"))
-                    ? "bg-[#07213D] text-white shadow-xs"
-                    : "bg-white text-[#07213D] border border-slate-200 hover:border-slate-300"
-                }`}
-                title={val === "auto" ? t.autoWidthTitle : t.setWidthTitle(label)}
-              >
-                {label}
-              </button>
-            ))}
+            ].map(({ label, val }) => {
+              const currentWidth = activeImgAttrs.width || "";
+              const isActive =
+                val === "auto"
+                  ? !currentWidth || currentWidth === "auto"
+                  : currentWidth === val ||
+                    (val.includes("50") && currentWidth.includes("50")) ||
+                    (val.includes("33") && currentWidth.includes("33")) ||
+                    (val.includes("75") && currentWidth.includes("75")) ||
+                    (val.includes("25") && currentWidth.includes("25")) ||
+                    (val === "100%" && (currentWidth === "100%" || currentWidth.includes("100%")));
+
+              return (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => updateImageAttr({ width: val })}
+                  className={`rounded-md px-2 py-1 text-[11px] font-bold transition-all cursor-pointer ${
+                    isActive
+                      ? "bg-[#07213D] text-white shadow-xs"
+                      : "bg-white text-[#07213D] border border-slate-200 hover:border-slate-300"
+                  }`}
+                  title={val === "auto" ? t.autoWidthTitle : t.setWidthTitle(label)}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
 
           <div className="h-4 w-px bg-amber-300 mx-1 hidden sm:block" />
@@ -625,7 +637,12 @@ export function RichTextEditor({
               onClick={() =>
                 updateImageAttr({
                   layout: "side-by-side",
-                  width: activeImgAttrs.width || "calc(50% - 0.5rem)",
+                  width:
+                    activeImgAttrs.width &&
+                    activeImgAttrs.width !== "auto" &&
+                    activeImgAttrs.width !== "100%"
+                      ? activeImgAttrs.width
+                      : "calc(50% - 0.5rem)",
                 })
               }
               className={`flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-bold cursor-pointer ${

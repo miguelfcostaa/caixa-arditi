@@ -41,7 +41,9 @@ img, picture, svg image {
   -webkit-touch-callout: none;
 }
 
-/* Imagens no conteúdo de notícias (WYSIWYG e Páginas de Notícia) */
+/* =========================================================================
+   IMAGENS DE NOTÍCIAS (WYSIWYG e Páginas de Notícia/Preview)
+   ========================================================================= */
 .article-rich-content img {
   border-radius: 0.875rem;
   border: none !important;
@@ -53,42 +55,29 @@ img, picture, svg image {
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08);
   border: 1px solid #cbd5e1 !important;
   max-width: 100%;
+  cursor: pointer;
+  transition: outline 0.15s ease;
 }
 
-/* Imagens normais sem largura personalizada (tamanho padrão equilibrado) */
-.article-rich-content img:not([style*="width"]),
-.tiptap img:not([style*="width"]) {
-  max-width: 520px;
-  max-height: 380px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
+.tiptap img:hover {
+  outline: 2px solid #F85308;
 }
 
 /* =========================================================================
    PÁGINA DA NOTÍCIA E PRÉ-VISUALIZAÇÃO (.article-rich-content)
    Espaçamento generoso obrigatório no topo e no fundo entre texto e imagens
    ========================================================================= */
-.article-rich-content img {
-  margin-top: 3.375rem !important;
-  margin-bottom: 3.375rem !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* Qualquer parágrafo que envolva imagens na página pública/preview */
 .article-rich-content p:has(> img) {
   margin-top: 3.375rem !important;
   margin-bottom: 3.375rem !important;
 }
 
-/* Imagens configuradas para Lado a Lado na notícia e preview */
-.article-rich-content p:has(> img[data-layout="side-by-side"]),
-.article-rich-content p:has(> img[style*="50%"]) {
+/* Parágrafos com múltiplas imagens ou marcados para lado a lado */
+.article-rich-content p:has(> img:nth-child(2)),
+.article-rich-content p:has(> img[data-layout="side-by-side"]) {
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: nowrap !important;
+  flex-wrap: wrap !important;
   gap: 0.75rem !important;
   justify-content: center !important;
   align-items: center !important;
@@ -99,60 +88,28 @@ img, picture, svg image {
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
-  overflow: hidden !important;
 }
 
-.article-rich-content p:has(> img[data-layout="side-by-side"]:only-child) {
-  display: inline-block !important;
-  width: calc(50% - 0.375rem) !important;
-  max-width: calc(50% - 0.375rem) !important;
-  vertical-align: top !important;
-  margin-top: 3.375rem !important;
-  margin-bottom: 3.375rem !important;
-  margin-left: 0.1875rem !important;
-  margin-right: 0.1875rem !important;
+.article-rich-content p:has(> img:nth-child(2)) > img,
+.article-rich-content p:has(> img[data-layout="side-by-side"]) > img {
+  margin: 0 !important;
   box-sizing: border-box !important;
-}
-
-/* Dentro da grelha lado a lado, as imagens individuais mantêm margem 0 no topo e fundo para alinhamento uniforme */
-.article-rich-content img[data-layout="side-by-side"],
-.article-rich-content img[data-layout="inline"],
-.article-rich-content img[style*="50%"] {
-  flex: 0 1 calc(50% - 0.375rem) !important;
-  max-width: calc(50% - 0.375rem) !important;
-  width: calc(50% - 0.375rem) !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  display: block !important;
-  object-fit: contain !important;
-}
-
-.article-rich-content p:has(> img[data-layout="side-by-side"]:only-child) > img {
-  max-width: 100% !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
 }
 
 /* =========================================================================
    ADMINISTRAÇÃO (.tiptap)
    Espaçamento compacto e limpo para o editor, sem margens excessivas
    ========================================================================= */
-.tiptap img:not([style*="width"]) {
-  margin: 1.25rem auto;
+.tiptap p:has(> img) {
+  margin-top: 1.25rem !important;
+  margin-bottom: 1.25rem !important;
 }
 
-.tiptap p:has(> img[data-layout="side-by-side"]),
-.tiptap p:has(> img[style*="50%"]) {
+.tiptap p:has(> img:nth-child(2)),
+.tiptap p:has(> img[data-layout="side-by-side"]) {
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: nowrap !important;
+  flex-wrap: wrap !important;
   gap: 0.75rem !important;
   justify-content: center !important;
   align-items: center !important;
@@ -160,76 +117,37 @@ img, picture, svg image {
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
-  overflow: hidden !important;
 }
 
-.tiptap p:has(> img[data-layout="side-by-side"]:only-child) {
-  display: inline-block !important;
-  width: calc(50% - 0.375rem) !important;
-  max-width: calc(50% - 0.375rem) !important;
-  vertical-align: top !important;
-  margin: 1.25rem 0.1875rem !important;
-  box-sizing: border-box !important;
-}
-
-.tiptap img[data-layout="side-by-side"],
-.tiptap img[data-layout="inline"],
-.tiptap img[style*="50%"] {
-  flex: 0 1 calc(50% - 0.375rem) !important;
-  max-width: calc(50% - 0.375rem) !important;
-  width: calc(50% - 0.375rem) !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
+.tiptap p:has(> img:nth-child(2)) > img,
+.tiptap p:has(> img[data-layout="side-by-side"]) > img {
   margin: 0 !important;
-  display: block !important;
-  object-fit: contain !important;
-}
-
-.tiptap p:has(> img[data-layout="side-by-side"]:only-child) > img {
-  max-width: 100% !important;
-  width: 100% !important;
-  min-width: 0 !important;
   box-sizing: border-box !important;
 }
 
 /* Em ecrãs pequenos de telemóvel */
 @media (max-width: 640px) {
-  .article-rich-content img,
   .article-rich-content p:has(> img) {
     margin-top: 2.625rem !important;
     margin-bottom: 2.625rem !important;
   }
 
+  .article-rich-content p:has(> img:nth-child(2)),
   .article-rich-content p:has(> img[data-layout="side-by-side"]),
-  .tiptap p:has(> img[data-layout="side-by-side"]),
-  .article-rich-content p:has(> img[style*="50%"]),
-  .tiptap p:has(> img[style*="50%"]) {
+  .tiptap p:has(> img:nth-child(2)),
+  .tiptap p:has(> img[data-layout="side-by-side"]) {
     flex-direction: column !important;
     gap: 1rem !important;
   }
 
-  .article-rich-content p:has(> img[data-layout="side-by-side"]),
-  .article-rich-content p:has(> img[style*="50%"]) {
-    margin-top: 2.625rem !important;
-    margin-bottom: 2.625rem !important;
-  }
-
-  .article-rich-content p:has(> img[data-layout="side-by-side"]:only-child),
-  .tiptap p:has(> img[data-layout="side-by-side"]:only-child) {
-    display: block !important;
-    width: 100% !important;
-    margin: 1rem auto !important;
-  }
-
-  .article-rich-content img[data-layout="side-by-side"],
-  .tiptap img[data-layout="side-by-side"],
-  .article-rich-content img[style*="50%"],
-  .tiptap img[style*="50%"] {
+  .article-rich-content p:has(> img:nth-child(2)) > img,
+  .article-rich-content p:has(> img[data-layout="side-by-side"]) > img,
+  .tiptap p:has(> img:nth-child(2)) > img,
+  .tiptap p:has(> img[data-layout="side-by-side"]) > img {
     max-width: 100% !important;
     width: 100% !important;
-    min-width: 0 !important;
-    display: block !important;
-    margin: 1rem auto !important;
+    height: auto !important;
   }
 }
+
 

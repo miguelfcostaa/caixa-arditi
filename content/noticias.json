@@ -16,10 +16,6 @@
       "en": "October 2026"
     },
     "image": "/images/noticias/investigacao-desenvolve-narrativas-interativas-que-se-adaptam-as-emocoes-de-criancas-com-cancro-1791553334638.jpg",
-    "imageAlt": {
-      "pt": "Reconhecimento de emoções",
-      "en": "Emotion recognition"
-    },
     "content": {
       "pt": [
         "No âmbito de uma dissertação de Mestrado em Engenharia Informática da Universidade da Madeira, foi desenvolvido um módulo de reconhecimento de emoções faciais para a plataforma Musiquence, destinado a criar narrativas interativas capazes de se adaptar ao estado emocional de crianças em contexto de oncologia pediátrica.",

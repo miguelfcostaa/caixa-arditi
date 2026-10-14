@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import type { NewsArticle } from "@/lib/newsletterData";
 import { NewsImage } from "@/components/NewsImage";
+import { ArticleContent } from "@/components/ArticleContent";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -74,13 +75,7 @@ export function ArticleView({
 
 
           {/* Conteúdo do Artigo */}
-          <div className="mx-auto mt-10 space-y-6 text-base sm:text-lg leading-relaxed text-[#334155]">
-            {paragraphs.map((p, idx) => (
-              <p key={idx} className="text-justify leading-relaxed">
-                {p}
-              </p>
-            ))}
-          </div>
+          <ArticleContent content={paragraphs} />
 
           {/* Divisória */}
           <div className="my-14 h-px w-full bg-slate-200" />

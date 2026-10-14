@@ -23,6 +23,8 @@ export function absoluteUrl(path = "/") {
 }
 
 export function truncateDescription(text: string, maxLength = 160) {
-  if (text.length <= maxLength) return text;
-  return `${text.slice(0, maxLength - 1).trimEnd()}…`;
+  if (!text) return "";
+  const plainText = text.replace(/<[^>]*>?/gm, "").trim();
+  if (plainText.length <= maxLength) return plainText;
+  return `${plainText.slice(0, maxLength - 1).trimEnd()}…`;
 }

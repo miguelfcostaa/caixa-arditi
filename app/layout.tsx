@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { ImageProtection } from "@/components/ImageProtection";
 import { absoluteUrl, siteConfig } from "@/lib/siteConfig";
 
 const montserrat = Montserrat({
@@ -91,7 +92,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-[#FCFAF9] text-[#07213D] selection:bg-[#F85308] selection:text-white font-sans"
       >
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <ImageProtection />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

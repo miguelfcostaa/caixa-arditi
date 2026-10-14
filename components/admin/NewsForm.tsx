@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -15,6 +15,8 @@ AlertCircle,
 } from "lucide-react";
 import { NewsArticle, NewsStatus } from "@/lib/newsletterData";
 import { NewsImage } from "@/components/NewsImage";
+import { PortugalFlag, UKFlag } from "@/components/Flags";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 interface NewsFormProps {
 initialArticle?: NewsArticle;
@@ -61,6 +63,15 @@ return text
     .replace(/\s+/g, "-");
 }
 
+function toInitialHtml(paragraphs?: string[]): string {
+  if (!paragraphs || paragraphs.length === 0) return "";
+  const joined = paragraphs.join("\n\n");
+  if (/<[a-z][\s\S]*>/i.test(joined)) {
+    return joined;
+  }
+  return paragraphs.map((p) => `<p>${p}</p>`).join("");
+}
+
 export function NewsForm({ initialArticle, isNew = false }: NewsFormProps) {
 const router = useRouter();
 
@@ -96,12 +107,12 @@ const currentImage = initialArticle?.image || "";
 const [imageFile, setImageFile] = useState<File | null>(null);
 const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-// Conteúdo / Parágrafos (como texto multilinhas para fácil edição)
+// Conteúdo / Parágrafos (como HTML do editor WYSIWYG)
 const [contentPt, setContentPt] = useState(
-    initialArticle?.content.pt.join("\n\n") || "",
+    toInitialHtml(initialArticle?.content.pt),
 );
 const [contentEn, setContentEn] = useState(
-    initialArticle?.content.en.join("\n\n") || "",
+    toInitialHtml(initialArticle?.content.en),
 );
 
 // Atualiza automaticamente os rótulos de data quando se escolhe uma data
@@ -127,8 +138,8 @@ const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     }
 };
 
-const handleSubmit = async (e: React.FormEvent, isPreview = false) => {
-    e.preventDefault();
+const handleSubmit = async (e?: React.FormEvent, isPreview = false) => {
+    if (e) e.preventDefault();
     setError(null);
     setSuccess(null);
 
@@ -146,15 +157,11 @@ const handleSubmit = async (e: React.FormEvent, isPreview = false) => {
     setLoading(true);
 
     try {
-    const paragraphsPt = contentPt
-        .split("\n\n")
-        .map((p) => p.trim())
-        .filter(Boolean);
+    const cleanPt = contentPt.trim() === "<p></p>" ? "" : contentPt.trim();
+    const cleanEn = contentEn.trim() === "<p></p>" ? "" : contentEn.trim();
 
-    const paragraphsEn = contentEn
-        .split("\n\n")
-        .map((p) => p.trim())
-        .filter(Boolean);
+    const paragraphsPt = cleanPt ? [cleanPt] : [titlePt.trim()];
+    const paragraphsEn = cleanEn ? [cleanEn] : paragraphsPt;
 
     const articlePayload: Partial<NewsArticle> = {
         slug: slug.trim().toLowerCase(),
@@ -174,8 +181,8 @@ const handleSubmit = async (e: React.FormEvent, isPreview = false) => {
         },
         image: currentImage,
         content: {
-        pt: paragraphsPt.length > 0 ? paragraphsPt : [titlePt.trim()],
-        en: paragraphsEn.length > 0 ? paragraphsEn : paragraphsPt,
+        pt: paragraphsPt,
+        en: paragraphsEn,
         },
     };
 
@@ -219,79 +226,97 @@ const handleSubmit = async (e: React.FormEvent, isPreview = false) => {
     }
 };
 
+const submitRef = useRef(handleSubmit);
+submitRef.current = handleSubmit;
+
+useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        submitRef.current(undefined, false);
+    }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+}, []);
+
 return (
     <form onSubmit={(e) => handleSubmit(e, false)} className="space-y-8">
-    {/* Barra de Ações Superior */}
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    {/* Cabeçalho + ações */}
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+        <h2 className="text-2xl font-extrabold text-[#07213D] sm:text-3xl">
+            {isNew ? "Nova Notícia" : "Editar Notícia"}
+        </h2>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 sm:self-auto">
         <Link
-        href="/admin"
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-[#F85308] sm:text-sm"
+            href="/admin"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#07213D]/50 hover:text-[#07213D] transition-colors"
         >
-        <ArrowLeft className="h-4 w-4" />
-        <span>Voltar ao painel</span>
+            <ArrowLeft className="h-4 w-4" />
+            <span>Voltar</span>
         </Link>
 
-        <div className="flex flex-wrap items-center gap-3">
         <button
             type="button"
             onClick={(e) => handleSubmit(e, true)}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-xs transition-colors hover:bg-slate-50 disabled:opacity-50 sm:text-sm cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-[#07213D] transition-colors hover:border-[#07213D]/30 hover:bg-slate-50 disabled:opacity-50 cursor-pointer"
         >
-            <Eye className="h-4 w-4 text-slate-500" />
+            <Eye className="h-4 w-4 text-[#07213D]/40" />
             <span>Pré-visualizar</span>
         </button>
 
         <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#07213D] px-5 py-2 text-xs font-semibold text-white shadow-md transition-colors hover:bg-[#07213D]/90 disabled:opacity-50 sm:text-sm cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#F85308] px-5 py-2 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#d64505] disabled:opacity-50 cursor-pointer"
         >
             <Save className="h-4 w-4" />
-            <span>{loading ? "A guardar..." : "Guardar Notícia"}</span>
+            <span>{loading ? "A guardar..." : "Guardar"}</span>
         </button>
         </div>
     </div>
 
     {/* Alertas */}
     {error && (
-        <div className="flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800">
-        <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-rose-600" />
+        <div className="flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
         <div>
-            <h4 className="font-semibold">Erro ao guardar</h4>
-            <p className="mt-0.5">{error}</p>
+            <span className="font-semibold">Erro ao guardar — </span>{error}
         </div>
         </div>
     )}
 
     {success && (
-        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
-        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
         <div>
-            <h4 className="font-semibold">Operação concluída</h4>
-            <p className="mt-0.5">{success}</p>
+            <span className="font-semibold">Guardado — </span>{success}
         </div>
         </div>
     )}
 
-    {/* Cartão de Definições Gerais */}
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8">
-        <h3 className="text-base font-bold text-[#07213D] sm:text-lg">
-        Configuração da Publicação
+    {/* Configuração da Publicação */}
+    <div className="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8">
+        <h3 className="text-lg font-extrabold text-[#07213D]">
+        Publicação
         </h3>
 
         <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {/* Estado de Publicação */}
+        {/* Estado */}
         <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
+            <label className="block text-sm font-medium text-[#07213D]">
             Estado
             </label>
-            <div className="mt-2 flex gap-3">
+            <div className="mt-2 flex gap-2">
             <label
                 className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-2.5 text-xs font-semibold transition-all cursor-pointer ${
                 status === "publicada"
-                    ? "border-emerald-500 bg-emerald-50 text-emerald-800 ring-2 ring-emerald-500/20"
-                    : "border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100"
+                    ? "border-emerald-500 bg-emerald-50 text-emerald-800"
+                    : "border-slate-200 bg-slate-50 text-[#07213D]/50 hover:bg-slate-100"
                 }`}
             >
                 <input
@@ -309,8 +334,8 @@ return (
             <label
                 className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-2.5 text-xs font-semibold transition-all cursor-pointer ${
                 status === "rascunho"
-                    ? "border-amber-500 bg-amber-50 text-amber-800 ring-2 ring-amber-500/20"
-                    : "border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100"
+                    ? "border-amber-500 bg-amber-50 text-amber-800"
+                    : "border-slate-200 bg-slate-50 text-[#07213D]/50 hover:bg-slate-100"
                 }`}
             >
                 <input
@@ -327,11 +352,11 @@ return (
             </div>
         </div>
 
-        {/* Data de Publicação */}
+        {/* Data */}
         <div>
             <label
             htmlFor="publishedAt"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+            className="block text-sm font-medium text-[#07213D]"
             >
             Data de Publicação
             </label>
@@ -341,23 +366,23 @@ return (
             required
             value={publishedAt}
             onChange={(e) => handleDateChange(e.target.value)}
-            className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+            className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-[#07213D] transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
             />
         </div>
 
-        {/* Slug URL */}
+        {/* Slug */}
         <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center justify-between">
                 <label
                     htmlFor="slug"
-                    className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+                    className="block text-sm font-medium text-[#07213D]"
                 >
-                    Identificador (Slug URL)
+                    Slug URL
                 </label>
                 <button
                     type="button"
                     onClick={() => setSlugLocked(!slugLocked)}
-                    className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 cursor-pointer"
+                    className="flex items-center gap-1 text-xs text-[#07213D]/40 hover:text-[#07213D] cursor-pointer transition-colors"
                     title={slugLocked ? "Desbloquear edição do slug" : "Bloquear slug"}
                 >
                     {slugLocked ? (
@@ -368,7 +393,7 @@ return (
                     ) : (
                     <>
                         <Unlock className="h-3 w-3 text-amber-600" />
-                        <span className="text-amber-600">Edição manual</span>
+                        <span className="text-amber-600">Editável</span>
                     </>
                     )}
                 </button>
@@ -384,8 +409,8 @@ return (
                     placeholder="slug-da-noticia"
                     className={`block w-full rounded-xl border px-3.5 py-2 text-sm transition-colors focus:outline-hidden ${
                     slugLocked
-                        ? "border-slate-200 bg-slate-100 text-slate-500 cursor-not-allowed"
-                        : "border-slate-300 bg-white text-slate-900 focus:border-[#F85308] focus:ring-2 focus:ring-[#F85308]/20"
+                        ? "border-slate-200 bg-slate-100 text-[#07213D]/40 cursor-not-allowed"
+                        : "border-slate-200 bg-white text-[#07213D] focus:border-[#F85308] focus:ring-2 focus:ring-[#F85308]/20"
                     }`}
                 />
             </div>
@@ -395,10 +420,10 @@ return (
 
 
     {/* Cartão de Conteúdo com Separadores Bilingues */}
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8">
-        <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8">
+        <div className="flex flex-col gap-4 border-b border-slate-100 pb-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h3 className="text-base font-bold text-[#07213D] sm:text-lg">
+            <h3 className="text-lg font-extrabold text-[#07213D]">
             Conteúdo da Notícia
             </h3>
         </div>
@@ -407,24 +432,26 @@ return (
             <button
             type="button"
             onClick={() => setActiveTab("pt")}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                 activeTab === "pt"
                 ? "bg-white text-[#07213D] shadow-xs"
-                : "text-slate-600 hover:text-slate-900"
+                : "text-[#07213D]/40 hover:text-[#07213D]"
             }`}
             >
+            <PortugalFlag className="h-3.5 w-5 rounded-[2px] shrink-0 shadow-xs overflow-hidden" />
             <span>Português</span>
             </button>
 
             <button
             type="button"
             onClick={() => setActiveTab("en")}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                 activeTab === "en"
                 ? "bg-white text-[#07213D] shadow-xs"
-                : "text-slate-600 hover:text-slate-900"
+                : "text-[#07213D]/40 hover:text-[#07213D]"
             }`}
             >
+            <UKFlag className="h-3.5 w-5 rounded-[2px] shrink-0 shadow-xs overflow-hidden" />
             <span>English</span>
             </button>
         </div>
@@ -436,9 +463,9 @@ return (
             <div>
             <label
                 htmlFor="titlePt"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="block text-sm font-medium text-[#07213D]"
             >
-                Título (Português) *
+                Título <span className="text-[#F85308]">*</span>
             </label>
             <input
                 id="titlePt"
@@ -453,7 +480,7 @@ return (
                 }
                 }}
                 placeholder="Ex: Workshop com Pais no âmbito do Projeto C.A.I.X.A."
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-4 py-2.5 text-base font-semibold text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+                className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-base font-semibold text-[#07213D] transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
             />
             </div>
 
@@ -461,9 +488,9 @@ return (
             <div>
                 <label
                 htmlFor="categoryPt"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="block text-sm font-medium text-[#07213D]"
                 >
-                Categoria (Português)
+                Categoria
                 </label>
                 <input
                 id="categoryPt"
@@ -472,7 +499,7 @@ return (
                 value={categoryPt}
                 onChange={(e) => setCategoryPt(e.target.value)}
                 placeholder="Ex: Iniciativas Comunitárias"
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+                className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-[#07213D] transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
                 />
                 <datalist id="cat-suggestions-pt">
                 {CATEGORY_SUGGESTIONS_PT.map((c) => (
@@ -484,9 +511,9 @@ return (
             <div>
                 <label
                 htmlFor="datePt"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="block text-sm font-medium text-[#07213D]"
                 >
-                Texto da Data (Português)
+                Texto da Data
                 </label>
                 <input
                 id="datePt"
@@ -494,28 +521,22 @@ return (
                 value={datePt}
                 onChange={(e) => setDatePt(e.target.value)}
                 placeholder="Ex: Outubro 2026"
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+                className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-[#07213D] transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
                 />
             </div>
             </div>
 
             <div>
-            <div className="flex items-center justify-between">
-                <label
+            <label
                 htmlFor="contentPt"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
-                >
-                Conteúdo do Artigo (Português)
-                </label>
-               
-            </div>
-            <textarea
-                id="contentPt"
-                rows={8}
+                className="block text-sm font-medium text-[#07213D]"
+            >
+                Conteúdo do Artigo
+            </label>
+            <RichTextEditor
                 value={contentPt}
-                onChange={(e) => setContentPt(e.target.value)}
-                placeholder="Escreva os parágrafos da notícia aqui...&#10;&#10;Um novo parágrafo começa após uma linha em branco."
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 p-4 text-sm leading-relaxed text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+                onChange={setContentPt}
+                placeholder="Escreva o conteúdo da notícia em português..."
             />
             </div>
         </div>
@@ -527,9 +548,9 @@ return (
             <div>
             <label
                 htmlFor="titleEn"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="block text-sm font-medium text-[#07213D]"
             >
-                Title (English)
+                Title
             </label>
             <input
                 id="titleEn"
@@ -537,7 +558,7 @@ return (
                 value={titleEn}
                 onChange={(e) => setTitleEn(e.target.value)}
                 placeholder="Ex: Workshop with Parents under Project C.A.I.X.A."
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-4 py-2.5 text-base font-semibold text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+                className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-base font-semibold text-[#07213D] transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
             />
             </div>
 
@@ -545,9 +566,9 @@ return (
             <div>
                 <label
                 htmlFor="categoryEn"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="block text-sm font-medium text-[#07213D]"
                 >
-                Category (English)
+                Category
                 </label>
                 <input
                 id="categoryEn"
@@ -556,7 +577,7 @@ return (
                 value={categoryEn}
                 onChange={(e) => setCategoryEn(e.target.value)}
                 placeholder="Ex: Community Initiatives"
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+                className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-[#07213D] transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
                 />
                 <datalist id="cat-suggestions-en">
                 {CATEGORY_SUGGESTIONS_EN.map((c) => (
@@ -568,9 +589,9 @@ return (
             <div>
                 <label
                 htmlFor="dateEn"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="block text-sm font-medium text-[#07213D]"
                 >
-                Date Text (English)
+                Date Text
                 </label>
                 <input
                 id="dateEn"
@@ -578,27 +599,22 @@ return (
                 value={dateEn}
                 onChange={(e) => setDateEn(e.target.value)}
                 placeholder="Ex: October 2026"
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+                className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-[#07213D] transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
                 />
             </div>
             </div>
 
             <div>
-            <div className="flex items-center justify-between">
-                <label
+            <label
                 htmlFor="contentEn"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-600"
-                >
-                Article Content (English)
-                </label>
-            </div>
-            <textarea
-                id="contentEn"
-                rows={8}
+                className="block text-sm font-medium text-[#07213D]"
+            >
+                Article Content
+            </label>
+            <RichTextEditor
                 value={contentEn}
-                onChange={(e) => setContentEn(e.target.value)}
-                placeholder="Write the news article paragraphs here...&#10;&#10;A new paragraph starts after a blank line."
-                className="mt-2 block w-full rounded-xl border border-slate-300 bg-slate-50/50 p-4 text-sm leading-relaxed text-slate-900 transition-colors focus:border-[#F85308] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#F85308]/20"
+                onChange={setContentEn}
+                placeholder="Write the news article content in English..."
             />
             </div>
         </div>
@@ -606,8 +622,8 @@ return (
     </div>
     
     {/* Cartão de Imagem */}
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs sm:p-8">
-        <h3 className="text-base font-bold text-[#07213D] sm:text-lg">
+    <div className="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8">
+        <h3 className="text-lg font-extrabold text-[#07213D]">
             Imagem de Destaque
         </h3>
 
@@ -624,7 +640,7 @@ return (
             </div>
 
             <div className="mt-4">
-                <label className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 bg-slate-50/50 px-4 py-3 text-xs font-semibold text-slate-700 transition-colors hover:border-[#F85308] hover:bg-slate-100 sm:text-sm">
+                <label className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50/50 px-4 py-3 text-xs font-semibold text-[#07213D]/60 transition-colors hover:border-[#F85308] hover:text-[#F85308] sm:text-sm">
                 <Upload className="h-4 w-4 text-[#F85308]" />
                 <span>
                     {imageFile ? imageFile.name : "Carregar nova imagem (PNG, JPG, WebP)"}
@@ -636,7 +652,7 @@ return (
                     className="sr-only"
                 />
                 </label>
-                <p className="mt-1.5 text-xs text-slate-400">
+                <p className="mt-1.5 text-xs text-[#07213D]/50">
                 A imagem será guardada em public/images/noticias/ e otimizada para o website.
                 </p>
             </div>
@@ -649,7 +665,7 @@ return (
     <div className="flex items-center justify-end gap-3 pt-4">
         <Link
         href="/admin"
-        className="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#07213D]/50 hover:text-[#07213D] transition-colors"
         >
         Cancelar
         </Link>
@@ -657,7 +673,7 @@ return (
         <button
         type="submit"
         disabled={loading}
-        className="inline-flex items-center gap-2 rounded-xl bg-[#07213D] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#07213D]/90 disabled:opacity-50 cursor-pointer"
+        className="inline-flex items-center gap-2 rounded-xl bg-[#F85308] px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#d64505] disabled:opacity-50 cursor-pointer"
         >
         <Save className="h-4 w-4" />
         <span>{loading ? "A guardar..." : "Guardar e Publicar"}</span>

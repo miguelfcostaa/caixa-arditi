@@ -12,7 +12,7 @@ export default async function NovaNoticiaPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/60 pb-20">
+    <div className="min-h-screen bg-[#FCFAF9] pb-20">
       <AdminNavbar />
 
       <main className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6 lg:px-8">

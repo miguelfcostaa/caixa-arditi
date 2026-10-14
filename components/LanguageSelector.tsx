@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Globe, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Locale } from "@/lib/translations";
+import { PortugalFlag, UKFlag } from "@/components/Flags";
 
 export function LanguageSelector() {
   const { locale, setLocale } = useLanguage();
@@ -74,13 +75,18 @@ export function LanguageSelector() {
                   setLocale(lang.code);
                   setIsOpen(false);
                 }}
-                className={`flex w-full items-center px-4 py-2.5 text-left text-sm transition-colors cursor-pointer ${
+                className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-sm transition-colors cursor-pointer ${
                   isSelected
                     ? "font-bold text-[#F85308] bg-[#F85308]/5"
                     : "font-medium text-[#07213D]/90 hover:bg-slate-50 hover:text-[#F85308]"
                 }`}
               >
-                {lang.label}
+                {lang.code === "pt" ? (
+                  <PortugalFlag className="h-3.5 w-5 rounded-[2px] shrink-0 shadow-xs overflow-hidden" />
+                ) : (
+                  <UKFlag className="h-3.5 w-5 rounded-[2px] shrink-0 shadow-xs overflow-hidden" />
+                )}
+                <span>{lang.label}</span>
               </button>
             );
           })}

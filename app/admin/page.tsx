@@ -15,10 +15,10 @@ export default async function AdminDashboardPage() {
   const allNews = await loadAllNews();
 
   return (
-    <div className="min-h-screen bg-slate-50/60 pb-20">
+    <div className="min-h-screen bg-[#FCFAF9] pb-24">
       <AdminNavbar />
 
-      <main className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6 lg:px-8">
         <NewsListClient initialNews={allNews} />
       </main>
     </div>

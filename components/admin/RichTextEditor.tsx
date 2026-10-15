@@ -6,6 +6,7 @@ import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import { mergeAttributes } from "@tiptap/core";
+import { NodeSelection } from "@tiptap/pm/state";
 import { useEffect, useRef, useState } from "react";
 import {
   Bold,
@@ -69,6 +70,7 @@ const EDITOR_TRANSLATIONS = {
     uploadError: "Erro ao carregar a imagem.",
     autoWidthTitle: "Ajustar automaticamente ao limite (50% se for lado a lado)",
     setWidthTitle: (label: string) => `Definir largura para ${label}`,
+    dragToResize: "Arrastar para aumentar ou diminuir a largura",
     autoHeightTitle: "Proporção natural da imagem",
     setHeightTitle: (label: string) => `Definir altura para ${label}`,
   },
@@ -103,6 +105,7 @@ const EDITOR_TRANSLATIONS = {
     uploadError: "Error uploading image.",
     autoWidthTitle: "Adjust automatically to limit (50% if side-by-side)",
     setWidthTitle: (label: string) => `Set width to ${label}`,
+    dragToResize: "Drag to increase or decrease width",
     autoHeightTitle: "Natural image ratio",
     setHeightTitle: (label: string) => `Set height to ${label}`,
   },
@@ -188,9 +191,12 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const t = EDITOR_TRANSLATIONS[locale] || EDITOR_TRANSLATIONS.pt;
   const singleFileInputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInternalUpdateRef = useRef(false);
   const [uploadingImage, setUploadingImage] = useState(false);
 
   // Estados para customização da imagem ativa
+  const [selectedImagePos, setSelectedImagePos] = useState<number | null>(null);
   const [activeImgAttrs, setActiveImgAttrs] = useState<{
     src?: string;
     width?: string | null;
@@ -222,12 +228,29 @@ export function RichTextEditor({
         class:
           "min-h-[260px] w-full px-4 py-3.5 text-sm sm:text-base leading-relaxed text-[#07213D] focus:outline-none focus:ring-0 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#07213D] [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[#07213D] [&_h3]:mt-5 [&_h3]:mb-2 [&_p]:mb-4 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-1 [&_ul]:my-3 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-1 [&_ol]:my-3 [&_li]:leading-relaxed [&_blockquote]:border-l-4 [&_blockquote]:border-[#F85308] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#07213D]/80 [&_blockquote]:my-4 [&_hr]:my-6 [&_hr]:border-slate-200",
       },
+      handleClick: (view, pos, event) => {
+        const target = event.target as HTMLElement;
+        if (target && target.tagName === "IMG") {
+          const nodePos = view.posAtDOM(target, 0);
+          if (nodePos >= 0) {
+            const tr = view.state.tr.setSelection(
+              NodeSelection.create(view.state.doc, nodePos),
+            );
+            view.dispatch(tr);
+            return true;
+          }
+        }
+        return false;
+      },
     },
     onUpdate: ({ editor }) => {
+      isInternalUpdateRef.current = true;
       onChange(editor.getHTML());
     },
     onSelectionUpdate: ({ editor }) => {
       if (editor.isActive("image")) {
+        const { from } = editor.state.selection;
+        setSelectedImagePos(from);
         const attrs = editor.getAttributes("image");
         setActiveImgAttrs({
           src: attrs.src || "",
@@ -235,18 +258,41 @@ export function RichTextEditor({
           height: attrs.height || "",
           layout: attrs.layout || "center",
         });
-      } else {
+      } else if (editor.isFocused) {
         setActiveImgAttrs(null);
+        setSelectedImagePos(null);
       }
     },
   });
 
   // Atualiza o editor quando o valor externo muda (ex: trocar de aba PT/EN)
   useEffect(() => {
-    if (editor && value !== editor.getHTML()) {
+    if (!editor) return;
+    if (isInternalUpdateRef.current) {
+      isInternalUpdateRef.current = false;
+      return;
+    }
+    if (value !== editor.getHTML()) {
       editor.commands.setContent(value);
     }
   }, [value, editor]);
+
+  // Fechar menu de imagem ao clicar fora do componente do editor
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setActiveImgAttrs(null);
+        setSelectedImagePos(null);
+      }
+    };
+    document.addEventListener("mousedown", handleDocumentClick);
+    return () => {
+      document.removeEventListener("mousedown", handleDocumentClick);
+    };
+  }, []);
 
   if (!editor) {
     return null;
@@ -305,10 +351,85 @@ export function RichTextEditor({
   // Atualizar atributos da imagem selecionada
   const updateImageAttr = (
     attrs: Partial<{ width: string | null; height: string | null; layout: string }>,
+    shouldFocus = false,
   ) => {
-    editor.chain().focus().updateAttributes("image", attrs).run();
+    if (!editor) return;
+
+    // Localizar a posição exata da imagem ativa
+    let targetPos = selectedImagePos;
+    if (targetPos !== null) {
+      const node = editor.state.doc.nodeAt(targetPos);
+      if (!node || node.type.name !== "image") {
+        targetPos = null;
+      }
+    }
+
+    if (targetPos === null && activeImgAttrs?.src) {
+      editor.state.doc.descendants((node, pos) => {
+        if (targetPos === null && node.type.name === "image" && node.attrs.src === activeImgAttrs.src) {
+          targetPos = pos;
+          return false;
+        }
+      });
+    }
+
+    if (targetPos !== null) {
+      setSelectedImagePos(targetPos);
+      const { tr } = editor.state;
+      const node = tr.doc.nodeAt(targetPos);
+      if (node) {
+        tr.setNodeMarkup(targetPos, undefined, {
+          ...node.attrs,
+          ...attrs,
+        });
+        tr.setSelection(NodeSelection.create(tr.doc, targetPos));
+        isInternalUpdateRef.current = true;
+        editor.view.dispatch(tr);
+        if (shouldFocus) {
+          editor.view.focus();
+        }
+        setActiveImgAttrs((prev) => (prev ? { ...prev, ...attrs } : null));
+        return;
+      }
+    }
+
+    // Fallback normal
+    if (shouldFocus) {
+      editor.chain().focus().updateAttributes("image", attrs).run();
+    } else {
+      editor.commands.updateAttributes("image", attrs);
+    }
     setActiveImgAttrs((prev) => (prev ? { ...prev, ...attrs } : null));
   };
+
+  const handleWidthSliderChange = (newVal: number) => {
+    let finalWidth: string;
+    if (newVal === 100) {
+      finalWidth = "100%";
+    } else if (activeImgAttrs?.layout === "side-by-side" && newVal === 50) {
+      finalWidth = "calc(50% - 0.5rem)";
+    } else if (activeImgAttrs?.layout === "side-by-side" && newVal === 33) {
+      finalWidth = "calc(33.333% - 0.5rem)";
+    } else {
+      finalWidth = `${newVal}%`;
+    }
+    updateImageAttr({ width: finalWidth }, false);
+  };
+
+  const currentWidthStr = activeImgAttrs?.width || "";
+  const isWidthAuto = !currentWidthStr || currentWidthStr === "auto";
+  const numericWidth = (() => {
+    if (isWidthAuto) {
+      return activeImgAttrs?.layout === "side-by-side" ? 50 : 100;
+    }
+    const match = currentWidthStr.match(/(\d+(?:\.\d+)?)%/);
+    if (match) return Math.round(parseFloat(match[1]));
+    const pxMatch = currentWidthStr.match(/(\d+)px/);
+    if (pxMatch) {
+      return Math.min(100, Math.max(15, Math.round((parseInt(pxMatch[1], 10) / 720) * 100)));
+    }
+    return 100;
+  })();
 
   // Inserir link
   const setLink = () => {
@@ -325,7 +446,7 @@ export function RichTextEditor({
   };
 
   return (
-    <div className="relative mt-2 rounded-xl border border-slate-200 bg-white shadow-xs focus-within:border-[#F85308] focus-within:ring-2 focus-within:ring-[#F85308]/20 transition-all">
+    <div ref={containerRef} className="relative mt-2 rounded-xl border border-slate-200 bg-white shadow-xs focus-within:border-[#F85308] focus-within:ring-2 focus-within:ring-[#F85308]/20 transition-all">
       {/* Topo Flutuante (Barra de Ferramentas + Ajustes de Imagem) */}
       <div className="sticky top-20 z-30 rounded-t-xl border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs transition-shadow">
         {/* Barra de Ferramentas WYSIWYG */}
@@ -540,50 +661,83 @@ export function RichTextEditor({
 
         {/* Painel de Customização da Imagem Selecionada */}
         {activeImgAttrs && (
-          <div className="flex flex-wrap items-center gap-2 border-t border-amber-200 bg-amber-50/95 px-3 py-2 text-xs text-[#07213D] animate-in fade-in duration-150">
+          <div
+            className="flex flex-wrap items-center gap-2 border-t border-amber-200 bg-amber-50/95 px-3 py-2 text-xs text-[#07213D] animate-in fade-in duration-150"
+            onMouseDown={(e) => {
+              if ((e.target as HTMLElement).tagName !== "INPUT") {
+                e.preventDefault();
+              }
+            }}
+          >
           <div className="flex items-center gap-1.5 font-bold text-[#F85308]">
             <Sliders className="h-3.5 w-3.5" />
             <span>{t.selectedImage}</span>
           </div>
 
-          {/* Presets de Largura */}
-          <div className="flex items-center gap-1">
-            <span className="font-semibold text-[#07213D]/60 text-[11px]">{t.width}</span>
-            {[
-              { label: "Auto", val: "auto" },
-              { label: "50%", val: "calc(50% - 0.5rem)" },
-              { label: "100%", val: "100%" },
-              { label: "75%", val: "75%" },
-              { label: "33%", val: "calc(33.333% - 0.5rem)" },
-              { label: "25%", val: "25%" },
-            ].map(({ label, val }) => {
-              const currentWidth = activeImgAttrs.width || "";
-              const isActive =
-                val === "auto"
-                  ? !currentWidth || currentWidth === "auto"
-                  : currentWidth === val ||
-                    (val.includes("50") && currentWidth.includes("50")) ||
-                    (val.includes("33") && currentWidth.includes("33")) ||
-                    (val.includes("75") && currentWidth.includes("75")) ||
-                    (val.includes("25") && currentWidth.includes("25")) ||
-                    (val === "100%" && (currentWidth === "100%" || currentWidth.includes("100%")));
+          {/* Presets e Barra de Ajuste de Largura */}
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <span className="font-semibold text-[#07213D]/60 text-[11px] whitespace-nowrap">{t.width}</span>
 
-              return (
-                <button
-                  key={label}
-                  type="button"
-                  onClick={() => updateImageAttr({ width: val })}
-                  className={`rounded-md px-2 py-1 text-[11px] font-bold transition-all cursor-pointer ${
-                    isActive
-                      ? "bg-[#07213D] text-white shadow-xs"
-                      : "bg-white text-[#07213D] border border-slate-200 hover:border-slate-300"
-                  }`}
-                  title={val === "auto" ? t.autoWidthTitle : t.setWidthTitle(label)}
-                >
-                  {label}
-                </button>
-              );
-            })}
+            {/* Barra que pode arrastar */}
+            <div
+              className="flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2 py-0.5 shadow-2xs"
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              <input
+                type="range"
+                min={15}
+                max={100}
+                step={1}
+                value={numericWidth}
+                onChange={(e) => handleWidthSliderChange(Number(e.target.value))}
+                onMouseDown={(e) => e.stopPropagation()}
+                className="h-1.5 w-20 sm:w-28 cursor-pointer appearance-none rounded-lg bg-slate-200 accent-[#07213D] hover:accent-[#F85308] transition-colors touch-none"
+                title={t.dragToResize}
+              />
+              <span className="min-w-[34px] text-right font-mono text-[11px] font-bold text-[#07213D]">
+                {isWidthAuto ? "Auto" : `${numericWidth}%`}
+              </span>
+            </div>
+
+            {/* Presets Rápidos */}
+            <div className="flex items-center gap-1">
+              {[
+                { label: "Auto", val: "auto" },
+                { label: "25%", val: "25%" },
+                { label: "33%", val: "calc(33.333% - 0.5rem)" },
+                { label: "50%", val: "calc(50% - 0.5rem)" },
+                { label: "75%", val: "75%" },
+                { label: "100%", val: "100%" },
+              ].map(({ label, val }) => {
+                const isActive =
+                  val === "auto"
+                    ? isWidthAuto
+                    : !isWidthAuto && (
+                        (val === "25%" && numericWidth === 25) ||
+                        (val.includes("33") && numericWidth === 33) ||
+                        (val.includes("50") && numericWidth === 50) ||
+                        (val === "75%" && numericWidth === 75) ||
+                        (val === "100%" && numericWidth === 100)
+                      );
+
+                return (
+                  <button
+                    key={label}
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => updateImageAttr({ width: val }, true)}
+                    className={`rounded-md px-2 py-1 text-[11px] font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? "bg-[#07213D] text-white shadow-xs"
+                        : "bg-white text-[#07213D] border border-slate-200 hover:border-slate-300"
+                    }`}
+                    title={val === "auto" ? t.autoWidthTitle : t.setWidthTitle(label)}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div className="h-4 w-px bg-amber-300 mx-1 hidden sm:block" />
@@ -600,7 +754,8 @@ export function RichTextEditor({
               <button
                 key={label}
                 type="button"
-                onClick={() => updateImageAttr({ height: val })}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => updateImageAttr({ height: val }, true)}
                 className={`rounded-md px-2 py-1 text-[11px] font-bold transition-all cursor-pointer ${
                   activeImgAttrs.height === val || (val === "220px" && (!activeImgAttrs.height || activeImgAttrs.height === "220px"))
                     ? "bg-[#07213D] text-white shadow-xs"
@@ -620,7 +775,8 @@ export function RichTextEditor({
             <span className="font-semibold text-[#07213D]/60 text-[11px]">{t.layout}</span>
             <button
               type="button"
-              onClick={() => updateImageAttr({ layout: "center" })}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => updateImageAttr({ layout: "center" }, true)}
               className={`flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-bold cursor-pointer ${
                 activeImgAttrs.layout === "center"
                   ? "bg-[#07213D] text-white shadow-xs"
@@ -634,6 +790,7 @@ export function RichTextEditor({
 
             <button
               type="button"
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() =>
                 updateImageAttr({
                   layout: "side-by-side",
@@ -643,7 +800,7 @@ export function RichTextEditor({
                     activeImgAttrs.width !== "100%"
                       ? activeImgAttrs.width
                       : "calc(50% - 0.5rem)",
-                })
+                }, true)
               }
               className={`flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-bold cursor-pointer ${
                 activeImgAttrs.layout === "side-by-side"
@@ -662,7 +819,29 @@ export function RichTextEditor({
           {/* Remover Imagem */}
           <button
             type="button"
-            onClick={() => editor.chain().focus().deleteSelection().run()}
+            onClick={() => {
+              let targetPos = selectedImagePos;
+              if (targetPos === null && activeImgAttrs?.src) {
+                editor.state.doc.descendants((node, pos) => {
+                  if (targetPos === null && node.type.name === "image" && node.attrs.src === activeImgAttrs.src) {
+                    targetPos = pos;
+                    return false;
+                  }
+                });
+              }
+              if (targetPos !== null) {
+                const node = editor.state.doc.nodeAt(targetPos);
+                if (node) {
+                  const tr = editor.state.tr.delete(targetPos, targetPos + node.nodeSize);
+                  isInternalUpdateRef.current = true;
+                  editor.view.dispatch(tr);
+                }
+              } else {
+                editor.chain().focus().deleteSelection().run();
+              }
+              setActiveImgAttrs(null);
+              setSelectedImagePos(null);
+            }}
             className="ml-auto flex items-center gap-1 rounded-md bg-rose-50 px-2 py-1 text-[11px] font-bold text-rose-700 hover:bg-rose-100 transition-colors cursor-pointer border border-rose-200"
             title={t.deleteTitle}
           >
